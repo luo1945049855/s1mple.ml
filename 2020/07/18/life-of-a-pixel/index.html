@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Life of a Pixel | S1mple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DOM-&gt;Style-&gt;Layout-&gt;Paint-&gt;Raster-&gt;GPU-&gt;Pixel Document Object Model(DOM)Style(CSS)CSS parser builds a model of the style rules. This works similar to the html parser except the css s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Life of a Pixel">
+<meta property="og:url" content="https://s1mple.ml/2020/07/18/life-of-a-pixel/index.html">
+<meta property="og:site_name" content="S1mple">
+<meta property="og:description" content="DOM-&gt;Style-&gt;Layout-&gt;Paint-&gt;Raster-&gt;GPU-&gt;Pixel Document Object Model(DOM)Style(CSS)CSS parser builds a model of the style rules. This works similar to the html parser except the css s">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-18T06:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-09T08:50:51.308Z">
+<meta property="article:author" content="dayo">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="S1mple" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">S1mple</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://s1mple.ml"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-life-of-a-pixel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/18/life-of-a-pixel/" class="article-date">
+  <time datetime="2020-07-18T06:00:00.000Z" itemprop="datePublished">2020-07-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Chromium/">Chromium</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Life of a Pixel
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>DOM-&gt;Style-&gt;Layout-&gt;Paint-&gt;Raster-&gt;GPU-&gt;Pixel</p>
+<h2 id="Document-Object-Model-DOM"><a href="#Document-Object-Model-DOM" class="headerlink" title="Document Object Model(DOM)"></a>Document Object Model(DOM)</h2><h2 id="Style-CSS"><a href="#Style-CSS" class="headerlink" title="Style(CSS)"></a>Style(CSS)</h2><p>CSS parser builds a model of the style rules. This works similar to the html parser except the css syntax is more specified(less forgiving): parse…turtles…actual style.</p>
+<p>Furthermore, it’s not trivial to determine which elements a style rule selects.<br>Some elements may be selected by more than one rule, with conflicting declarations for a particular style property.<br>The resolution of this is known as the “cascade” in CSS.</p>
+<h2 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h2><h2 id="Compositing"><a href="#Compositing" class="headerlink" title="Compositing"></a>Compositing</h2><ul>
+<li><p>Decompose the page into layers which raster independently.</p>
+</li>
+<li><p>Combine the layers on another thread(<code>Compositor thread</code>).</p>
+</li>
+<li><p>The Compositor thread can handle input events from browser process. </p>
+</li>
+<li><p>Update layer list before paint because each layer is painted separately. In the future, layers will be created after paint(?).</p>
+</li>
+<li><p>The Compositor can apply various properties to the way it draws a layer: transform, clip, effect, scroll.</p>
+</li>
+<li><p>The Compositor thread has two copies of the tree, so that it can raster tiles from a new commit  while drawing the previous commit. We want to ensure atomic commits and two trees is the approach to do this.(Raster and Draw Quad same time.)</p>
+</li>
+<li><p>Tiling:<br>  Layers can be large-rastering the whole layer is expensive, and unnecessary if only part of it is visible.<br>  Tiles are the unit of raster work. Tiles are rastered with a pool of dedicated <code>raster threads</code>(this include image decodes).<br>  Tiles are prioritized based on their distance from the viewport.<br>  (Note: a layer actually has multiple tilings for different resolutions.)</p>
+</li>
+</ul>
+<h2 id="Paint"><a href="#Paint" class="headerlink" title="Paint"></a>Paint</h2><p>Paint walks the layout tree and records a linear list of paint operations.</p>
+<h2 id="Raster"><a href="#Raster" class="headerlink" title="Raster"></a>Raster</h2><p>Raster is the step after paint, which turns paint ops into bitmaps.</p>
+<ul>
+<li>Accelerated by the GPU in <code>GPU process</code>.</li>
+<li>Rasterization issues OpenGL calls through Skia From <code>render process</code>.</li>
+<li>OpenGL, DirectX(Windows, ANGLE translate OpenGL to DirectX which build by Google).</li>
+<li>The output of raster is tile bitmap in GPU memory.</li>
+</ul>
+<h2 id="Draw-Quad-layers"><a href="#Draw-Quad-layers" class="headerlink" title="Draw Quad(layers)"></a>Draw Quad(layers)</h2><ul>
+<li>Once all the tiles are rastered, the compositor thread generates “draw quads”.</li>
+<li>A quad is like a command to draw a tile in a particular location on the screen, taking into account all the transformations applied by the layer tree.</li>
+<li>Each quad reference the tile’s rastered output in memory.</li>
+<li>The quads are wrapped up in a CompositorFrame object which gets submitted to the gpu process.</li>
+</ul>
+<h2 id="Display-viz"><a href="#Display-viz" class="headerlink" title="Display(viz)"></a>Display(viz)</h2><ul>
+<li>Compositor frames come from multiple renders, and from the brwoser(which has its own compositor for the UI).</li>
+<li>Compositor frames are associated with a “surface”, representing the place where they will appear on screen.</li>
+<li>Surfaces can embed other surfaces. The browser UI embeds a render. Renders can embed other renders for cross-origin iframes(a.k.a. site isolation, “out of process iframe” or OOPIF).</li>
+<li>The Display compositor runs on the Viz Compositor Thread in the GPU process. It’s part of the viz service(short for “visuals”).</li>
+<li>The Display compositor synchronizes the incoming frames and understands the dependencies betweens embedded surfaces(“surface aggregation”).</li>
+<li>Viz uses skia to display each quad in the CompositorFrame. This allow the compositor to draw using any backend(GL, Vulkan, Metal, DX12) supported by skia, similar to raster.</li>
+<li>The display compositor’s output is double-buffered.</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://bit.ly/lifeofapixel">Life of a Pixel</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/07/18/life-of-a-pixel/" data-id="ckev5orgx0008fsvv1vz85el9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/09/network/proxy_types/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Proxy Types
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/14/vue/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Vue</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CEF/">CEF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chromium/">Chromium</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Misc/">Misc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/17/math/matrix/">Matrix</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/16/windows/uniquely_identify_a_windows_machine/">Way to uniquely identify a windows machine</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/15/misc/soft_hyphen/">Soft Hyphen</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/09/misc/memory-type/">Memory Type</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/">CPP-C</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 dayo<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

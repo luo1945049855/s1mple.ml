@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CSS | S1mple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="css三种写法，优先级（内联式&gt;嵌入式&gt;外部式） 内联式：写在html标签中。  &lt;p&gt;&lt;span style&#x3D;&quot;color:red&quot;&gt;内联式&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;  嵌入式：写在当前文件中。  123456&lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;    span&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS">
+<meta property="og:url" content="https://s1mple.ml/2020/06/13/css/index.html">
+<meta property="og:site_name" content="S1mple">
+<meta property="og:description" content="css三种写法，优先级（内联式&gt;嵌入式&gt;外部式） 内联式：写在html标签中。  &lt;p&gt;&lt;span style&#x3D;&quot;color:red&quot;&gt;内联式&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;  嵌入式：写在当前文件中。  123456&lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;    span&amp;#123;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-13T12:19:09.000Z">
+<meta property="article:modified_time" content="2020-09-09T08:50:51.307Z">
+<meta property="article:author" content="dayo">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="S1mple" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">S1mple</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://s1mple.ml"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-css" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/13/css/" class="article-date">
+  <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Frontend/">Frontend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CSS
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="css三种写法，优先级（内联式-gt-嵌入式-gt-外部式）"><a href="#css三种写法，优先级（内联式-gt-嵌入式-gt-外部式）" class="headerlink" title="css三种写法，优先级（内联式&gt;嵌入式&gt;外部式）"></a>css三种写法，优先级（内联式&gt;嵌入式&gt;外部式）</h2><ol>
+<li><p>内联式：写在html标签中。</p>
+<p> <code>&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;内联式&lt;/span&gt;&lt;/p&gt;</code></p>
+</li>
+<li><p>嵌入式：写在当前文件中。</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-tag">span</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:blue;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span&gt;嵌入式&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外部式：写在外部文件中。</p>
+<p> <code>&lt;link href=&quot;base.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</code></p>
+</li>
+</ol>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><pre><code>1. 嵌入式写在外部式之后
+2. 相同权值</code></pre>
+<h2 id="标签选择器"><a href="#标签选择器" class="headerlink" title="标签选择器"></a>标签选择器</h2><p>其实就是html代码中的标签。如html、body、h1、p、img。</p>
+<h2 id="类选择器"><a href="#类选择器" class="headerlink" title="类选择器"></a>类选择器</h2><p>.类选器名称{css样式代码;}</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-class">.setGreen</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:green;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span class=&quot;setGreen&quot;&gt;类选择器&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ID选择器"><a href="#ID选择器" class="headerlink" title="ID选择器"></a>ID选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-id">#setGreen</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:green;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span id=&quot;setGreen&quot;&gt;ID选择器&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类选择器和ID选择器区别"><a href="#类选择器和ID选择器区别" class="headerlink" title="类选择器和ID选择器区别"></a>类选择器和ID选择器区别</h2><ul>
+<li>类选择器可以多次使用，ID选择器不可。</li>
+<li>类选择器可以多个同时使用，ID选择器不可。</li>
+</ul>
+<h2 id="子选择器"><a href="#子选择器" class="headerlink" title="子选择器"></a>子选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"> <span class="selector-class">.food</span>&gt;<span class="selector-tag">li</span>&#123;<span class="attribute">color</span>:white; <span class="attribute">border</span>:<span class="number">1px</span> solid red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;ul class=&quot;food&quot;&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;水果</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;蔬菜</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="包含（后代）选择器"><a href="#包含（后代）选择器" class="headerlink" title="包含（后代）选择器"></a>包含（后代）选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"> <span class="selector-class">.first</span> <span class="selector-tag">li</span>&#123;<span class="attribute">color</span>:white; <span class="attribute">border</span>:<span class="number">1px</span> solid red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;ul class=&quot;first&quot;&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;水果</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;蔬菜</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通用选择器"><a href="#通用选择器" class="headerlink" title="通用选择器"></a>通用选择器</h2><p><code>*&#123;color:red;&#125;</code></p>
+<h2 id="伪类选择符"><a href="#伪类选择符" class="headerlink" title="伪类选择符"></a>伪类选择符</h2><p>给html不存在的标签设置样式，如</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:red;</span><br><span class="line">        <span class="attribute">font-size</span>:<span class="number">20px</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分组选择符"><a href="#分组选择符" class="headerlink" title="分组选择符"></a>分组选择符</h2><p>为浏览器中多个标签设置同一样式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span>,<span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:red;&#125;</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"><span class="selector-tag">h1</span>,<span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:red;&#125;</span><br><span class="line"><span class="selector-class">.first</span>,<span class="selector-id">#second</span> <span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:green;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;p class=&quot;first&quot;&gt;三年级时，我还是一个&lt;span&gt;胆小如鼠&lt;/span&gt;的小女孩，上课从来不敢回答老师提出的问题，生怕回答错了老师会批评我。就一直没有这个勇气来回答老师提出的问题。学校举办的活动我也没勇气参加。&lt;/p&gt;</span><br><span class="line">&lt;p id=&quot;second&quot;&gt;到了三年级下学期时，我们班上了一节公开课，老师提出了一个很&lt;span&gt;简单&lt;/span&gt;的问题，班里很多同学都举手了，甚至成绩比我差很多的，也举手了，还说着：&quot;我来，我来。&quot;我环顾了四周，就我没有举手。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>CSS的某些样式具有继承性，它允许样式不仅应用于某个特定的html标签元素，而且应用于其后代。</p>
+<p><code>p&#123;color:red;&#125;</code>具有继承性；<br><code>p&#123;border:1px solid red;&#125;</code>不具有继承性。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/06/13/css/" data-id="ckev5org90000fsvv5we786iu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/13/html/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          HTML
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2000/01/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CEF/">CEF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chromium/">Chromium</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Misc/">Misc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/17/math/matrix/">Matrix</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/16/windows/uniquely_identify_a_windows_machine/">Way to uniquely identify a windows machine</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/15/misc/soft_hyphen/">Soft Hyphen</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/09/misc/memory-type/">Memory Type</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/">CPP-C</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 dayo<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

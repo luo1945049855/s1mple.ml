@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Protocol | S1mple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="IPv4Internet Protocol version 4. IPv4, which we often denote as just IP, has been theworkhorse protocol of the IP suite since the early 1980s. It uses 32-bitaddresses (Section A.4). IPv4 provides pack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Protocol">
+<meta property="og:url" content="https://s1mple.ml/2020/09/09/network/transport-layer/index.html">
+<meta property="og:site_name" content="S1mple">
+<meta property="og:description" content="IPv4Internet Protocol version 4. IPv4, which we often denote as just IP, has been theworkhorse protocol of the IP suite since the early 1980s. It uses 32-bitaddresses (Section A.4). IPv4 provides pack">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-14T01:49:13.087Z">
+<meta property="article:author" content="dayo">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="S1mple" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">S1mple</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://s1mple.ml"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-network/transport-layer" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/network/transport-layer/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Network/">Network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Protocol
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><p>Internet Protocol version 4. IPv4, which we often denote as just IP, has been the<br>workhorse protocol of the IP suite since the early 1980s. It uses 32-bit<br>addresses (Section A.4). IPv4 provides packet delivery service for TCP, UDP,<br>SCTP, ICMP, and IGMP.</p>
+<h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>Internet Protocol version 6. IPv6 was designed in the mid-1990s as a replace-<br>ment for IPv4. The major change is a larger address comprising 128 bits (Sec-<br>tion A.5), to deal with the explosive growth of the Internet in the 1990s. IPv6<br>provides packet delivery service for TCP, UDP, SCTP, and ICMPv6.<br>We often use the word ‘‘IP’’ as an adjective, as in IP layer and IP address, when<br>the distinction between IPv4 and IPv6 is not needed.</p>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>Transmission Control Protocol. TCP is a connection-oriented protocol that pro-<br>vides a reliable, full-duplex byte stream to its users. TCP sockets are an<br>example of stream sockets. TCP takes care of details such as acknowledg-<br>ments, timeouts, retransmissions, and the like. Most Internet application pro-<br>grams use TCP. Notice that TCP can use either IPv4 or IPv6.</p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>User Datagram Protocol. UDP is a connectionless protocol, and UDP sockets<br>are an example of datagram sockets. There is no guarantee that UDP data-<br>grams ever reach their intended destination. As with TCP, UDP can use<br>either IPv4 or IPv6.</p>
+<h2 id="SCTP"><a href="#SCTP" class="headerlink" title="SCTP"></a>SCTP</h2><p>Stream Control Transmission Protocol. SCTP is a connection-oriented protocol<br>that provides a reliable full-duplex association. The word ‘‘association’’ is used<br>when referring to a connection in SCTP because SCTP is multihomed, involv-<br>ing a set of IP addresses and a single port for each side of an association.<br>SCTP provides a message service, which maintains record boundaries. As<br>with TCP and UDP, SCTP can use either IPv4 or IPv6, but it can also use both<br>IPv4 and IPv6 simultaneously on the same association.</p>
+<h2 id="ICMP"><a href="#ICMP" class="headerlink" title="ICMP"></a>ICMP</h2><p>Internet Control Message Protocol. ICMP handles error and control information<br>between routers and hosts. These messages are normally generated by and<br>processed by the TCP/IP networking software itself, not user processes,<br>although we show the ping and traceroute programs, which use ICMP.<br>We sometimes refer to this protocol as ICMPv4 to distinguish it from<br>ICMPv6.</p>
+<h2 id="IGMP"><a href="#IGMP" class="headerlink" title="IGMP"></a>IGMP</h2><p>Internet Group Management Protocol. IGMP is used with multicasting (Chap-<br>ter 21), which is optional with IPv4.</p>
+<h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><p>Address Resolution Protocol. ARP maps an IPv4 address into a hardware<br>address (such as an Ethernet address). ARP is normally used on broadcast<br>networks such as Ethernet, token ring, and FDDI, and is not needed on point-<br>to-point networks.</p>
+<h2 id="RARP"><a href="#RARP" class="headerlink" title="RARP"></a>RARP</h2><p>Reverse Address Resolution Protocol. RARP maps a hardware address into an<br>IPv4 address. It is sometimes used when a diskless node is booting.</p>
+<h2 id="ICMPv6"><a href="#ICMPv6" class="headerlink" title="ICMPv6"></a>ICMPv6</h2><p>Internet Control Message Protocol version 6. ICMPv6 combines the functionality<br>of ICMPv4, IGMP, and ARP.</p>
+<h2 id="BPF"><a href="#BPF" class="headerlink" title="BPF"></a>BPF</h2><p>BSD packet filter. This interface provides access to the datalink layer. It is nor-<br>mally found on Berkeley-derived kernels.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/09/09/network/transport-layer/" data-id="ckev6y91m000j18vv2alnha5a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/09/misc/curve/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Curve
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/09/misc/operator-int()-vs-int-operator()/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">operator int() vs int operator()</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CEF/">CEF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chromium/">Chromium</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Frontend/">Frontend</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Misc/">Misc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/17/math/matrix/">Matrix</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/16/windows/uniquely_identify_a_windows_machine/">Way to uniquely identify a windows machine</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/15/misc/soft_hyphen/">Soft Hyphen</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/09/misc/memory-type/">Memory Type</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/">CPP-C</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 dayo<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
