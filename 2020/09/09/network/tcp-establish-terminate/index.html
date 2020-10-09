@@ -10,12 +10,12 @@
   <meta name="description" content="Connection establishmentTo establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP Connection Establish and Terminate">
-<meta property="og:url" content="https://s1mple.ml/2020/09/09/network/tcp-connection-establish-and-terminate/index.html">
+<meta property="og:url" content="https://s1mple.ml/2020/09/09/network/tcp-establish-terminate/index.html">
 <meta property="og:site_name" content="S1mple">
 <meta property="og:description" content="Connection establishmentTo establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up f">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-09T09:41:17.741Z">
+<meta property="article:modified_time" content="2020-10-09T06:07:06.603Z">
 <meta property="article:author" content="dayo">
 <meta name="twitter:card" content="summary">
   
@@ -66,9 +66,9 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-network/tcp-connection-establish-and-terminate" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-network/tcp-establish-terminate" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/09/network/tcp-connection-establish-and-terminate/" class="article-date">
+    <a href="/2020/09/09/network/tcp-establish-terminate/" class="article-date">
   <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
 </a>
     
@@ -92,26 +92,52 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Connection establishment<br>To establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open. Once the passive open is established, a client may initiate an active open. To establish a connection, the three-way (or 3-step) handshake occurs:</p>
-<p>SYN: The active open is performed by the client sending a SYN to the server. The client sets the segment’s sequence number to a random value A.<br>SYN-ACK: In response, the server replies with a SYN-ACK. The acknowledgment number is set to one more than the received sequence number (A + 1), and the sequence number that the server chooses for the packet is another random number, B.<br>ACK: Finally, the client sends an ACK back to the server. The sequence number is set to the received acknowledgement value i.e. A + 1, and the acknowledgement number is set to one more than the received sequence number i.e. B + 1.<br>At this point, both the client and server have received an acknowledgment of the connection. The steps 1, 2 establish the connection parameter (sequence number) for one direction and it is acknowledged. The steps 2, 3 establish the connection parameter (sequence number) for the other direction and it is acknowledged. With these, a full-duplex communication is established.</p>
-<p>Connection termination<br>The connection termination phase uses a four-way handshake, with each side of the connection terminating independently. When an endpoint wishes to stop its half of the connection, it transmits a FIN packet, which the other end acknowledges with an ACK. Therefore, a typical tear-down requires a pair of FIN and ACK segments from each TCP endpoint. After both FIN/ACK exchanges are concluded, the side which sent the first FIN before receiving one waits for a timeout before finally closing the connection, during which time the local port is unavailable for new connections; this prevents confusion due to delayed packets being delivered during subsequent connections.</p>
-<p>A connection can be “half-open”, in which case one side has terminated its end, but the other has not. The side that has terminated can no longer send any data into the connection, but the other side can. The terminating side should continue reading the data until the other side terminates as well.</p>
-<p>It is also possible to terminate the connection by a 3-way handshake, when host A sends a FIN and host B replies with a FIN &amp; ACK (merely combines 2 steps into one) and host A replies with an ACK. This is perhaps the most common method.</p>
+        <h2 id="Connection-establishment"><a href="#Connection-establishment" class="headerlink" title="Connection establishment"></a>Connection establishment</h2><p>To establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open. Once the passive open is established, a client may initiate an active open. To establish a connection, the three-way (or 3-step) handshake occurs:</p>
+<ol>
+<li>SYN: The active open is performed by the client sending a SYN to the server. The client sets the segment’s sequence number to a random value A.</li>
+<li>SYN-ACK: In response, the server replies with a SYN-ACK. The acknowledgment number is set to one more than the received sequence number (A + 1), and the sequence number that the server chooses for the packet is another random number, B.</li>
+<li>ACK: Finally, the client sends an ACK back to the server. The sequence number is set to the received acknowledgement value i.e. A + 1, and the acknowledgement number is set to one more than the received sequence number i.e. B + 1.</li>
+</ol>
+<p>At this point, both the client and server have received an acknowledgment of the connection.</p>
+<ul>
+<li>The steps 1, 2 establish the connection parameter (sequence number) for one direction and it is acknowledged.</li>
+<li>The steps 2, 3 establish the connection parameter (sequence number) for the other direction and it is acknowledged. With these, a full-duplex communication is established.</li>
+</ul>
+<h2 id="Connection-termination"><a href="#Connection-termination" class="headerlink" title="Connection termination"></a>Connection termination</h2><h3 id="four-way-handshake-termination"><a href="#four-way-handshake-termination" class="headerlink" title="four-way handshake termination"></a>four-way handshake termination</h3><p>The connection termination phase uses a four-way handshake, with <code>each side of the connection terminating independently</code>.</p>
+<ol>
+<li><p>FIN(host A): When an endpoint wishes to stop its half of the connection, it transmits a FIN packet.</p>
+</li>
+<li><p>ACK(host B): which the other end acknowledges with an ACK.</p>
+</li>
+<li><p>FIN(host B):</p>
+</li>
+<li><p>ACK(host A):</p>
+</li>
+</ol>
+<p>Therefore, a typical tear-down requires <code>a pair of</code> FIN and ACK segments from each TCP endpoint.<br>After <code>both</code> FIN/ACK exchanges are concluded,<br>The side which sent the first FIN waits for a timeout before finally closing the connection,<br>during which time the local port is unavailable for new connections;<br>This prevents confusion due to delayed packets being delivered during subsequent connections.</p>
+<p>A connection can be “half-open”, in which case one side has terminated its end, but the other has not.<br>The side that has terminated can no longer send any data into the connection, but the other side can.<br>The terminating side should continue reading the data until the other side terminates as well.</p>
+<h3 id="three-way-handshake-termination"><a href="#three-way-handshake-termination" class="headerlink" title="three-way handshake termination"></a>three-way handshake termination</h3><p>It is also possible to terminate the connection by a 3-way handshake,<br><code>This is perhaps the most common method</code>.</p>
+<ol>
+<li><p>FIN: when host A sends a FIN.</p>
+</li>
+<li><p>FIN &amp; ACK: host B replies with a <code>FIN &amp; ACK</code> (merely combines 2 steps into one).</p>
+</li>
+<li><p>ACK: host A replies with an ACK.</p>
+</li>
+</ol>
 <p>It is possible for both hosts to send FINs simultaneously then both just have to ACK. This could possibly be considered a 2-way handshake since the FIN/ACK sequence is done in parallel for both directions.</p>
-<p>Some host TCP stacks may implement a half-duplex close sequence, as Linux or HP-UX do. If such a host actively closes a connection but still has not read all the incoming data the stack already received from the link, this host sends a RST instead of a FIN (Section 4.2.2.13 in RFC 1122). This allows a TCP application to be sure the remote application has read all the data the former sent—waiting the FIN from the remote side, when it actively closes the connection. However, the remote TCP stack cannot distinguish between a Connection Aborting RST and this Data Loss RST. Both cause the remote stack to throw away all the data it received, but that the application still didn’t read.</p>
-<p>3 way handshake</p>
-<p>the three steps of a TCP three way handshake and how two TCP devices synchronize.</p>
-<p>Before the sending device and the receiving device start the exchange of data, both devices need to be synchronized. During the TCP initialization process, the sending device and the receiving device exchange a few control packets for synchronization purposes. This exchange is known as a three-way handshake.</p>
-<p>The three-way handshake begins with the initiator sending a TCP segment with the SYN control bit flag set.</p>
-<p>TCP allows one side to establish a connection. The other side may either accept the connection or refuse it. If we consider this from application layer point of view, the side that is establishing the connection is the client and the side waiting for a connection is the server.</p>
-<p>TCP identifies two types of OPEN calls:</p>
-<p>Active Open. In an Active Open call a device (client process) using TCP takes the active role and initiates the connection by sending a TCP SYN message to start the connection.</p>
-<p>Passive Open A passive OPEN can specify that the device (server process) is waiting for an active OPEN from a specific client. It does not generate any TCP message segment. The server processes listening for the clients are in Passive Open mode.</p>
-<p>Three-way Handshake</p>
-<p>Step 1. Device A (Client) sends a TCP segment with SYN = 1, ACK = 0, ISN (Initial Sequence Number) = 2000.</p>
-<p>The Active Open device (Device A) sends a segment with the SYN flag set to 1, ACK flag set to 0 and an Initial Sequence Number 2000 (For Example), which marks the beginning of the sequence numbers for data that device A will transmit. SYN is short for SYNchronize. SYN flag announces an attempt to open a connection. The first byte transmitted to Device B will have the sequence number ISN+1.</p>
-<p>Step 2. Device B (Server) receives Device A’s TCP segment and returns a TCP segment with SYN = 1, ACK = 1, ISN = 5000 (Device B’s Initial Sequence Number), Acknowledgment Number = 2001 (2000 + 1, the next sequence number Device B expecting from Device A).</p>
-<p>Step 3. Device A sends a TCP segment to Device B that acknowledges receipt of Device B’s ISN, With flags set as SYN = 0, ACK = 1, Sequence number = 2001, Acknowledgment number = 5001 (5000 + 1, the next sequence number Device A expecting from Device B)</p>
+<p>Some host TCP stacks may implement a half-duplex close sequence, as Linux or HP-UX do.</p>
+<p>If such a host actively closes a connection but still has not read all the incoming data<br>the stack already received from the link, this host sends a RST instead of a FIN<br>(Section 4.2.2.13 in RFC 1122).</p>
+<p>This allows a TCP application to be sure the remote application has read all the data<br>the former sent—waiting the FIN from the remote side, when it actively closes the connection.</p>
+<p>However, the remote TCP stack cannot distinguish between a <code>Connection Aborting RST</code><br>and this <code>Data Loss RST</code>.<br>Both cause the remote stack to throw away all the data it received, but that the application still didn’t read.</p>
+<h2 id="Sequence-Number"><a href="#Sequence-Number" class="headerlink" title="Sequence Number"></a>Sequence Number</h2><ol>
+<li><p>SYN: Step 1. Device A (Client) sends a TCP segment with <code>SYN = 1, ACK = 0</code>, <code>ISN (Initial Sequence Number) = 2000</code>.<br>The Active Open device (Device A) sends a segment with the SYN flag set to 1, ACK flag set to 0 and an Initial Sequence Number 2000 (For Example), which marks the beginning of the sequence numbers for data that device A will transmit.<br>SYN is short for SYNchronize. SYN flag announces an attempt to open a connection. The first byte transmitted to Device B will have the sequence number ISN+1.</p>
+</li>
+<li><p>SYN &amp; ACK: Step 2. Device B (Server) receives Device A’s TCP segment and returns a TCP segment with<br><code>SYN = 1, ACK = 1</code>, <code>ISN = 5000 (Device B’s Initial Sequence Number), Acknowledgment Number = 2001</code> (2000 + 1, the next sequence number Device B expecting from Device A).</p>
+</li>
+<li><p>ACK: Step 3. Device A sends a TCP segment to Device B that acknowledges receipt of Device B’s ISN, With flags set as <code>SYN = 0, ACK = 1</code>, <code>Sequence number = 2001, Acknowledgment number = 5001</code> (5000 + 1, the next sequence number Device A expecting from Device B)</p>
+</li>
+</ol>
 <p>This handshaking technique is referred to as the Three-way handshake or SYN, SYN-ACK, ACK.</p>
 <p>After the three-way handshake, the connection is open and the participant computers start sending data using the sequence and acknowledge numbers.</p>
 <p>You have learned what is TCP three way hand shake (3 way handshake), the three steps of a TCP three way handshake and how two TCP devices synchronize.</p>
@@ -119,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/09/09/network/tcp-connection-establish-and-terminate/" data-id="ckev6y91n000k18vv7qxr8hij" class="article-share-link">Share</a>
+      <a data-url="https://s1mple.ml/2020/09/09/network/tcp-establish-terminate/" data-id="ckg1x80vo0000i4vv3vq91s49" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,19 +154,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/09/09/misc/memory-type/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/09/09/misc/operator-int()-vs-int-operator()/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Memory Type
+          operator int() vs int operator()
         
       </div>
     </a>
   
   
-    <a href="/2020/09/09/misc/mutex_lock/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/09/09/windows/hook/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Mutex vs Lock</div>
+      <div class="article-nav-title">Hook</div>
     </a>
   
 </nav>
