@@ -7,17 +7,19 @@
   
   <title>Curve | S1mple</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Bezier Curve之前使用Qt画过贝塞尔曲线，用户可拖动2个控制点进行调整，此种方案属于交互式。 给定一系列点，画曲线此处找到的方式有：  Krita（基于Qt的画图工具）基于Bezier曲线的实现。  JScurve求平均值方式，可以使点平滑。  burningmime基于Philip J. Schneider&#39;s least-squares method实现的方案。此方案效果较好">
+  <meta name="description" content="Bezier Curve贝塞尔曲线通过两个端点和两个控制点指定。曲线不会通过控制点，但是控制点会像磁铁一样将曲线拉向控制点的方向，并影响曲线的弯曲。如下图所示：  注意：曲线从端点p1开始，向控制点c1移动。曲线在端点p1处的切线是p1和c1的连线。曲线在端点p2处的切线是p2和c2的连线。 给定一系列点，画曲线此处找到的方式有：  Krita（基于Qt的画图工具）基于Bezier曲线的实现。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Curve">
 <meta property="og:url" content="https://s1mple.ml/2020/09/09/misc/curve/index.html">
 <meta property="og:site_name" content="S1mple">
-<meta property="og:description" content="Bezier Curve之前使用Qt画过贝塞尔曲线，用户可拖动2个控制点进行调整，此种方案属于交互式。 给定一系列点，画曲线此处找到的方式有：  Krita（基于Qt的画图工具）基于Bezier曲线的实现。  JScurve求平均值方式，可以使点平滑。  burningmime基于Philip J. Schneider&#39;s least-squares method实现的方案。此方案效果较好">
+<meta property="og:description" content="Bezier Curve贝塞尔曲线通过两个端点和两个控制点指定。曲线不会通过控制点，但是控制点会像磁铁一样将曲线拉向控制点的方向，并影响曲线的弯曲。如下图所示：  注意：曲线从端点p1开始，向控制点c1移动。曲线在端点p1处的切线是p1和c1的连线。曲线在端点p2处的切线是p2和c2的连线。 给定一系列点，画曲线此处找到的方式有：  Krita（基于Qt的画图工具）基于Bezier曲线的实现。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s1mple.ml/images/bezier_spline.png">
 <meta property="article:published_time" content="2020-09-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-09T09:41:04.514Z">
+<meta property="article:modified_time" content="2020-10-09T09:27:02.269Z">
 <meta property="article:author" content="dayo">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1mple.ml/images/bezier_spline.png">
   
     <link rel="alternate" href="/atom.xml" title="S1mple" type="application/atom+xml">
   
@@ -92,7 +94,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Bezier-Curve"><a href="#Bezier-Curve" class="headerlink" title="Bezier Curve"></a>Bezier Curve</h2><p>之前使用Qt画过贝塞尔曲线，用户可拖动<code>2个</code>控制点进行调整，此种方案属于交互式。</p>
+        <h2 id="Bezier-Curve"><a href="#Bezier-Curve" class="headerlink" title="Bezier Curve"></a>Bezier Curve</h2><p>贝塞尔曲线通过两个<code>端点</code>和两个<code>控制点</code>指定。<br>曲线不会通过控制点，但是控制点会像磁铁一样将曲线拉向控制点的方向，并影响曲线的弯曲。<br>如下图所示：</p>
+<p><img src="/images/bezier_spline.png" alt="bezier_splines"></p>
+<p>注意：<br>曲线从端点p1开始，向控制点c1移动。曲线在端点p1处的<code>切线</code>是p1和c1的连线。<br>曲线在端点p2处的切线是p2和c2的连线。</p>
 <h2 id="给定一系列点，画曲线"><a href="#给定一系列点，画曲线" class="headerlink" title="给定一系列点，画曲线"></a>给定一系列点，画曲线</h2><p>此处找到的方式有：</p>
 <ul>
 <li><p>Krita（基于Qt的画图工具）基于Bezier曲线的实现。</p>
@@ -104,6 +108,10 @@
 <li><p><a target="_blank" rel="noopener" href="https://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit">Draw a Smooth Curve through a Set of 2D Points with Bezier Primitives</a>。</p>
 </li>
 </ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-bezier-splines-about">Bezier Splines</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30791706/gdi-curve-overflowing/49693235">GDI+ curve “overflowing”</a></li>
+</ol>
 
       
     </div>
@@ -160,7 +168,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
     </div>
   </div>
 
@@ -171,6 +179,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/10/10/network/tcp-ip-osi-model/">TCP/IP vs OSI Model</a>
+          </li>
         
           <li>
             <a href="/2020/09/24/windows/batch/">Batch Script</a>
@@ -186,10 +198,6 @@
         
           <li>
             <a href="/2020/09/15/misc/soft_hyphen/">Soft Hyphen</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/09/misc/operator-int()-vs-int-operator()/">operator int() vs int operator()</a>
           </li>
         
       </ul>

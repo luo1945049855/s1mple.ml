@@ -204,7 +204,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Bezier-Curve"><a href="#Bezier-Curve" class="headerlink" title="Bezier Curve"></a>Bezier Curve</h2><p>之前使用Qt画过贝塞尔曲线，用户可拖动<code>2个</code>控制点进行调整，此种方案属于交互式。</p>
+        <h2 id="Bezier-Curve"><a href="#Bezier-Curve" class="headerlink" title="Bezier Curve"></a>Bezier Curve</h2><p>贝塞尔曲线通过两个<code>端点</code>和两个<code>控制点</code>指定。<br>曲线不会通过控制点，但是控制点会像磁铁一样将曲线拉向控制点的方向，并影响曲线的弯曲。<br>如下图所示：</p>
+<p><img src="/images/bezier_spline.png" alt="bezier_splines"></p>
+<p>注意：<br>曲线从端点p1开始，向控制点c1移动。曲线在端点p1处的<code>切线</code>是p1和c1的连线。<br>曲线在端点p2处的切线是p2和c2的连线。</p>
 <h2 id="给定一系列点，画曲线"><a href="#给定一系列点，画曲线" class="headerlink" title="给定一系列点，画曲线"></a>给定一系列点，画曲线</h2><p>此处找到的方式有：</p>
 <ul>
 <li><p>Krita（基于Qt的画图工具）基于Bezier曲线的实现。</p>
@@ -216,6 +218,10 @@
 <li><p><a target="_blank" rel="noopener" href="https://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit">Draw a Smooth Curve through a Set of 2D Points with Bezier Primitives</a>。</p>
 </li>
 </ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-bezier-splines-about">Bezier Splines</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30791706/gdi-curve-overflowing/49693235">GDI+ curve “overflowing”</a></li>
+</ol>
 
       
     </div>
@@ -279,14 +285,14 @@
 
 
   
-    <article id="post-cef/cef-cpptoc-ctocpp-anotation" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-network/tcp-establish-terminate" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/" class="article-date">
+    <a href="/2020/09/09/network/tcp-establish-terminate/" class="article-date">
   <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/CEF/">CEF</a>
+    <a class="article-category-link" href="/categories/Network/">Network</a>
   </div>
 
   </div>
@@ -297,7 +303,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/">CPP-C</a>
+      <a class="article-title" href="/2020/09/09/network/tcp-establish-terminate/">TCP Connection Establish and Terminate</a>
     </h1>
   
 
@@ -305,32 +311,60 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="cpp-to-c关键代码"><a href="#cpp-to-c关键代码" class="headerlink" title="cpp to c关键代码"></a>cpp to c关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">CefCppToC</span> :</span> <span class="keyword">public</span> CefBase &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">static</span> StructName* <span class="title">Wrap</span><span class="params">(CefRefPtr&lt;BaseName&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!c.get())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    ClassName* wrapper = <span class="keyword">new</span> ClassName();</span><br><span class="line">    wrapper-&gt;wrapper_struct_.object_ = c.get();</span><br><span class="line">    wrapper-&gt;AddRef();</span><br><span class="line">    <span class="keyword">return</span> wrapper-&gt;GetStruct();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">  CefCppToC() &#123;</span><br><span class="line">    wrapper_struct_.type_ = kWrapperType;</span><br><span class="line">    wrapper_struct_.wrapper_ = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">memset</span>(GetStruct(), <span class="number">0</span>, <span class="keyword">sizeof</span>(StructName));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">cef_base_t</span>* base = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">cef_base_t</span>*&gt;(GetStruct());</span><br><span class="line">    base-&gt;size = <span class="keyword">sizeof</span>(StructName);</span><br><span class="line">    base-&gt;add_ref = struct_add_ref;</span><br><span class="line">    base-&gt;release = struct_release;</span><br><span class="line">    base-&gt;has_one_ref = struct_has_one_ref;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> NDEBUG</span></span><br><span class="line">    base::AtomicRefCountInc(&amp;DebugObjCt);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">WrapperStruct</span> &#123;</span></span><br><span class="line">    CefWrapperType type_;</span><br><span class="line">    BaseName* object_;</span><br><span class="line">    CefCppToC&lt;ClassName, BaseName, StructName&gt;* wrapper_;</span><br><span class="line">    StructName struct_;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="模板实例化"><a href="#模板实例化" class="headerlink" title="模板实例化"></a>模板实例化</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CefAppCppToC</span></span></span><br><span class="line"><span class="class">    :</span> <span class="keyword">public</span> CefCppToC &lt;CefAppCppToC, CefApp, <span class="keyword">cef_app_t</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">CefAppCppToC::CefAppCppToC() &#123;</span><br><span class="line">  GetStruct()-&gt;on_before_command_line_processing =</span><br><span class="line">      app_on_before_command_line_processing;</span><br><span class="line">  GetStruct()-&gt;on_register_custom_schemes = app_on_register_custom_schemes;</span><br><span class="line">  GetStruct()-&gt;get_resource_bundle_handler = app_get_resource_bundle_handler;</span><br><span class="line">  GetStruct()-&gt;get_browser_process_handler = app_get_browser_process_handler;</span><br><span class="line">  GetStruct()-&gt;get_render_process_handler = app_get_render_process_handler;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><ul>
-<li>模板参数分别为：派生类，基类，C结构体。</li>
-<li>CefCppToC中存在C结构体WrapperStruct对象。</li>
-<li>WrapperStruct中BaseName* object_保存cpp对象指针。</li>
-<li>WrapperStruct中StructName struct_保存c对象。</li>
-<li>CefCppToC::AddRef调用object_::AddRef。</li>
-<li>CefCppToC构造函数初始化C结构体cef_base_t成员，派生类初始化派生结构体中函数指针（如：CefAppCppToC初始化cef_app_t中函数指针)。</li>
+        <h2 id="Connection-establishment"><a href="#Connection-establishment" class="headerlink" title="Connection establishment"></a>Connection establishment</h2><p>To establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open. Once the passive open is established, a client may initiate an active open. To establish a connection, the three-way (or 3-step) handshake occurs:</p>
+<ol>
+<li>SYN: The active open is performed by the client sending a SYN to the server. The client sets the segment’s sequence number to a random value A.</li>
+<li>SYN-ACK: In response, the server replies with a SYN-ACK. The acknowledgment number is set to one more than the received sequence number (A + 1), and the sequence number that the server chooses for the packet is another random number, B.</li>
+<li>ACK: Finally, the client sends an ACK back to the server. The sequence number is set to the received acknowledgement value i.e. A + 1, and the acknowledgement number is set to one more than the received sequence number i.e. B + 1.</li>
+</ol>
+<p>At this point, both the client and server have received an acknowledgment of the connection.</p>
+<ul>
+<li>The steps 1, 2 establish the connection parameter (sequence number) for one direction and it is acknowledged.</li>
+<li>The steps 2, 3 establish the connection parameter (sequence number) for the other direction and it is acknowledged. With these, a full-duplex communication is established.</li>
 </ul>
-<h2 id="c-to-cpp关键代码"><a href="#c-to-cpp关键代码" class="headerlink" title="c to cpp关键代码"></a>c to cpp关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">CefRefPtr</span>&lt;BaseName&gt;</span></span><br><span class="line"><span class="class">    <span class="title">CefCToCpp</span> &lt;ClassName, BaseName, StructName&gt; :</span>:Wrap(StructName* s) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!s)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">  WrapperStruct* wrapperStruct = <span class="keyword">new</span> WrapperStruct;</span><br><span class="line">  wrapperStruct-&gt;type_ = kWrapperType;</span><br><span class="line">  wrapperStruct-&gt;struct_ = s;</span><br><span class="line">  <span class="function">CefRefPtr&lt;BaseName&gt; <span class="title">wrapperPtr</span><span class="params">(&amp;wrapperStruct-&gt;wrapper_)</span></span>;</span><br><span class="line">  wrapperStruct-&gt;wrapper_.UnderlyingRelease();</span><br><span class="line">  <span class="keyword">return</span> wrapperPtr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">CefCToCpp</span>&lt;ClassName,BaseName,StructName&gt;:</span>:WrapperStruct &#123;</span><br><span class="line">  CefWrapperType type_;</span><br><span class="line">  StructName* struct_;</span><br><span class="line">  ClassName wrapper_;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">StructName* <span class="title">GetStruct</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">WrapperStruct* wrapperStruct = GetWrapperStruct(<span class="keyword">this</span>);</span><br><span class="line">DCHECK_EQ(kWrapperType, wrapperStruct-&gt;type_);</span><br><span class="line"><span class="keyword">return</span> wrapperStruct-&gt;struct_;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">typename</span> <span class="title">CefCToCpp</span>&lt;ClassName, BaseName, StructName&gt;:</span>:WrapperStruct*</span><br><span class="line">    CefCToCpp&lt;ClassName, BaseName, StructName&gt;::GetWrapperStruct(</span><br><span class="line">        <span class="keyword">const</span> BaseName* obj) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;WrapperStruct*&gt;(</span><br><span class="line">      <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">char</span>*&gt;(<span class="keyword">const_cast</span>&lt;BaseName*&gt;(obj)) -</span><br><span class="line">      (<span class="keyword">sizeof</span>(WrapperStruct) - <span class="keyword">sizeof</span>(ClassName)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="关键点-1"><a href="#关键点-1" class="headerlink" title="关键点"></a>关键点</h3><ul>
-<li>模板参数与CppToC类似。</li>
-<li>CefCToCpp::WrapperStruct中StructName* struct_保存c结构体地址。</li>
-<li>CefCToCpp::WrapperStruct中wrapper保存cpp对象。</li>
-<li>CefCToCpp::<strong>GetWrapperStruct</strong>为<strong>桥梁</strong>函数，起到关键作用。该函数首先根据数据成员和结构体的内存偏移得到CefCToCpp::WrapperStruct，从而得到c结构体指针struct_。</li>
-<li>cef_base_t * struct内部函数使用类似上述的技术，先得到CefCppToC::WrapperStruct，从而得到原cpp对象object_。</li>
-</ul>
+<h2 id="Connection-termination"><a href="#Connection-termination" class="headerlink" title="Connection termination"></a>Connection termination</h2><h3 id="four-way-handshake-termination"><a href="#four-way-handshake-termination" class="headerlink" title="four-way handshake termination"></a>four-way handshake termination</h3><p>The connection termination phase uses a four-way handshake, with <code>each side of the connection terminating independently</code>.</p>
+<ol>
+<li><p>FIN(host A): When an endpoint wishes to stop its half of the connection, it transmits a FIN packet.</p>
+</li>
+<li><p>ACK(host B): which the other end acknowledges with an ACK.</p>
+</li>
+<li><p>FIN(host B):</p>
+</li>
+<li><p>ACK(host A):</p>
+</li>
+</ol>
+<p>Therefore, a typical tear-down requires <code>a pair of</code> FIN and ACK segments from each TCP endpoint.<br>After <code>both</code> FIN/ACK exchanges are concluded,<br>The side which sent the first FIN waits for a timeout before finally closing the connection,<br>during which time the local port is unavailable for new connections;<br>This prevents confusion due to delayed packets being delivered during subsequent connections.</p>
+<p>A connection can be “half-open”, in which case one side has terminated its end, but the other has not.<br>The side that has terminated can no longer send any data into the connection, but the other side can.<br>The terminating side should continue reading the data until the other side terminates as well.</p>
+<h3 id="three-way-handshake-termination"><a href="#three-way-handshake-termination" class="headerlink" title="three-way handshake termination"></a>three-way handshake termination</h3><p>It is also possible to terminate the connection by a 3-way handshake,<br><code>This is perhaps the most common method</code>.</p>
+<ol>
+<li><p>FIN: when host A sends a FIN.</p>
+</li>
+<li><p>FIN &amp; ACK: host B replies with a <code>FIN &amp; ACK</code> (merely combines 2 steps into one).</p>
+</li>
+<li><p>ACK: host A replies with an ACK.</p>
+</li>
+</ol>
+<p>It is possible for both hosts to send FINs simultaneously then both just have to ACK. This could possibly be considered a 2-way handshake since the FIN/ACK sequence is done in parallel for both directions.</p>
+<p>Some host TCP stacks may implement a half-duplex close sequence, as Linux or HP-UX do.</p>
+<p>If such a host actively closes a connection but still has not read all the incoming data<br>the stack already received from the link, this host sends a RST instead of a FIN<br>(Section 4.2.2.13 in RFC 1122).</p>
+<p>This allows a TCP application to be sure the remote application has read all the data<br>the former sent—waiting the FIN from the remote side, when it actively closes the connection.</p>
+<p>However, the remote TCP stack cannot distinguish between a <code>Connection Aborting RST</code><br>and this <code>Data Loss RST</code>.<br>Both cause the remote stack to throw away all the data it received, but that the application still didn’t read.</p>
+<h2 id="Sequence-Number"><a href="#Sequence-Number" class="headerlink" title="Sequence Number"></a>Sequence Number</h2><ol>
+<li><p>SYN: Step 1. Device A (Client) sends a TCP segment with <code>SYN = 1, ACK = 0</code>, <code>ISN (Initial Sequence Number) = 2000</code>.<br>The Active Open device (Device A) sends a segment with the SYN flag set to 1, ACK flag set to 0 and an Initial Sequence Number 2000 (For Example), which marks the beginning of the sequence numbers for data that device A will transmit.<br>SYN is short for SYNchronize. SYN flag announces an attempt to open a connection. The first byte transmitted to Device B will have the sequence number ISN+1.</p>
+</li>
+<li><p>SYN &amp; ACK: Step 2. Device B (Server) receives Device A’s TCP segment and returns a TCP segment with<br><code>SYN = 1, ACK = 1</code>, <code>ISN = 5000 (Device B’s Initial Sequence Number), Acknowledgment Number = 2001</code> (2000 + 1, the next sequence number Device B expecting from Device A).</p>
+</li>
+<li><p>ACK: Step 3. Device A sends a TCP segment to Device B that acknowledges receipt of Device B’s ISN, With flags set as <code>SYN = 0, ACK = 1</code>, <code>Sequence number = 2001, Acknowledgment number = 5001</code> (5000 + 1, the next sequence number Device A expecting from Device B)</p>
+</li>
+</ol>
+<p>This handshaking technique is referred to as the Three-way handshake or SYN, SYN-ACK, ACK.</p>
+<p>After the three-way handshake, the connection is open and the participant computers start sending data using the sequence and acknowledge numbers.</p>
+<p>You have learned what is TCP three way hand shake (3 way handshake), the three steps of a TCP three way handshake and how two TCP devices synchronize.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/" data-id="ckev7rqfa0000mcvv6fp11von" class="article-share-link">Share</a>
+      <a data-url="https://s1mple.ml/2020/09/09/network/tcp-establish-terminate/" data-id="ckg1x80vo0000i4vv3vq91s49" class="article-share-link">Share</a>
       
       
     </footer>
@@ -619,7 +653,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
     </div>
   </div>
 
@@ -630,6 +664,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/10/10/network/tcp-ip-osi-model/">TCP/IP vs OSI Model</a>
+          </li>
         
           <li>
             <a href="/2020/09/24/windows/batch/">Batch Script</a>
@@ -645,10 +683,6 @@
         
           <li>
             <a href="/2020/09/15/misc/soft_hyphen/">Soft Hyphen</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/09/misc/operator-int()-vs-int-operator()/">operator int() vs int operator()</a>
           </li>
         
       </ul>

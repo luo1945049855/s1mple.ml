@@ -216,6 +216,67 @@
 
 
   
+    <article id="post-cef/cef-cpptoc-ctocpp-anotation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CEF/">CEF</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/">CPP-C</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="cpp-to-c关键代码"><a href="#cpp-to-c关键代码" class="headerlink" title="cpp to c关键代码"></a>cpp to c关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">CefCppToC</span> :</span> <span class="keyword">public</span> CefBase &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">static</span> StructName* <span class="title">Wrap</span><span class="params">(CefRefPtr&lt;BaseName&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!c.get())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    ClassName* wrapper = <span class="keyword">new</span> ClassName();</span><br><span class="line">    wrapper-&gt;wrapper_struct_.object_ = c.get();</span><br><span class="line">    wrapper-&gt;AddRef();</span><br><span class="line">    <span class="keyword">return</span> wrapper-&gt;GetStruct();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">  CefCppToC() &#123;</span><br><span class="line">    wrapper_struct_.type_ = kWrapperType;</span><br><span class="line">    wrapper_struct_.wrapper_ = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">memset</span>(GetStruct(), <span class="number">0</span>, <span class="keyword">sizeof</span>(StructName));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">cef_base_t</span>* base = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">cef_base_t</span>*&gt;(GetStruct());</span><br><span class="line">    base-&gt;size = <span class="keyword">sizeof</span>(StructName);</span><br><span class="line">    base-&gt;add_ref = struct_add_ref;</span><br><span class="line">    base-&gt;release = struct_release;</span><br><span class="line">    base-&gt;has_one_ref = struct_has_one_ref;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> NDEBUG</span></span><br><span class="line">    base::AtomicRefCountInc(&amp;DebugObjCt);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">WrapperStruct</span> &#123;</span></span><br><span class="line">    CefWrapperType type_;</span><br><span class="line">    BaseName* object_;</span><br><span class="line">    CefCppToC&lt;ClassName, BaseName, StructName&gt;* wrapper_;</span><br><span class="line">    StructName struct_;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板实例化"><a href="#模板实例化" class="headerlink" title="模板实例化"></a>模板实例化</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CefAppCppToC</span></span></span><br><span class="line"><span class="class">    :</span> <span class="keyword">public</span> CefCppToC &lt;CefAppCppToC, CefApp, <span class="keyword">cef_app_t</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">CefAppCppToC::CefAppCppToC() &#123;</span><br><span class="line">  GetStruct()-&gt;on_before_command_line_processing =</span><br><span class="line">      app_on_before_command_line_processing;</span><br><span class="line">  GetStruct()-&gt;on_register_custom_schemes = app_on_register_custom_schemes;</span><br><span class="line">  GetStruct()-&gt;get_resource_bundle_handler = app_get_resource_bundle_handler;</span><br><span class="line">  GetStruct()-&gt;get_browser_process_handler = app_get_browser_process_handler;</span><br><span class="line">  GetStruct()-&gt;get_render_process_handler = app_get_render_process_handler;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><ul>
+<li>模板参数分别为：派生类，基类，C结构体。</li>
+<li>CefCppToC中存在C结构体WrapperStruct对象。</li>
+<li>WrapperStruct中BaseName* object_保存cpp对象指针。</li>
+<li>WrapperStruct中StructName struct_保存c对象。</li>
+<li>CefCppToC::AddRef调用object_::AddRef。</li>
+<li>CefCppToC构造函数初始化C结构体cef_base_t成员，派生类初始化派生结构体中函数指针（如：CefAppCppToC初始化cef_app_t中函数指针)。</li>
+</ul>
+<h2 id="c-to-cpp关键代码"><a href="#c-to-cpp关键代码" class="headerlink" title="c to cpp关键代码"></a>c to cpp关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">CefRefPtr</span>&lt;BaseName&gt;</span></span><br><span class="line"><span class="class">    <span class="title">CefCToCpp</span> &lt;ClassName, BaseName, StructName&gt; :</span>:Wrap(StructName* s) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!s)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">  WrapperStruct* wrapperStruct = <span class="keyword">new</span> WrapperStruct;</span><br><span class="line">  wrapperStruct-&gt;type_ = kWrapperType;</span><br><span class="line">  wrapperStruct-&gt;struct_ = s;</span><br><span class="line">  <span class="function">CefRefPtr&lt;BaseName&gt; <span class="title">wrapperPtr</span><span class="params">(&amp;wrapperStruct-&gt;wrapper_)</span></span>;</span><br><span class="line">  wrapperStruct-&gt;wrapper_.UnderlyingRelease();</span><br><span class="line">  <span class="keyword">return</span> wrapperPtr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">CefCToCpp</span>&lt;ClassName,BaseName,StructName&gt;:</span>:WrapperStruct &#123;</span><br><span class="line">  CefWrapperType type_;</span><br><span class="line">  StructName* struct_;</span><br><span class="line">  ClassName wrapper_;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">StructName* <span class="title">GetStruct</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">WrapperStruct* wrapperStruct = GetWrapperStruct(<span class="keyword">this</span>);</span><br><span class="line">DCHECK_EQ(kWrapperType, wrapperStruct-&gt;type_);</span><br><span class="line"><span class="keyword">return</span> wrapperStruct-&gt;struct_;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">typename</span> <span class="title">CefCToCpp</span>&lt;ClassName, BaseName, StructName&gt;:</span>:WrapperStruct*</span><br><span class="line">    CefCToCpp&lt;ClassName, BaseName, StructName&gt;::GetWrapperStruct(</span><br><span class="line">        <span class="keyword">const</span> BaseName* obj) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;WrapperStruct*&gt;(</span><br><span class="line">      <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">char</span>*&gt;(<span class="keyword">const_cast</span>&lt;BaseName*&gt;(obj)) -</span><br><span class="line">      (<span class="keyword">sizeof</span>(WrapperStruct) - <span class="keyword">sizeof</span>(ClassName)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关键点-1"><a href="#关键点-1" class="headerlink" title="关键点"></a>关键点</h3><ul>
+<li>模板参数与CppToC类似。</li>
+<li>CefCToCpp::WrapperStruct中StructName* struct_保存c结构体地址。</li>
+<li>CefCToCpp::WrapperStruct中wrapper保存cpp对象。</li>
+<li>CefCToCpp::<strong>GetWrapperStruct</strong>为<strong>桥梁</strong>函数，起到关键作用。该函数首先根据数据成员和结构体的内存偏移得到CefCToCpp::WrapperStruct，从而得到c结构体指针struct_。</li>
+<li>cef_base_t * struct内部函数使用类似上述的技术，先得到CefCppToC::WrapperStruct，从而得到原cpp对象object_。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/" data-id="ckev7rqfa0000mcvv6fp11von" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-life-of-a-pixel" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/18/life-of-a-pixel/" class="article-date">
@@ -783,7 +844,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
     </div>
   </div>
 
@@ -794,6 +855,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/10/10/network/tcp-ip-osi-model/">TCP/IP vs OSI Model</a>
+          </li>
         
           <li>
             <a href="/2020/09/24/windows/batch/">Batch Script</a>
@@ -809,10 +874,6 @@
         
           <li>
             <a href="/2020/09/15/misc/soft_hyphen/">Soft Hyphen</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/09/misc/operator-int()-vs-int-operator()/">operator int() vs int operator()</a>
           </li>
         
       </ul>
