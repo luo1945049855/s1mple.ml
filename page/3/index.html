@@ -66,9 +66,167 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-network/proxy_types" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-windows/io-completion-ports" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/09/network/proxy_types/" class="article-date">
+    <a href="/2020/09/09/windows/io-completion-ports/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Windows/">Windows</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/windows/io-completion-ports/">I/O Completion Ports</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I/O completion ports 是多核系统下，处理多个异步I/O请求的高效线程模型。当进程创建一个I/O completion port对象，系统创建一个队列与之关联，用来将相关请求放入队列。与接收到I/O请求创建线程相比，I/O completion port与线程池配合，可以使进程在处理并发异步请求时，更快更有效率。</p>
+<p>可以理解为I/O completion port为I/O completion队列，线程池根据队列内容进行处理。</p>
+<p>相关windows api包括：</p>
+<ol>
+<li>CreateIoCompletionPort</li>
+<li>GetQueuedCompletionStatus</li>
+<li>PostQueuedCompletionStatus</li>
+</ol>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/fileio/i-o-completion-ports">I/O Completion Ports</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/09/09/windows/io-completion-ports/" data-id="ckev6e5ho0001qgvv30vc7v09" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-windows/owned-windows" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/windows/owned-windows/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Windows/">Windows</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/windows/owned-windows/">Owned Windows</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>An overlapped or pop-up window can be owned by another overlapped or pop-up window. Being owned places several constraints on a window.</p>
+<p>An owned window is always above its owner in the z-order.<br>The system automatically destroys an owned window when its owner is destroyed.<br>An owned window is hidden when its owner is minimized.<br>Only an overlapped or pop-up window can be an owner window; a child window cannot be an owner window. An application creates an owned window by specifying the owner’s window handle as the hwndParent parameter of CreateWindowEx when it creates a window with the WS_OVERLAPPED or WS_POPUP style. The hwndParent parameter must identify an overlapped or pop-up window. If hwndParent identifies a child window, the system assigns ownership to the top-level parent window of the child window. After creating an owned window, an application cannot transfer ownership of the window to another window.</p>
+<p>Dialog boxes and message boxes are owned windows by default. An application specifies the owner window when calling a function that creates a dialog box or message box.</p>
+<p>An application can use the GetWindow function with the GW_OWNER flag to retrieve a handle to a window’s owner.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-gb/windows/win32/winmsg/window-features">Window Features</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/09/09/windows/owned-windows/" data-id="ckev6e5hs0003qgvv82h6c0ie" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-windows/using-lockbits-in-gdi+" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/windows/using-lockbits-in-gdi+/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Windows/">Windows</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/windows/using-lockbits-in-gdi+/">Using LockBits in GDI+</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Understanding how to use LockBits is essential for creating high performance GDI+ applications. Usually, GDI+ is thought of as a low performance graphics API. While arguments can be made for this, if you use GDI+ properly, you can achieve great performance.</p>
+<p>The easiest way to access pixel data is to use GetPixel and SetPixel member functions of the Bitmap class. Unfortunately, using these functions has a great amount of overhead. When working with large images, doing any type of processing with GetPixel and SetPixel is simply too slow and not acceptable for modern applications. LockBits is specifically used to make the data in a bitmap directly available to you, the programmer. The workflow is very simple:</p>
+<ol>
+<li>Use LockBits to obtain a raw array of data</li>
+<li>Perform image processing using the standard array of data</li>
+<li>Use UnlockBits to commit the new data back into the bitmap</li>
+</ol>
+<h2 id="Calling-LockBits"><a href="#Calling-LockBits" class="headerlink" title="Calling LockBits"></a>Calling LockBits</h2><p>When calling LockBits, you can specify a specific rectangular portion of the bitmap you want to manipulate, the read/write mode, the pixel format you would like the data to be in.</p>
+<p>// We must use LockBits to get the raw data. GetPixel and SetPixel are simply too slow</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BitmapData bitmapData;</span><br><span class="line">pBitmap-&gt;LockBits(</span><br><span class="line">    &amp;Rect(<span class="number">0</span>,<span class="number">0</span>,pBitmap-&gt;GetWidth(), pBitmap-&gt;GetHeight()), </span><br><span class="line">    ImageLockModeWrite,</span><br><span class="line">    PixelFormat32bppARGB, &amp;bitmapData);</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-format-of-the-pixel-data"><a href="#The-format-of-the-pixel-data" class="headerlink" title="The format of the pixel data"></a>The format of the pixel data</h2><p>It is important for you to realize how the data is formatted. The data is located in the Scan0 member variable in the BitmapData class. This is a standard, one dimensional array which stores information for a 2D image. Therefore, that 2D information is packed into a 1D array. In order to gain access to a specific pixel, you will need to know the X and Y coordinate, along with the Stride.</p>
+<p><img src="/images/LockBits.jpg?raw=true%22LockBits%22" alt="LockBits"></p>
+<p>As you can see in the image above, not all data elements are used. Furthermore, the Scan0 array is of the type void. Before accessing data, it is a good idea to keep another pointer around with the same element size as that in the format you picked when calling the LockBits function. For example, in the code above, a 32 bits per pixel format was selected. Therefore, it would be a good idea to create a pointer of the type int, which is 32 bits for most compilers.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> *pRawBitmapOrig = (<span class="keyword">unsigned</span> <span class="keyword">int</span>*)bitmapData.Scan0;   <span class="comment">// for easy access and indexing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> curColor = pRawBitmapCopy[curY * bitmapData.Stride / <span class="number">4</span> + curX];</span><br><span class="line"><span class="keyword">int</span> b = curColor &amp; <span class="number">0xff</span>;</span><br><span class="line"><span class="keyword">int</span> g = (curColor &amp; <span class="number">0xff00</span>) &gt;&gt; <span class="number">8</span>;</span><br><span class="line"><span class="keyword">int</span> r = (curColor &amp; <span class="number">0xff0000</span>) &gt;&gt; <span class="number">16</span>;</span><br><span class="line"><span class="keyword">int</span> a = (curColor &amp; <span class="number">0xff000000</span>) &gt;&gt; <span class="number">24</span>;</span><br></pre></td></tr></table></figure>
+
+<p>As you can see in the above code, casting the Scan0 array to another pointer with 32 bits per data element makes accessing the pixel data very straightforward.</p>
+<h2 id="Unlocking-the-bits"><a href="#Unlocking-the-bits" class="headerlink" title="Unlocking the bits"></a>Unlocking the bits</h2><p>As soon as you’re finished manipulating the image data, you’ll want to call UnlockBits. This function essentially commits the data in the Scan0 array back into the bitmap, and also does memory management if any memory had to be allocated in the first place with LockBits.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pBitmap-&gt;UnlockBits(&amp;bitmapData);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Using LockBits and Unlock bits can make simple functions such as image convolution perform 20 times as fast when compared to using GetPixel and SetPixel. Just remember that if you’re editing even a moderately small number of pixels, it might be a good idea to take route described in this tutorial instead of having to make thousands or even millions of functions calls.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="http://supercomputingblog.com/graphics/using-lockbits-in-gdi/">Using LockBits in GDI+</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/09/09/windows/using-lockbits-in-gdi+/" data-id="ckev6e5hx0009qgvvby25c2rv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-network/tcp-establish-terminate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/network/tcp-establish-terminate/" class="article-date">
   <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
 </a>
     
@@ -84,7 +242,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/network/proxy_types/">Proxy Types</a>
+      <a class="article-title" href="/2020/09/09/network/tcp-establish-terminate/">TCP Connection Establish and Terminate</a>
     </h1>
   
 
@@ -92,182 +250,60 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol>
-<li>正向代理(Forward Proxy)</li>
-<li>反向代理(Reverse Proxy)</li>
-<li>透明代理(Transparent Proxy)</li>
+        <h2 id="Connection-establishment"><a href="#Connection-establishment" class="headerlink" title="Connection establishment"></a>Connection establishment</h2><p>To establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open. Once the passive open is established, a client may initiate an active open. To establish a connection, the three-way (or 3-step) handshake occurs:</p>
+<ol>
+<li>SYN: The active open is performed by the client sending a SYN to the server. The client sets the segment’s sequence number to a random value A.</li>
+<li>SYN-ACK: In response, the server replies with a SYN-ACK. The acknowledgment number is set to one more than the received sequence number (A + 1), and the sequence number that the server chooses for the packet is another random number, B.</li>
+<li>ACK: Finally, the client sends an ACK back to the server. The sequence number is set to the received acknowledgement value i.e. A + 1, and the acknowledgement number is set to one more than the received sequence number i.e. B + 1.</li>
 </ol>
-<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ol>
-<li><p>正向代理</p>
-<p> 客户端向代理服务器发送一个请求，并且指定目标服务器，之后代理向目标服务器转交并且将获得的内容返回给客户端。</p>
-</li>
-<li><p>反向代理</p>
-<p> 客户端向反向代理发送请求，接着反向代理判断请求走向何处，并将请求转交给客户端，使得这些内容就好似他自己一样，一次客户端并不会感知到反向代理后面的服务，也因此不需要客户端做任何设置，只需要把反向代理服务器当成真正的服务器就好了。</p>
-</li>
-<li><p>透明代理</p>
-<p> 透明代理比较类似正向代理的功能，差别在于客户端根本不知道代理的存在，它改编你的request，并会传送真实IP（使用场景就是公司限制网络的访问）。</p>
-</li>
-</ol>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ol>
-<li><p>正向代理</p>
+<p>At this point, both the client and server have received an acknowledgment of the connection.</p>
 <ul>
-<li><p>cross firewall</p>
-<p><img src="/images/forward_proxy_cross_firewall.webp" alt="cross firewall"></p>
-<p>用户A无法访问<code>wwww.google.com</code>，但是能访问服务器B，而服务器B可以访问google。于是用户A访问服务器B，通过服务器B去访问google，服务器B收到请求后，去访问google，google把响应信息返回给服务器B，服务器B再把响应信息返回给A。</p>
-</li>
+<li>The steps 1, 2 establish the connection parameter (sequence number) for one direction and it is acknowledged.</li>
+<li>The steps 2, 3 establish the connection parameter (sequence number) for the other direction and it is acknowledged. With these, a full-duplex communication is established.</li>
 </ul>
+<h2 id="Connection-termination"><a href="#Connection-termination" class="headerlink" title="Connection termination"></a>Connection termination</h2><h3 id="four-way-handshake-termination"><a href="#four-way-handshake-termination" class="headerlink" title="four-way handshake termination"></a>four-way handshake termination</h3><p>The connection termination phase uses a four-way handshake, with <code>each side of the connection terminating independently</code>.</p>
+<ol>
+<li><p>FIN(host A): When an endpoint wishes to stop its half of the connection, it transmits a FIN packet.</p>
 </li>
-<li><p>反向代理</p>
-<ul>
-<li><p>负载均衡</p>
-<p><img src="/images/reverse_proxy_payload_balance.webp" alt="负载均衡"></p>
-<p>当反向代理服务器不止一个的时候，我们甚至可以把它们做成集群，当更多的用户访问资源服务器B的时候，让不同的代理服务器Z（x）去应答不同的用户，然后发送不同用户需要的资源。</p>
+<li><p>ACK(host B): which the other end acknowledges with an ACK.</p>
 </li>
-<li><p>保护和隐藏原始资源服务器</p>
-<p><img src="/images/reverse_proxy_hide_original_server.webp" alt="保护和隐藏原始资源服务器"></p>
-<p>用户A始终认为它访问的是原始服务器B而不是代理服务器Z，但实用际上反向代理服务器接受用户A的应答，从原始资源服务器B中取得用户A的需求资源，然后发送给用户A。由于防火墙的作用，只允许代理服务器Z访问原始资源服务器B。尽管在这个虚拟的环境下，防火墙和反向代理的共同作用保护了原始资源服务器B，但用户A并不知情。</p>
+<li><p>FIN(host B):</p>
 </li>
-<li><p>加密和SSL加速</p>
-</li>
-<li><p>缓存静态内容</p>
-</li>
-<li><p>压缩</p>
-</li>
-<li><p>减速上传</p>
-</li>
-<li><p>安全</p>
-</li>
-<li><p>外网发布</p>
-</li>
-</ul>
-</li>
-<li><p>透明代理</p>
-<p> 比如为了工作效率或者安全，A公司屏蔽了QQ软件的使用。A公司的员工接上了网络，但发现无法使用qq。这就是透明代理捣的鬼。公司在内网和外网的中间插入一个透明代理，这个代理会根据规则抓取请求内容，遇到qq的请求我就把这个请求给屏蔽掉，这样就完成了透明屏蔽。当然了，如果你明白原理，就可以自己搞个正向代理来绕过公司的屏蔽。</p>
+<li><p>ACK(host A):</p>
 </li>
 </ol>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ikrI3rmSYs83wdSWqq2QIg">正向代理与反向代理有什么区别</a></p>
+<p>Therefore, a typical tear-down requires <code>a pair of</code> FIN and ACK segments from each TCP endpoint.<br>After <code>both</code> FIN/ACK exchanges are concluded,<br>The side which sent the first FIN waits for a timeout before finally closing the connection,<br>during which time the local port is unavailable for new connections;<br>This prevents confusion due to delayed packets being delivered during subsequent connections.</p>
+<p>A connection can be “half-open”, in which case one side has terminated its end, but the other has not.<br>The side that has terminated can no longer send any data into the connection, but the other side can.<br>The terminating side should continue reading the data until the other side terminates as well.</p>
+<h3 id="three-way-handshake-termination"><a href="#three-way-handshake-termination" class="headerlink" title="three-way handshake termination"></a>three-way handshake termination</h3><p>It is also possible to terminate the connection by a 3-way handshake,<br><code>This is perhaps the most common method</code>.</p>
+<ol>
+<li><p>FIN: when host A sends a FIN.</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://www.tuicool.com/articles/M7bAnqy">正向代理和反向代理的区别</a></p>
+<li><p>FIN &amp; ACK: host B replies with a <code>FIN &amp; ACK</code> (merely combines 2 steps into one).</p>
+</li>
+<li><p>ACK: host A replies with an ACK.</p>
 </li>
 </ol>
+<p>It is possible for both hosts to send FINs simultaneously then both just have to ACK. This could possibly be considered a 2-way handshake since the FIN/ACK sequence is done in parallel for both directions.</p>
+<p>Some host TCP stacks may implement a half-duplex close sequence, as Linux or HP-UX do.</p>
+<p>If such a host actively closes a connection but still has not read all the incoming data<br>the stack already received from the link, this host sends a RST instead of a FIN<br>(Section 4.2.2.13 in RFC 1122).</p>
+<p>This allows a TCP application to be sure the remote application has read all the data<br>the former sent—waiting the FIN from the remote side, when it actively closes the connection.</p>
+<p>However, the remote TCP stack cannot distinguish between a <code>Connection Aborting RST</code><br>and this <code>Data Loss RST</code>.<br>Both cause the remote stack to throw away all the data it received, but that the application still didn’t read.</p>
+<h2 id="Sequence-Number"><a href="#Sequence-Number" class="headerlink" title="Sequence Number"></a>Sequence Number</h2><ol>
+<li><p>SYN: Step 1. Device A (Client) sends a TCP segment with <code>SYN = 1, ACK = 0</code>, <code>ISN (Initial Sequence Number) = 2000</code>.<br>The Active Open device (Device A) sends a segment with the SYN flag set to 1, ACK flag set to 0 and an Initial Sequence Number 2000 (For Example), which marks the beginning of the sequence numbers for data that device A will transmit.<br>SYN is short for SYNchronize. SYN flag announces an attempt to open a connection. The first byte transmitted to Device B will have the sequence number ISN+1.</p>
+</li>
+<li><p>SYN &amp; ACK: Step 2. Device B (Server) receives Device A’s TCP segment and returns a TCP segment with<br><code>SYN = 1, ACK = 1</code>, <code>ISN = 5000 (Device B’s Initial Sequence Number), Acknowledgment Number = 2001</code> (2000 + 1, the next sequence number Device B expecting from Device A).</p>
+</li>
+<li><p>ACK: Step 3. Device A sends a TCP segment to Device B that acknowledges receipt of Device B’s ISN, With flags set as <code>SYN = 0, ACK = 1</code>, <code>Sequence number = 2001, Acknowledgment number = 5001</code> (5000 + 1, the next sequence number Device A expecting from Device B)</p>
+</li>
+</ol>
+<p>This handshaking technique is referred to as the Three-way handshake or SYN, SYN-ACK, ACK.</p>
+<p>After the three-way handshake, the connection is open and the participant computers start sending data using the sequence and acknowledge numbers.</p>
+<p>You have learned what is TCP three way hand shake (3 way handshake), the three steps of a TCP three way handshake and how two TCP devices synchronize.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/09/09/network/proxy_types/" data-id="ckev6y91k000e18vv9ise77cw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-network/transport-layer" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/network/transport-layer/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Network/">Network</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/network/transport-layer/">Protocol</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><p>Internet Protocol version 4. IPv4, which we often denote as just IP, has been the<br>workhorse protocol of the IP suite since the early 1980s. It uses 32-bit<br>addresses (Section A.4). IPv4 provides packet delivery service for TCP, UDP,<br>SCTP, ICMP, and IGMP.</p>
-<h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>Internet Protocol version 6. IPv6 was designed in the mid-1990s as a replace-<br>ment for IPv4. The major change is a larger address comprising 128 bits (Sec-<br>tion A.5), to deal with the explosive growth of the Internet in the 1990s. IPv6<br>provides packet delivery service for TCP, UDP, SCTP, and ICMPv6.<br>We often use the word ‘‘IP’’ as an adjective, as in IP layer and IP address, when<br>the distinction between IPv4 and IPv6 is not needed.</p>
-<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>Transmission Control Protocol. TCP is a connection-oriented protocol that pro-<br>vides a reliable, full-duplex byte stream to its users. TCP sockets are an<br>example of stream sockets. TCP takes care of details such as acknowledg-<br>ments, timeouts, retransmissions, and the like. Most Internet application pro-<br>grams use TCP. Notice that TCP can use either IPv4 or IPv6.</p>
-<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>User Datagram Protocol. UDP is a connectionless protocol, and UDP sockets<br>are an example of datagram sockets. There is no guarantee that UDP data-<br>grams ever reach their intended destination. As with TCP, UDP can use<br>either IPv4 or IPv6.</p>
-<h2 id="SCTP"><a href="#SCTP" class="headerlink" title="SCTP"></a>SCTP</h2><p>Stream Control Transmission Protocol. SCTP is a connection-oriented protocol<br>that provides a reliable full-duplex association. The word ‘‘association’’ is used<br>when referring to a connection in SCTP because SCTP is multihomed, involv-<br>ing a set of IP addresses and a single port for each side of an association.<br>SCTP provides a message service, which maintains record boundaries. As<br>with TCP and UDP, SCTP can use either IPv4 or IPv6, but it can also use both<br>IPv4 and IPv6 simultaneously on the same association.</p>
-<h2 id="ICMP"><a href="#ICMP" class="headerlink" title="ICMP"></a>ICMP</h2><p>Internet Control Message Protocol. ICMP handles error and control information<br>between routers and hosts. These messages are normally generated by and<br>processed by the TCP/IP networking software itself, not user processes,<br>although we show the ping and traceroute programs, which use ICMP.<br>We sometimes refer to this protocol as ICMPv4 to distinguish it from<br>ICMPv6.</p>
-<h2 id="IGMP"><a href="#IGMP" class="headerlink" title="IGMP"></a>IGMP</h2><p>Internet Group Management Protocol. IGMP is used with multicasting (Chap-<br>ter 21), which is optional with IPv4.</p>
-<h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><p>Address Resolution Protocol. ARP maps an IPv4 address into a hardware<br>address (such as an Ethernet address). ARP is normally used on broadcast<br>networks such as Ethernet, token ring, and FDDI, and is not needed on point-<br>to-point networks.</p>
-<h2 id="RARP"><a href="#RARP" class="headerlink" title="RARP"></a>RARP</h2><p>Reverse Address Resolution Protocol. RARP maps a hardware address into an<br>IPv4 address. It is sometimes used when a diskless node is booting.</p>
-<h2 id="ICMPv6"><a href="#ICMPv6" class="headerlink" title="ICMPv6"></a>ICMPv6</h2><p>Internet Control Message Protocol version 6. ICMPv6 combines the functionality<br>of ICMPv4, IGMP, and ARP.</p>
-<h2 id="BPF"><a href="#BPF" class="headerlink" title="BPF"></a>BPF</h2><p>BSD packet filter. This interface provides access to the datalink layer. It is nor-<br>mally found on Berkeley-derived kernels.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/09/09/network/transport-layer/" data-id="ckev6y91m000j18vv2alnha5a" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-cef/cef-cpptoc-ctocpp-anotation" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/CEF/">CEF</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/">CPP-C</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="cpp-to-c关键代码"><a href="#cpp-to-c关键代码" class="headerlink" title="cpp to c关键代码"></a>cpp to c关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">CefCppToC</span> :</span> <span class="keyword">public</span> CefBase &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">static</span> StructName* <span class="title">Wrap</span><span class="params">(CefRefPtr&lt;BaseName&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!c.get())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    ClassName* wrapper = <span class="keyword">new</span> ClassName();</span><br><span class="line">    wrapper-&gt;wrapper_struct_.object_ = c.get();</span><br><span class="line">    wrapper-&gt;AddRef();</span><br><span class="line">    <span class="keyword">return</span> wrapper-&gt;GetStruct();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">  CefCppToC() &#123;</span><br><span class="line">    wrapper_struct_.type_ = kWrapperType;</span><br><span class="line">    wrapper_struct_.wrapper_ = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">memset</span>(GetStruct(), <span class="number">0</span>, <span class="keyword">sizeof</span>(StructName));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">cef_base_t</span>* base = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">cef_base_t</span>*&gt;(GetStruct());</span><br><span class="line">    base-&gt;size = <span class="keyword">sizeof</span>(StructName);</span><br><span class="line">    base-&gt;add_ref = struct_add_ref;</span><br><span class="line">    base-&gt;release = struct_release;</span><br><span class="line">    base-&gt;has_one_ref = struct_has_one_ref;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> NDEBUG</span></span><br><span class="line">    base::AtomicRefCountInc(&amp;DebugObjCt);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">WrapperStruct</span> &#123;</span></span><br><span class="line">    CefWrapperType type_;</span><br><span class="line">    BaseName* object_;</span><br><span class="line">    CefCppToC&lt;ClassName, BaseName, StructName&gt;* wrapper_;</span><br><span class="line">    StructName struct_;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="模板实例化"><a href="#模板实例化" class="headerlink" title="模板实例化"></a>模板实例化</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CefAppCppToC</span></span></span><br><span class="line"><span class="class">    :</span> <span class="keyword">public</span> CefCppToC &lt;CefAppCppToC, CefApp, <span class="keyword">cef_app_t</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">CefAppCppToC::CefAppCppToC() &#123;</span><br><span class="line">  GetStruct()-&gt;on_before_command_line_processing =</span><br><span class="line">      app_on_before_command_line_processing;</span><br><span class="line">  GetStruct()-&gt;on_register_custom_schemes = app_on_register_custom_schemes;</span><br><span class="line">  GetStruct()-&gt;get_resource_bundle_handler = app_get_resource_bundle_handler;</span><br><span class="line">  GetStruct()-&gt;get_browser_process_handler = app_get_browser_process_handler;</span><br><span class="line">  GetStruct()-&gt;get_render_process_handler = app_get_render_process_handler;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><ul>
-<li>模板参数分别为：派生类，基类，C结构体。</li>
-<li>CefCppToC中存在C结构体WrapperStruct对象。</li>
-<li>WrapperStruct中BaseName* object_保存cpp对象指针。</li>
-<li>WrapperStruct中StructName struct_保存c对象。</li>
-<li>CefCppToC::AddRef调用object_::AddRef。</li>
-<li>CefCppToC构造函数初始化C结构体cef_base_t成员，派生类初始化派生结构体中函数指针（如：CefAppCppToC初始化cef_app_t中函数指针)。</li>
-</ul>
-<h2 id="c-to-cpp关键代码"><a href="#c-to-cpp关键代码" class="headerlink" title="c to cpp关键代码"></a>c to cpp关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">CefRefPtr</span>&lt;BaseName&gt;</span></span><br><span class="line"><span class="class">    <span class="title">CefCToCpp</span> &lt;ClassName, BaseName, StructName&gt; :</span>:Wrap(StructName* s) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!s)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">  WrapperStruct* wrapperStruct = <span class="keyword">new</span> WrapperStruct;</span><br><span class="line">  wrapperStruct-&gt;type_ = kWrapperType;</span><br><span class="line">  wrapperStruct-&gt;struct_ = s;</span><br><span class="line">  <span class="function">CefRefPtr&lt;BaseName&gt; <span class="title">wrapperPtr</span><span class="params">(&amp;wrapperStruct-&gt;wrapper_)</span></span>;</span><br><span class="line">  wrapperStruct-&gt;wrapper_.UnderlyingRelease();</span><br><span class="line">  <span class="keyword">return</span> wrapperPtr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">CefCToCpp</span>&lt;ClassName,BaseName,StructName&gt;:</span>:WrapperStruct &#123;</span><br><span class="line">  CefWrapperType type_;</span><br><span class="line">  StructName* struct_;</span><br><span class="line">  ClassName wrapper_;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">StructName* <span class="title">GetStruct</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">WrapperStruct* wrapperStruct = GetWrapperStruct(<span class="keyword">this</span>);</span><br><span class="line">DCHECK_EQ(kWrapperType, wrapperStruct-&gt;type_);</span><br><span class="line"><span class="keyword">return</span> wrapperStruct-&gt;struct_;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">typename</span> <span class="title">CefCToCpp</span>&lt;ClassName, BaseName, StructName&gt;:</span>:WrapperStruct*</span><br><span class="line">    CefCToCpp&lt;ClassName, BaseName, StructName&gt;::GetWrapperStruct(</span><br><span class="line">        <span class="keyword">const</span> BaseName* obj) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;WrapperStruct*&gt;(</span><br><span class="line">      <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">char</span>*&gt;(<span class="keyword">const_cast</span>&lt;BaseName*&gt;(obj)) -</span><br><span class="line">      (<span class="keyword">sizeof</span>(WrapperStruct) - <span class="keyword">sizeof</span>(ClassName)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="关键点-1"><a href="#关键点-1" class="headerlink" title="关键点"></a>关键点</h3><ul>
-<li>模板参数与CppToC类似。</li>
-<li>CefCToCpp::WrapperStruct中StructName* struct_保存c结构体地址。</li>
-<li>CefCToCpp::WrapperStruct中wrapper保存cpp对象。</li>
-<li>CefCToCpp::<strong>GetWrapperStruct</strong>为<strong>桥梁</strong>函数，起到关键作用。该函数首先根据数据成员和结构体的内存偏移得到CefCToCpp::WrapperStruct，从而得到c结构体指针struct_。</li>
-<li>cef_base_t * struct内部函数使用类似上述的技术，先得到CefCppToC::WrapperStruct，从而得到原cpp对象object_。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/09/09/cef/cef-cpptoc-ctocpp-anotation/" data-id="ckev7rqfa0000mcvv6fp11von" class="article-share-link">Share</a>
+      <a data-url="https://s1mple.ml/2020/09/09/network/tcp-establish-terminate/" data-id="ckg1x80vo0000i4vv3vq91s49" class="article-share-link">Share</a>
       
       
     </footer>
@@ -362,9 +398,9 @@
 
 
   
-    <article id="post-vue" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-fontend/vue" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/06/14/vue/" class="article-date">
+    <a href="/2020/06/14/fontend/vue/" class="article-date">
   <time datetime="2020-06-13T16:00:00.000Z" itemprop="datePublished">2020-06-14</time>
 </a>
     
@@ -380,7 +416,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/14/vue/">Vue</a>
+      <a class="article-title" href="/2020/06/14/fontend/vue/">Vue</a>
     </h1>
   
 
@@ -534,7 +570,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/06/14/vue/" data-id="ckev5orgx0009fsvvdo8e8jy0" class="article-share-link">Share</a>
+      <a data-url="https://s1mple.ml/2020/06/14/fontend/vue/" data-id="ckhx0y4j000023gvvfsa72uh4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -544,9 +580,9 @@
 
 
   
-    <article id="post-es6" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-fontend/css" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/06/13/es6/" class="article-date">
+    <a href="/2020/06/13/fontend/css/" class="article-date">
   <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
 </a>
     
@@ -562,7 +598,83 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/13/es6/">ES6</a>
+      <a class="article-title" href="/2020/06/13/fontend/css/">CSS</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="css三种写法，优先级（内联式-gt-嵌入式-gt-外部式）"><a href="#css三种写法，优先级（内联式-gt-嵌入式-gt-外部式）" class="headerlink" title="css三种写法，优先级（内联式&gt;嵌入式&gt;外部式）"></a>css三种写法，优先级（内联式&gt;嵌入式&gt;外部式）</h2><ol>
+<li><p>内联式：写在html标签中。</p>
+<p> <code>&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;内联式&lt;/span&gt;&lt;/p&gt;</code></p>
+</li>
+<li><p>嵌入式：写在当前文件中。</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-tag">span</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:blue;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span&gt;嵌入式&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外部式：写在外部文件中。</p>
+<p> <code>&lt;link href=&quot;base.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</code></p>
+</li>
+</ol>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><pre><code>1. 嵌入式写在外部式之后
+2. 相同权值</code></pre>
+<h2 id="标签选择器"><a href="#标签选择器" class="headerlink" title="标签选择器"></a>标签选择器</h2><p>其实就是html代码中的标签。如html、body、h1、p、img。</p>
+<h2 id="类选择器"><a href="#类选择器" class="headerlink" title="类选择器"></a>类选择器</h2><p>.类选器名称{css样式代码;}</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-class">.setGreen</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:green;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span class=&quot;setGreen&quot;&gt;类选择器&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ID选择器"><a href="#ID选择器" class="headerlink" title="ID选择器"></a>ID选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-id">#setGreen</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:green;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span id=&quot;setGreen&quot;&gt;ID选择器&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类选择器和ID选择器区别"><a href="#类选择器和ID选择器区别" class="headerlink" title="类选择器和ID选择器区别"></a>类选择器和ID选择器区别</h2><ul>
+<li>类选择器可以多次使用，ID选择器不可。</li>
+<li>类选择器可以多个同时使用，ID选择器不可。</li>
+</ul>
+<h2 id="子选择器"><a href="#子选择器" class="headerlink" title="子选择器"></a>子选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"> <span class="selector-class">.food</span>&gt;<span class="selector-tag">li</span>&#123;<span class="attribute">color</span>:white; <span class="attribute">border</span>:<span class="number">1px</span> solid red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;ul class=&quot;food&quot;&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;水果</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;蔬菜</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="包含（后代）选择器"><a href="#包含（后代）选择器" class="headerlink" title="包含（后代）选择器"></a>包含（后代）选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"> <span class="selector-class">.first</span> <span class="selector-tag">li</span>&#123;<span class="attribute">color</span>:white; <span class="attribute">border</span>:<span class="number">1px</span> solid red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;ul class=&quot;first&quot;&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;水果</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;蔬菜</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通用选择器"><a href="#通用选择器" class="headerlink" title="通用选择器"></a>通用选择器</h2><p><code>*&#123;color:red;&#125;</code></p>
+<h2 id="伪类选择符"><a href="#伪类选择符" class="headerlink" title="伪类选择符"></a>伪类选择符</h2><p>给html不存在的标签设置样式，如</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:red;</span><br><span class="line">        <span class="attribute">font-size</span>:<span class="number">20px</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分组选择符"><a href="#分组选择符" class="headerlink" title="分组选择符"></a>分组选择符</h2><p>为浏览器中多个标签设置同一样式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span>,<span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:red;&#125;</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"><span class="selector-tag">h1</span>,<span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:red;&#125;</span><br><span class="line"><span class="selector-class">.first</span>,<span class="selector-id">#second</span> <span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:green;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;p class=&quot;first&quot;&gt;三年级时，我还是一个&lt;span&gt;胆小如鼠&lt;/span&gt;的小女孩，上课从来不敢回答老师提出的问题，生怕回答错了老师会批评我。就一直没有这个勇气来回答老师提出的问题。学校举办的活动我也没勇气参加。&lt;/p&gt;</span><br><span class="line">&lt;p id=&quot;second&quot;&gt;到了三年级下学期时，我们班上了一节公开课，老师提出了一个很&lt;span&gt;简单&lt;/span&gt;的问题，班里很多同学都举手了，甚至成绩比我差很多的，也举手了，还说着：&quot;我来，我来。&quot;我环顾了四周，就我没有举手。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>CSS的某些样式具有继承性，它允许样式不仅应用于某个特定的html标签元素，而且应用于其后代。</p>
+<p><code>p&#123;color:red;&#125;</code>具有继承性；<br><code>p&#123;border:1px solid red;&#125;</code>不具有继承性。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://s1mple.ml/2020/06/13/fontend/css/" data-id="ckhx0y4il00003gvveil77ddv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-fontend/es6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/13/fontend/es6/" class="article-date">
+  <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Frontend/">Frontend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/13/fontend/es6/">ES6</a>
     </h1>
   
 
@@ -595,7 +707,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/06/13/es6/" data-id="ckev5orgo0001fsvv9km7ahm7" class="article-share-link">Share</a>
+      <a data-url="https://s1mple.ml/2020/06/13/fontend/es6/" data-id="ckhx0y4iz00013gvvfjl6e82e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -605,9 +717,9 @@
 
 
   
-    <article id="post-html" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-fontend/html" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/06/13/html/" class="article-date">
+    <a href="/2020/06/13/fontend/html/" class="article-date">
   <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
 </a>
     
@@ -623,7 +735,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/13/html/">HTML</a>
+      <a class="article-title" href="/2020/06/13/fontend/html/">HTML</a>
     </h1>
   
 
@@ -679,83 +791,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/06/13/html/" data-id="ckev5orgw0007fsvvcpay6wru" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-css" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/06/13/css/" class="article-date">
-  <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Frontend/">Frontend</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/13/css/">CSS</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="css三种写法，优先级（内联式-gt-嵌入式-gt-外部式）"><a href="#css三种写法，优先级（内联式-gt-嵌入式-gt-外部式）" class="headerlink" title="css三种写法，优先级（内联式&gt;嵌入式&gt;外部式）"></a>css三种写法，优先级（内联式&gt;嵌入式&gt;外部式）</h2><ol>
-<li><p>内联式：写在html标签中。</p>
-<p> <code>&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;内联式&lt;/span&gt;&lt;/p&gt;</code></p>
-</li>
-<li><p>嵌入式：写在当前文件中。</p>
- <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-tag">span</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:blue;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span&gt;嵌入式&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>外部式：写在外部文件中。</p>
-<p> <code>&lt;link href=&quot;base.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</code></p>
-</li>
-</ol>
-<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><pre><code>1. 嵌入式写在外部式之后
-2. 相同权值</code></pre>
-<h2 id="标签选择器"><a href="#标签选择器" class="headerlink" title="标签选择器"></a>标签选择器</h2><p>其实就是html代码中的标签。如html、body、h1、p、img。</p>
-<h2 id="类选择器"><a href="#类选择器" class="headerlink" title="类选择器"></a>类选择器</h2><p>.类选器名称{css样式代码;}</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-class">.setGreen</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:green;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span class=&quot;setGreen&quot;&gt;类选择器&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ID选择器"><a href="#ID选择器" class="headerlink" title="ID选择器"></a>ID选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-id">#setGreen</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:green;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;span id=&quot;setGreen&quot;&gt;ID选择器&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="类选择器和ID选择器区别"><a href="#类选择器和ID选择器区别" class="headerlink" title="类选择器和ID选择器区别"></a>类选择器和ID选择器区别</h2><ul>
-<li>类选择器可以多次使用，ID选择器不可。</li>
-<li>类选择器可以多个同时使用，ID选择器不可。</li>
-</ul>
-<h2 id="子选择器"><a href="#子选择器" class="headerlink" title="子选择器"></a>子选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"> <span class="selector-class">.food</span>&gt;<span class="selector-tag">li</span>&#123;<span class="attribute">color</span>:white; <span class="attribute">border</span>:<span class="number">1px</span> solid red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;ul class=&quot;food&quot;&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;水果</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;蔬菜</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="包含（后代）选择器"><a href="#包含（后代）选择器" class="headerlink" title="包含（后代）选择器"></a>包含（后代）选择器</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"> <span class="selector-class">.first</span> <span class="selector-tag">li</span>&#123;<span class="attribute">color</span>:white; <span class="attribute">border</span>:<span class="number">1px</span> solid red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;ul class=&quot;first&quot;&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;水果</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;<span class="selector-tag">li</span>&gt;蔬菜</span><br><span class="line">        &lt;<span class="selector-tag">ul</span>&gt;</span><br><span class="line">            &lt;li&gt;香蕉&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;苹果&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="通用选择器"><a href="#通用选择器" class="headerlink" title="通用选择器"></a>通用选择器</h2><p><code>*&#123;color:red;&#125;</code></p>
-<h2 id="伪类选择符"><a href="#伪类选择符" class="headerlink" title="伪类选择符"></a>伪类选择符</h2><p>给html不存在的标签设置样式，如</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">        <span class="attribute">color</span>:red;</span><br><span class="line">        <span class="attribute">font-size</span>:<span class="number">20px</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;a href=&quot;http://www.google.com&quot;&gt;Google&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="分组选择符"><a href="#分组选择符" class="headerlink" title="分组选择符"></a>分组选择符</h2><p>为浏览器中多个标签设置同一样式</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span>,<span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:red;&#125;</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"><span class="selector-tag">h1</span>,<span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:red;&#125;</span><br><span class="line"><span class="selector-class">.first</span>,<span class="selector-id">#second</span> <span class="selector-tag">span</span>&#123;<span class="attribute">color</span>:green;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;p class=&quot;first&quot;&gt;三年级时，我还是一个&lt;span&gt;胆小如鼠&lt;/span&gt;的小女孩，上课从来不敢回答老师提出的问题，生怕回答错了老师会批评我。就一直没有这个勇气来回答老师提出的问题。学校举办的活动我也没勇气参加。&lt;/p&gt;</span><br><span class="line">&lt;p id=&quot;second&quot;&gt;到了三年级下学期时，我们班上了一节公开课，老师提出了一个很&lt;span&gt;简单&lt;/span&gt;的问题，班里很多同学都举手了，甚至成绩比我差很多的，也举手了，还说着：&quot;我来，我来。&quot;我环顾了四周，就我没有举手。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>CSS的某些样式具有继承性，它允许样式不仅应用于某个特定的html标签元素，而且应用于其后代。</p>
-<p><code>p&#123;color:red;&#125;</code>具有继承性；<br><code>p&#123;border:1px solid red;&#125;</code>不具有继承性。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://s1mple.ml/2020/06/13/css/" data-id="ckev5org90000fsvv5we786iu" class="article-share-link">Share</a>
+      <a data-url="https://s1mple.ml/2020/06/13/fontend/html/" data-id="ckhx0y4j200063gvv9onj3q9b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -844,7 +880,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
     </div>
   </div>
 
@@ -855,6 +891,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/11/20/fontend/typescript/">TypeScript</a>
+          </li>
         
           <li>
             <a href="/2020/10/10/network/tcp-ip-osi-model/">TCP/IP vs OSI Model</a>
@@ -870,10 +910,6 @@
         
           <li>
             <a href="/2020/09/16/windows/uniquely_identify_a_windows_machine/">Way to uniquely identify a windows machine</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/15/misc/soft_hyphen/">Soft Hyphen</a>
           </li>
         
       </ul>
