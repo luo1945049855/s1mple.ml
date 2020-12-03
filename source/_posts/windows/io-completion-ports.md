@@ -11,8 +11,28 @@ I/O completion ports 是多核系统下，处理多个异步I/O请求的高效�
 相关windows api包括：
 
 1. CreateIoCompletionPort
+将file handle与completion key关联，得到I/O completion port。
+
 2. GetQueuedCompletionStatus
+通过I/O completion port得到completion key和overlapped(that was specified when the completed I/O operation was started.)。
+注意：completion key与file handle关联。overlapped可区分input/output。
+
 3. PostQueuedCompletionStatus
+
+4. WriteFile
+
+```cpp
+WriteFile(handle_.Get(), message->data(),
+          static_cast<DWORD>(message->data_num_bytes()), NULL,
+          &write_context_.overlapped)
+```
+
+5. ReadFile
+
+```cpp
+::ReadFile(handle_.Get(), buffer, static_cast<DWORD>(buffer_capacity),
+           NULL, &read_context_.overlapped);
+```
 
 ## 参考链接
 
