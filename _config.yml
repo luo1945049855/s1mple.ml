@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: S1mple 
+title: 业精于勤，荒于嬉。行成于思，毁于随。 
 subtitle: ''
 description: '大口吃肉，大碗喝酒'
 keywords:
@@ -13,7 +13,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: https://s1mple.ml
+url: https://zerobit.ga
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
