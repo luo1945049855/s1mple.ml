@@ -7,12 +7,12 @@
   
   <title>业精于勤，荒于嬉。行成于思，毁于随。</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="大口吃肉，大碗喝酒">
+  <meta name="description" content="敏于事而慎于言">
 <meta property="og:type" content="website">
 <meta property="og:title" content="业精于勤，荒于嬉。行成于思，毁于随。">
 <meta property="og:url" content="https://zerobit.ga/page/3/index.html">
 <meta property="og:site_name" content="业精于勤，荒于嬉。行成于思，毁于随。">
-<meta property="og:description" content="大口吃肉，大碗喝酒">
+<meta property="og:description" content="敏于事而慎于言">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="dayo">
 <meta name="twitter:card" content="summary">
@@ -28,7 +28,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 5.1.1"></head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container">
@@ -316,6 +316,74 @@
     </div>
     <footer class="article-footer">
       <a data-url="https://zerobit.ga/2020/09/09/network/tcp-establish-terminate/" data-id="ckg1x80vo0000i4vv3vq91s49" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-windows/wtl-thunk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/windows/wtl-thunk/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Windows/">Windows</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/windows/wtl-thunk/">WTL Thunk</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Thunk是一段机器码，主要有两个功能：</p>
+<ol>
+<li>改变调用栈;</li>
+<li>跳转到目标程序；</li>
+</ol>
+<p>WTL中使用Thunk技术将GWLP_WNDPROC初始回调函数(一般为”StartWindowProc”)替换为用户期望回调函数（一般为”WindowProc”)。<br>初次接触时有几个问题可能费解：</p>
+<ol>
+<li>WTL在何处RegisterClass</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T::GetWndClassInfo().Register()</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>WTL在何处存放this指针供StartWindowProc获取</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_AtlWinModule.AddCreateWndData(&amp;<span class="keyword">this</span>-&gt;m_thunk.cd, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Thunk细节</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">stdcallthunk</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	DWORD   m_mov;          <span class="comment">// mov dword ptr [esp+0x4], pThis (esp+0x4 is hWnd)</span></span><br><span class="line">	DWORD   m_this;         <span class="comment">//</span></span><br><span class="line">	BYTE    m_jmp;          <span class="comment">// jmp WndProc</span></span><br><span class="line">	DWORD   m_relproc;      <span class="comment">// relative jmp</span></span><br><span class="line">	<span class="function">BOOL <span class="title">Init</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">		_In_ DWORD_PTR proc,</span></span></span><br><span class="line"><span class="function"><span class="params">		_In_opt_ <span class="keyword">void</span>* pThis)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		m_mov = <span class="number">0x042444C7</span>;  <span class="comment">//C7 44 24 0C</span></span><br><span class="line">		m_this = PtrToUlong(pThis);</span><br><span class="line">		m_jmp = <span class="number">0xe9</span>;</span><br><span class="line">		m_relproc = DWORD((INT_PTR)proc - ((INT_PTR)<span class="keyword">this</span>+<span class="keyword">sizeof</span>(_stdcallthunk)));</span><br><span class="line">		<span class="comment">// write block from data cache and</span></span><br><span class="line">		<span class="comment">//  flush from instruction cache</span></span><br><span class="line">		FlushInstructionCache(GetCurrentProcess(), <span class="keyword">this</span>, <span class="keyword">sizeof</span>(_stdcallthunk));</span><br><span class="line">		<span class="keyword">return</span> TRUE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//some thunks will dynamically allocate the memory for the code</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span>* <span class="title">GetCodeAddress</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	_Ret_maybenull_ _Post_writable_byte_size_(<span class="keyword">sizeof</span>(_stdcallthunk)) <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(_In_ <span class="keyword">size_t</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> __AllocStdCallThunk();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="keyword">operator</span> <span class="title">delete</span><span class="params">(_In_opt_ <span class="keyword">void</span>* pThunk)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        __FreeStdCallThunk(pThunk);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在 Init() 函数中这组汇编指令被初始化为下面的指令：</p>
+<p>mov dword ptr [esp+0x4], pThis<br>jmp (int)proc - ((int)this+sizeof(_WndProcThunk))</p>
+<p>它完成的功能是，用窗口类的指针 pThis 代替窗口句柄 hWnd （ esp+0x4 中放的就是 hWnd ），然后跳转到传入的 proc 函数处（ (int)proc - ((int)this+sizeof(_WndProcThunk)) 是 proc 与 thunk 之间的距离）。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/chenyujing1234/article/details/7443084">WTL中 Thunk技术本质</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/tttyd/article/details/4562233">ATL Thunk机制学习</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/windows/wtl-thunk/" data-id="ckev6e5hy000aqgvv0kz37bx2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -813,60 +881,11 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2000/01/01/hello-world/" class="article-date">
-  <time datetime="1999-12-31T16:00:00.000Z" itemprop="datePublished">2000-01-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2000/01/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2000/01/01/hello-world/" data-id="ckev5orgr0003fsvvd89r6sy4" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -892,7 +911,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a></li></ul>
     </div>
   </div>
 
@@ -903,6 +922,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/02/20/windows/memory_leak/">Memory Leak</a>
+          </li>
         
           <li>
             <a href="/2020/11/20/fontend/typescript/">TypeScript</a>
@@ -918,10 +941,6 @@
         
           <li>
             <a href="/2020/09/17/math/matrix/">Matrix</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/16/windows/uniquely_identify_a_windows_machine/">Way to uniquely identify a windows machine</a>
           </li>
         
       </ul>
