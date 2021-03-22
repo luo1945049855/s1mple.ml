@@ -1,7 +1,7 @@
 ---
 title:  "Runtime Error"
 date:   2020-09-09
-categories: Misc
+categories: CPP
 ---
 
 ## Pure Virtual on Call

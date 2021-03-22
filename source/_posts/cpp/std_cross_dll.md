@@ -1,7 +1,7 @@
 ---
 title:  "Use std classes cross dll boundary"
 date:   2020-09-09
-categories: Misc
+categories: CPP
 ---
 
 Keep in mind one thing before you read further: My answer is coming from the point of view of writing portable code that can be used in applications made up of modules compiled under different compilers. This can include different versions or even different patch levels of the same compiler.

@@ -1,7 +1,7 @@
 ---
 title:  "Soft Hyphen"
 date:   2020-09-15
-categories: Misc
+categories: Unicode
 ---
 
 ## Unicode Character And Encoding

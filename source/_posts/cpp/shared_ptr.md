@@ -1,7 +1,7 @@
 ---
 title:  "Shared_Ptr"
 date:   2020-09-09
-categories: Misc
+categories: CPP
 ---
 
 ```cpp

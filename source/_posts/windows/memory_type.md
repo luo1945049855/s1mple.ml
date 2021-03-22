@@ -1,7 +1,7 @@
 ---
 title:  "Memory Type"
 date:   2020-09-09
-categories: Misc
+categories: Windows
 ---
 
 [原地址：What is private bytes, virtual bytes, working set?](https://stackoverflow.com/questions/1984186/what-is-private-bytes-virtual-bytes-working-set)

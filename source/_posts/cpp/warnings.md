@@ -1,7 +1,7 @@
 ---
 title:  "Warnings"
 date:   2020-09-09
-categories: Misc
+categories: CPP
 ---
 
 ## c4251

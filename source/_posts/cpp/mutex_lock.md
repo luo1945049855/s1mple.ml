@@ -1,7 +1,7 @@
 ---
 title:  "Mutex vs Lock"
 date:   2020-09-09
-categories: Misc
+categories: CPP
 ---
 
 ## mutex

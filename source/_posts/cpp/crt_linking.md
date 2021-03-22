@@ -1,7 +1,7 @@
 ---
 title:  "MT-MTd-MD-MDd"
 date:   2020-09-09
-categories: Misc
+categories: CPP
 ---
 
 ## /MT和/MTd
