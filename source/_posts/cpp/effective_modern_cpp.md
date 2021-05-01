@@ -16,15 +16,29 @@ categories: CPP
 
 * `RValues` can't bind to lvalue references, unless they're lvalue-references-to-const.
 
-```cpp
-template<typename Container, typename Index>
-decltype(auto) authAndAccess(Container& c, Index i)
-authAndAccess(std::vector<int>{1, 2, 3}, 0); // compile error.
+  ```c++
+  template<typename Container, typename Index>
+  decltype(auto) authAndAccess(Container& c, Index i)
+  authAndAccess(std::vector<int>{1, 2, 3}, 0); // compile error.
 
-template<typename Container, typename Index>
-decltype(auto) authAndAccess(const Container& c, Index i)
-authAndAccess(std::vector<int>{1, 2, 3}, 0); // ok.
-```
+  template<typename Container, typename Index>
+  decltype(auto) authAndAccess(const Container& c, Index i)
+  authAndAccess(std::vector<int>{1, 2, 3}, 0); // ok.
+  ```
+
+* Reference Collapsing:
+If either reference is an lvalue reference, the result is an lvalue reference.
+Otherwise(i.e.,if both are rvalue reference) the result is an rvalue reference.
+
+* Reference Collapsing occurs in four contexts:
+
+1. `template` instantiation.
+
+2. generation for `auto` variables.
+
+3. generation and use of `typedef`s and alia declarations.
+
+4. use of `decltype`.
 
 ## Smart Pointers
 
@@ -46,29 +60,6 @@ a copy of custom allocator;
 
 * std::unique_ptr<T, deleter> the type of deleter is part of the type of the smart pointer.
   pointed-to types must be complete when compiler-generated special functions.
-
-## Exception
-
-* Functions offering the strong exception safety guarantee(i.e., the `strong guarantee`) assure callers that if an exception arises, the state of the program remains as it was prior to the call.
-
-* Applying `noexcept` to functions that won't produce exceptions: it permits compilers to generate better object code:
-
-  In a `noexcept` function, optimizers needn't keep the runtime stack in an unwindalbe state if an exception would propagate out of the function.
-
-  nor must they ensure that objects in a `noexcept` function are destroyed in the inverse order of construction should an exception leave the function.
-
-* `noexcept(expression)` result is true if the potential exception of the expression is empty.
-
-* Destructor is implicitly `noexcept` unless a data member of the class is of a type that expressly states that its destructor may emit exceptions(e.g., declares it "noexcept(false)").
-
-* If an exception propagates out of a thread's primary function,
-  or a `noexcept` specification is violated, local objects may not be destroyed,
-  `std::abort` or an exit function(i.e., `std::_Exit, std::exit, std::quick_exit`) is called.
-
-```cpp
-template <class T, size_t N>
-void swap(T (&a)[N], T (&b)[N]) noexcept(noexcept(swap(*a, *b)));
-```
 
 ## Template
 
@@ -141,7 +132,7 @@ template <typename T>
 using MyAllocList = std::list<T, MyAlloc<T>>;
 ```
 
-### Perfect Forwarding
+## Perfect Forwarding
 
 * Function templates that take arbitrary arguments
   and forward them to other functions such that
@@ -150,22 +141,86 @@ using MyAllocList = std::list<T, MyAlloc<T>>;
 * RValue references should be unconditionally cast to rvalues, because they're always bound to rvalues.
   Universal references should be conditionally case to rvalues, because they're only sometimes bound to rvalues.
 
-* Do the same thing for rvalue references and universal references
-  being returned from functions that return by value.
+* Do the same thing for rvalue references and universal references being returned from functions that return by value.
 
-* Never apply std::move or std::forward to local objects
-  if they would otherwise be eligible for the return value optimization.
+* Never apply `std::move` or `std::forward` to local objects if they would otherwise be eligible for the `return value optimization`.
 
-* `return value optimization(RVO)`:
-  the type of the local object is the same as that returned by the function.
-  the local object is what's being returned.
-* If the conditions for the `RVO are met`,
-  but compilers choose `not to perform copy elision`,
-  the object being returned must be treated as an `rvalue`.
+* Functions taking `universal references` are the greediest functions in C++.
+* When a `template instantiation` and `non-template function` are equally good matches for a function call, the normal function is preferred.
 
-* Functions taking universal references are the greediest functions in C++.
-* When a template instantiation and non-template function are equally good matches for a function call,
-  the normal function is preferred.
+* The kind of arguments that can't be perfect-forwarded:
+  
+  * Braced initializers.
+
+    A braced initializer to a function template parameter that's not declared to be a `std::initializer_list` is decreed to be, as the Standard puts it, a "non-deduced context."
+    Compilers are forbidden from deducing a type for the expression {1, 2, 3}, because fwd's parameter isn't declared to be a `std::initializer_list`.
+
+    ```cpp
+    void f(const std::vector<int>& v);
+
+    template <typename T>
+    void fwd(T& v)
+    {
+      f(std::forward<T>(v));
+    }
+
+    f ({1, 2, 3});  // ok.
+    fwd({1, 2, 3}); // error.
+    ```
+
+  * 0 or NULL as null pointers.
+
+    0 and NULL will be deduced to integral type(typically int).
+
+  * declaration-only integral `static const` data members.
+
+    fwd's parameter is a universal reference, and references, in the code generated by compilers, are usually treated like pointers.
+    In the program's underlying binary code(and on the hardware), `pointers and references` are essentially the same thing.
+
+    ```cpp
+    class Widget {
+    public:
+      static const std::size_t MinVals = 28;
+    };
+    std::vector<int> widgetData;
+    widgetData.reserve(Widget::MinVals); // ok.
+
+    f(Widget::MinVals);   // ok.
+    fwd(Widget::MinVals); // error. link error.
+    ```
+
+  * overloaded function names and template names.
+
+    void f(int (*pf)(int));
+    void f(int pf(int));    // same to above.
+
+    ```cpp
+    int processVal(int value);
+    int processVal(int value, int priority);
+    fwd(processVal); // error! which processVal.
+    ```
+
+  * Bitfields
+
+    fwd's parameter is a reference, h.totalLength is a non-const bitfield.
+
+    The C++ Standard: "A non-const reference shall not be bound to a bit-field." But reference-to-const is allowed.
+
+    There's no way to create a pointer to arbitrary bits(C++ dictates that the smallest thing you can point to is a char).
+
+    ```cpp
+    struct IPv4Helper {
+      std::uint32_t version: 4,
+                    IHL: 4,
+                    DSCP: 6,
+                    ECN: 2,
+                    totalLength: 16;
+    };
+    
+    IPv4Helper h;
+    f(h.totalLength); // ok.
+    fwd(h.totalLength); // error.
+    ```
 
 ## Uniform Initialization
 
@@ -218,21 +273,255 @@ std::vector<int> v2{10, 20}; // use std::initializer_list ctor:
                              // 2-element values are 10, 20.
 ```
 
+## Special Member Function Generation
+
+C++98:
+
+* These functions are generated only if they're needed,
+  i.e., if some code uses them without their being expressly declared in the class.
+* Generated special member functions are implicitly `public` and `inline` and
+  `nonvirtual`(unless destructor in a derived class inheriting from a base class with a virtual destructor).
+
+* default constructor: no constructor at all(prevent constructor arguments are required)
+
+* destructor: noexcept by default. virtual only if base class destructor is virtual.
+
+  `delete` of `typeid` on a derived class object through `a base class pointer` or `reference` yield undefined or misleading results.
+
+* copy constructor:
+  deleted if class declares a move operation.
+  generation of this function in a class with user-declared `copy assignment operator` or `destructor` is deprecated.
+
+* copy assignment:
+  deleted if class declares a move operation.
+  generation of this function in a class with user-declared `copy constructor` or `destructor` is deprecated.
+
+C++11:
+
+* memberwise move consits of move operations on `data members`
+  and `base classes` that support move operations, but a copy operation for those that don't.
+
+* The two move operations, if you declare either, that prevents compilers from generating the other.
+* Move operations won't be generated for any class that explicitly declared a copy operation.
+* Declaring a move operation in a class causes compilers to disable the copy operations.
+
+* User-defined destructor has no impact on compiler's generated copy operations,
+  because that will break too much legacy code.
+* User-defined destructor prevents compiler from generating move operations.
+
+* Template Member Functions don't preventing compiler from generating the special member functions.
+
+* move constructor: no copy, no move, no destructor.
+* move assignment: no copy, no move, no destructor.
+
 ## Lambda Expression
 
-* std::function object typically uses more memory that auto-declared object.
-  std::function object is almost certain to be slower that calling it via an auto-declared object.
+* `std::function` object typically uses more memory that auto-declared object.
+  `std::function` object is almost certain to be slower that calling it via an auto-declared object.
+* `std::bind` all arguments passed to `bind objects` are passed by reference using `perfect-forwarding`.
 
-## Function's `reference qualifiers`
+* Each lambda causes compilers to generate a unique `closure class`(compile time).
 
-* They make it possible to limit use of a member function to lvalues only or rvalues only.
+  By default, the `operator()` member function inside the closure class generated from a lambda is `const`.
+  If the lambda were declared `mutable`, `operator()` in its closure class would not be declared `const`.
+
+  `closure object`(runtime) may generally be copied, so it's possible to have multiple closures of a closure type corresponding to a single lambda.
+
+* std::all_of
+  
+  ```cpp
+  std::all_of(
+    std::begin(container), std::end(container), 
+      [&](const ConstElem& value) { reutn value % divisor == 0; });
+  ```
+
+* init capture(generalized lambda capture)
+
+  ```cpp
+  auto func = [pw = std::move(pw)]() {...}
+  ```
+
+* C++14 availing ourselves of the standard suffixes for seconds(s), milliseconds(ms), hours(h). These suffixes are implemented in the `std::literals` namespace.
+
+## Concurrency API
+
+* Hardware threads: CPU threads.
+  Software threads: OS threads(System threads).
+  std::threads: objects in a C++ process.
+
+  When there are more ready-to-run `software threads` than `hardware threads`, the `thread scheduler(OS)` time-slices the software threads on the hardware.
+
+  `Context Switches` increase the overall thread management overhead of the system.
+
+  They can be particularly costly when the `hardware thread` on which a `software thread` is scheduled
+  is on a `different core` that was the case for the software thread during its `last time-slice` because of `CPU caches`.
+
+* `std::future` can get return value of an async task, even `exception` can be get access to.
+
+  `std::launch::deferred` launch policy means that f may run only when `get` or `wait` is called on the future returned by `std::async`.
+
+  ```cpp
+  fut = std::async(doAsyncWork); // doAsyncWork may throw.
+
+  if (fut.wait_for(0s) == 
+      std::future_status::deferred)) {} // check to see if task was deferred...
+  ```
+
+* If you try to create threads more than the system can provide, a `std::system_error` exception is thrown.
+
+* Invoking `join` or `detach` on an unjoinable thread yields `undefined behavior`.
+
+* `shared state` is the place where callee's result is stored.
+
+  caller(std::future) <------[shared state]--------- callee (std::promise)
+
+* The destructor for the `last future` referring to a `shared state` for a `non-deferred task` launched via `std::async` blocks until the task completes.
+
+  For asynchronously running tasks, this is akin to an implicit `detach` on the underlying thread.
+  For `deferred tasks` for which this is the final future, it means that the deferred task will never run.
+
+* A `std::packaged_task` object prepares a function(or other callable object) for asynchronous execution by wrapping it such that its result is put into a `shared state`.
+  The future created by `std::packaged_task` doesn't satisfy above conditions.
+
+  ```cpp
+  int calcValue();
+
+  std::packaged_task<int()> pt(calcValue);
+
+  auto fut = pt.get_future();
+
+  std::thread t(std::move(pt)); // it's upto thread, not future.
+
+  std::async(std::move(pt)); // no reason to don't use std::async directly.
+  ```
+
+* `std::promise` and `std::future` can be used for event communication.
+
+  ```cpp
+  std::promise<void> p;
+
+  void react();
+
+  void detect()
+  {
+    std::thread t([]
+    {
+      p.get_future().wait();
+      react();
+    })
+
+    ... // some work prior to call to react.
+
+    p.set_value();
+
+    t.jon();
+  }
+  ```
+
+  ```cpp
+  // suspend then unsuspend not just one reacting task, but many.
+  // std::shared_future instead of std::future.
+  std::promise<void> p;
+
+  void detect()
+  {
+    auto sf = p.get_future().share();
+
+    std::vector<std::thread> vt;
+
+    for (int i = 0; i < threadsToRun; ++i)
+    {
+      vt.emplace_back([sf] { sf.wait(); react(); });
+    }
+
+    ... // some work prior to call to react.
+
+    p.set_value();
+
+    ...
+
+    for (auto&t : vt)
+    {
+      t.join();
+    }
+  }
+  ```
+
+* `std::atomic` implemented using special machine instructions that are more efficient than `mutex`.
+
+* `volatile` for special memory. `std::atomic` for concurrency.
+
+  ```cpp
+  std::atomic<int> ac(0);
+  volatile int vc(0);
+
+  /*------thread1-------*/      /*------thread2-------*/      
+         ++ac;                        ++ac;
+         ++vc;                        ++vc;
+  ```
+
+  Each increment consists of `reading vc's value`, `incrementing the value`, `writing the result back`.
+  But these operations are not guaranteed to proceed atomically.
+
+* Generally, compilers are permitted to reorder unrelated assignments:
+
+  Even if compilers don't reorder them, the underlying `hardware` might do it.
+
+  `std::atomic` using `sequential consistency` imposes restrictions on reorder, no code that precedes a `write` of a `std::atomic` may take place afterwards.
+
+  ```cpp
+  a = b;
+  x = y;
+  // compiler may generally reorder them as:
+  x = y;
+  a = b;
+  ```
+
+* `volatile` can't do above thing. but it can tell compilers that we're dealing with `special memory`,
+  "Don't perform any optimizations on operations on this memory".
+
+  ```cpp
+  //##########1
+  x = 10; // eliminated.
+  x = 20;
+
+  //##########2
+  auto y = x;
+  y = x;  // eliminated.
+  x = 10; // eliminated.
+  x = 20;
+
+  //#########3
+  std::atomic<int> y(x.load());
+  y.store(x.load());
+
+  // "optimize"
+  register = x.load();
+  std::atomic<int> y(register);
+  y.store(register);
+  ```
+
+## Exception
+
+* Functions offering the strong exception safety guarantee(i.e., the `strong guarantee`) assure callers that if an exception arises, the state of the program remains as it was prior to the call.
+
+* Applying `noexcept` to functions that won't produce exceptions: it permits compilers to generate better object code:
+
+  In a `noexcept` function, optimizers needn't keep the runtime stack in an unwindalbe state if an exception would propagate out of the function.
+
+  nor must they ensure that objects in a `noexcept` function are destroyed in the inverse order of construction should an exception leave the function.
+
+* `noexcept(expression)` result is true if the potential exception of the expression is empty.
+
+* Destructor is implicitly `noexcept` unless a data member of the class is of a type that expressly states that its destructor may emit exceptions(e.g., declares it "noexcept(false)").
+
+* If an exception propagates out of a thread's primary function,
+  or a `noexcept` specification is violated, local objects may not be destroyed,
+  `std::abort` or an exit function(i.e., `std::_Exit, std::exit, std::quick_exit`) is called.
 
 ```cpp
-class Widget {
-public:
-    void doWork() &;  // *this is an lvalue
-    void doWork() &&; // *this is an rvalue
-};
+template <class T, size_t N>
+void swap(T (&a)[N], T (&b)[N]) noexcept(noexcept(swap(*a, *b)));
 ```
 
 ## auto && decltype()
@@ -300,7 +589,26 @@ decltype(x) is int.
 decltype((x)) is int&.
 ```
 
-## enum class (Scoped Enum)
+## emplace_back
+
+* emplace_back; emplace_front; emplace;
+  emplace_hint(associative container); emplace_after(std::forward_list)
+
+* `Insertion functions` take objects to be inserted.
+  `Emplacement functions` task constructor arguments for obejcts to be inserted which avoid the creation and destruction of `temporary objects`.
+
+* copy initialization && direct initialization
+
+  direct initialization can use `explicit` constructor.
+
+  emplacement functions use direct initialization, which means they may use `explicit` constructors.
+
+  ```cpp
+  std::regex r1 = nullptr; // error! copy initialization
+  std::regex r2(nullptr);  // compiles. direct initialization
+  ```
+
+## enum class (scoped enum)
 
 * `enum class Color: std::uint32_t { black, white, red }`
 
@@ -423,43 +731,27 @@ private:
 };
 ```
 
-## Special member function generation
+## Function's `Reference Qualifiers`
 
-C++98:
+* They make it possible to limit use of a member function to lvalues only or rvalues only.
 
-* These functions are generated only if they're needed,
-  i.e., if some code uses them without their being expressly declared in the class.
-* Generated special member functions are implicitly `public` and `inline` and
-  `nonvirtual`(unless destructor in a derived class inheriting from a base class with a virtual destructor).
+```cpp
+class Widget {
+public:
+    void doWork() &;  // *this is an lvalue
+    void doWork() &&; // *this is an rvalue
+};
+```
 
-* default constructor: no constructor at all(prevent constructor arguments are required)
+## RVO(Return Value Optimization)
 
-* destructor: noexcept by default. virtual only if base class destructor is virtual.
+* the type of the local object is the same as that returned by the function.
+  the local object is what's being returned.
 
-  `delete` of `typeid` on a derived class object through `a base class pointer` or `reference` yield undefined or misleading results.
+* If the conditions for the `RVO are met`, but compilers choose `not to perform copy elision`,
+  the object being returned must be treated as an `rvalue`.
 
-* copy constructor:
-  deleted if class declares a move operation.
-  generation of this function in a class with user-declared `copy assignment operator` or `destructor` is deprecated.
+## SSO(Small String Optimization)
 
-* copy assignment:
-  deleted if class declares a move operation.
-  generation of this function in a class with user-declared `copy constructor` or `destructor` is deprecated.
-
-C++11:
-
-* memberwise move consits of move operations on `data members`
-  and `base classes` that support move operations, but a copy operation for those that don't.
-
-* The two move operations, if you declare either, that prevents compilers from generating the other.
-* Move operations won't be generated for any class that explicitly declared a copy operation.
-* Declaring a move operation in a class causes compilers to disable the copy operations.
-
-* User-defined destructor has no impact on compiler's generated copy operations,
-  because that will break too much legacy code.
-* User-defined destructor prevents compiler from generating move operations.
-
-* Template Member Functions don't preventing compiler from generating the special member functions.
-
-* move constructor: no copy, no move, no destructor.
-* move assignment: no copy, no move, no destructor.
+* "small" strings (e.g., those with a capacity of no more than 15 characters)
+  are stored in a buffer within the `std::string` object. no heap-allocated storage is used.
