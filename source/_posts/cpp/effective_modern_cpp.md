@@ -49,8 +49,7 @@ a copy of custom deleter;
 a copy of custom allocator;
 
 * constructing more than one std::shared_ptr from a single raw pointer, undefined behavior.
-  `std::enable_shared_from_this<T>` use
-  `The Curiously Recurring Template Pattern(CRTP)` can solve this problem.
+  `std::enable_shared_from_this<T>` which using `The Curiously Recurring Template Pattern(CRTP)` can solve this problem.
 
 * std::shared_ptr can be created from a std::unique_ptr.
 
@@ -58,8 +57,7 @@ a copy of custom allocator;
 
 * std::make_shared allocates `a single chunk of memory` to hold both the Widget object and the control block.
 
-* std::unique_ptr<T, deleter> the type of deleter is part of the type of the smart pointer.
-  pointed-to types must be complete when compiler-generated special functions.
+* std::unique_ptr<T, deleter> the type of deleter is `part of the type` of the smart pointer, so pointed-to types must be complete when compiler-generated special functions.
 
 ## Template
 
@@ -109,10 +107,7 @@ f1(someFunc); // param deduced as ptr-to-func. void(*)(int, double);
 f2(someFunc); // param deduced as ref-to-func. void(&)(int, double);
 ```
 
-* Function can't declare parameters that are truly arrays,
-  they can declare parameters that are `reference to array`
-  which interestingly enables creation of a template that
-  deduces `the number of elements` that an an array contains:
+* Function can't declare parameters that are truly arrays, they can declare parameters that are `reference to array` which interestingly enables creation of a template that deduces `the number of elements` that an an array contains:
 
 ```cpp
 template <typename T, std::size_t N>
@@ -134,9 +129,7 @@ using MyAllocList = std::list<T, MyAlloc<T>>;
 
 ## Perfect Forwarding
 
-* Function templates that take arbitrary arguments
-  and forward them to other functions such that
-  the target functions receive `exactly the same` arguments.
+* Function templates that take arbitrary arguments and forward them to other functions such that the target functions receive `exactly the same` arguments.
 
 * RValue references should be unconditionally cast to rvalues, because they're always bound to rvalues.
   Universal references should be conditionally case to rvalues, because they're only sometimes bound to rvalues.
@@ -223,8 +216,6 @@ using MyAllocList = std::list<T, MyAlloc<T>>;
     ```
 
 ## Uniform Initialization
-
-* When the initializer for an `auto-declared` variable is `enclosed in braces`, the deduced type is a `std::initializer_list`.
 
 * Function calls using the braced initialization syntax `strongly prefer` the overloads taking `std::initializer_list`.
 * `Narrowing Conversion` are prohibited inside braced initializers.
@@ -540,8 +531,7 @@ auto authAndAccess(Container& c, Index i) ->decltype(c[i])
 * C++14 permits `auto` to indicate that a function's return type.
   C++14 lambdas may use `auto` in parameter declarations.
   However, these uses of `auto` employ `template type deduction` not `auto` type deduction.
-* Template Type Deduction, the reference-ness of an initializing expression is ignored.
-  `auto` return type deduction will strip off the reference
+* Template Type Deduction, the reference-ness of an initializing expression is ignored, so `auto` return type deduction will strip off the reference
 
 ```cpp
 template <typename Container, typename Index>
@@ -622,8 +612,7 @@ decltype((x)) is int&.
 
 * Any functions may be deleted.
 * Deleted functions can prevent use of template instantiations that should be disabled.
-  It's not possible to give a member function template specialization
-  a different access level from that of the main template.
+  It's not possible to give a member function template specialization a different access level from that of the main template.
 
 ```cpp
 bool isLucky(int number);
@@ -650,13 +639,12 @@ private:
 ## constexpr
 
 * `constexpr` indicated a value that's not only constant, it's known during compilation.
-* `constexpr functions` produce compile-time constants when they are called with compile-time constants.
-  if they're called with values not known until runtime, they produce runtime values.
+* `constexpr functions` produce compile-time constants when they are called with compile-time constants. if they're called with values not known until runtime, they produce runtime values.
 
 * I/O statements are generally not permitted in `constexpr` functions.
 
-* The conditional "?:" operator can be used in place of if-else statements.
-  Recursion can be used instead of loops.
+* The conditional `?:` operator can be used in place of if-else statements.
+  `Recursion` can be used instead of loops.
 
 * `constexpr functions` are limited to taking and returning `literal types`.
 
@@ -667,6 +655,8 @@ private:
   user-defined types may be literal too, because constructors and other member functions may be constexpr.
 
 ```cpp
+// C++11
+
 constexpr int pow(int base, int exp) noexcept
 {
     return (exp == 0 ? 1 : base * pow(base, exp - 1));
