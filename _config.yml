@@ -98,8 +98,8 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
-# theme: pacman
+# theme: landscape
+theme: jacman
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
