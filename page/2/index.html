@@ -5,32 +5,38 @@
   <meta charset="UTF-8">
   
     <title>业精于勤，荒于嬉。行成于思，毁于随。</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="dayo">
     
+
+    
     <meta name="description" content="敏于事而慎于言">
+<meta property="og:type" content="website">
+<meta property="og:title" content="业精于勤，荒于嬉。行成于思，毁于随。">
+<meta property="og:url" content="https://zerobit.ga/page/2/index.html">
+<meta property="og:site_name" content="业精于勤，荒于嬉。行成于思，毁于随。">
+<meta property="og:description" content="敏于事而慎于言">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="dayo">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="alternative" href="/atom.xml" title="业精于勤，荒于嬉。行成于思，毁于随。" type="application/atom+xml">
     
     
-    
-    
-    <link rel="alternate" href="[object Object]" title="业精于勤，荒于嬉。行成于思，毁于随。" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
     
     
 <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
   <body>
     <header>
-      <div>
+      
+<div>
 		
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="业精于勤，荒于嬉。行成于思，毁于随。">业精于勤，荒于嬉。行成于思，毁于随。</a></h1>
@@ -40,14 +46,19 @@
 			</a></div>
 			<nav class="animated">
 				<ul>
-					
+					<ul>
+					 
 						<li><a href="/">Home</a></li>
 					
-					<li>
+						<li><a href="/archives">Archives</a></li>
 					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:zerobit.ga">
 					</form>
 					
@@ -55,26 +66,69 @@
 				</ul>
 			</nav>			
 </div>
-
     </header>
     <div id="container">
       <div id="main">
 
-  <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2020/09/09/windows/using-lockbits-in-gdi+/" title="Using LockBits in GDI+" itemprop="url">
+<section class="post" itemscope itemprop="blogitem">
   
-    <h1 itemprop="name">Using LockBits in GDI+</h1>
+    <a href="/2020/09/09/windows/wtl-thunk/" title="WTL Thunk" itemprop="url">
+  
+    <h1 itemprop="name">WTL Thunk</h1>
     
      
-           <p itemprop="description" >Understanding how to use LockBits is essential for creating high performance GDI+ applications. Usually, GDI+ is thought of as a low perform</p>
+           <p itemprop="description" >Thunk是一段机器码，主要有两个功能：
+
+改变调用栈;
+跳转到目标程序；
+
+WTL中使用Thunk技术将GWLP_WNDPROC初始回调函数(一般为”StartWindowProc”)替换为用户期望回调函数（一般为”WindowProc”)。初次接触时有几个问题可能费解：
+
+W</p>
         
     
     <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
   </a>
 </section>
 
-  <section class="post" itemscope itemprop="blogPost">
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2020/09/09/network/proxy_types/" title="Proxy Types" itemprop="url">
+  
+    <h1 itemprop="name">Proxy Types</h1>
+    
+     
+           <p itemprop="description" >分类
+正向代理(Forward Proxy)
+反向代理(Reverse Proxy)
+透明代理(Transparent Proxy)
+
+区别
+正向代理
+ 客户端向代理服务器发送一个请求，并且指定目标服务器，之后代理向目标服务器转交并且将获得的内容返回给客户端。
+
+反向代理
+ 客户</p>
+        
+    
+    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
   
     <a href="/2020/09/09/windows/memory_type/" title="Memory Type" itemprop="url">
   
@@ -90,7 +144,13 @@ Private Bytes：指可执行文件申请的，不一定是实际使用的。priv
   </a>
 </section>
 
-  <section class="post" itemscope itemprop="blogPost">
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
   
     <a href="/2020/09/09/network/transport_layer/" title="Protocol" itemprop="url">
   
@@ -104,94 +164,13 @@ Private Bytes：指可执行文件申请的，不一定是实际使用的。priv
   </a>
 </section>
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2020/09/09/windows/hook/" title="Hook" itemprop="url">
-  
-    <h1 itemprop="name">Hook</h1>
-    
-     
-           <p itemprop="description" >123456789HHOOK SetWindowsHookExA(  int       idHook,  HOOKPROC  lpfn,  HINSTANCE hmod,  DWORD     dwThreadId);BOOL UnhookWindowsHookEx(  HHO</p>
-        
-    
-    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-  </a>
-</section>
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2020/09/09/network/tcp_establish_terminate/" title="TCP Connection Establish and Terminate" itemprop="url">
-  
-    <h1 itemprop="name">TCP Connection Establish and Terminate</h1>
-    
-     
-           <p itemprop="description" >Connection establishmentTo establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the se</p>
-        
-    
-    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-  </a>
-</section>
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2020/09/09/windows/owned-windows/" title="Owned Windows" itemprop="url">
-  
-    <h1 itemprop="name">Owned Windows</h1>
-    
-     
-           <p itemprop="description" >An overlapped or pop-up window can be owned by another overlapped or pop-up window. Being owned places several constraints on a window.
-An o</p>
-        
-    
-    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-  </a>
-</section>
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2020/09/09/math/curve/" title="Curve" itemprop="url">
-  
-    <h1 itemprop="name">Curve</h1>
-    
-     
-           <p itemprop="description" >Bezier Curve贝塞尔曲线通过两个端点和两个控制点指定。曲线不会通过控制点，但是控制点会像磁铁一样将曲线拉向控制点的方向，并影响曲线的弯曲。如下图所示：
 
-注意：曲线从端点p1开始，向控制点c1移动。曲线在端点p1处的切线是p1和c1的连线。曲线在端点p2处的切线是p2和</p>
-        
-    
-    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-  </a>
-</section>
 
-  <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2020/09/09/cef/cef_cpptoc_ctocpp/" title="CPP-C" itemprop="url">
-  
-    <h1 itemprop="name">CPP-C</h1>
-    
-     
-           <p itemprop="description" >cpp to c关键代码123456789101112131415161718192021222324252627282930313233343536template&amp;lt;class ClassName, class BaseName, class StructName&amp;gt;</p>
-        
-    
-    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2020/09/09/cpp/function_obj/" title="operator int() vs int operator()" itemprop="url">
-  
-    <h1 itemprop="name">operator int() vs int operator()</h1>
-    
-     
-           <p itemprop="description" >1234567891011121314151617struct A&amp;#123;    // operator() override turn an object into a `function object`.    int operator()    &amp;#123;      </p>
-        
-    
-    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
+<section class="post" itemscope itemprop="blogitem">
   
     <a href="/2020/09/09/windows/io-completion-ports/" title="I/O Completion Ports" itemprop="url">
   
@@ -206,8 +185,114 @@ An o</p>
 </section>
 
 
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2020/09/09/windows/using-lockbits-in-gdi+/" title="Using LockBits in GDI+" itemprop="url">
+  
+    <h1 itemprop="name">Using LockBits in GDI+</h1>
+    
+     
+           <p itemprop="description" >Understanding how to use LockBits is essential for creating high performance GDI+ applications. Usually, GDI+ is thought of as a low perform</p>
+        
+    
+    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2020/09/09/network/tcp_establish_terminate/" title="TCP Connection Establish and Terminate" itemprop="url">
+  
+    <h1 itemprop="name">TCP Connection Establish and Terminate</h1>
+    
+     
+           <p itemprop="description" >Connection establishmentTo establish a connection, TCP uses a three-way handshake. Before a client attempts to connect with a server, the se</p>
+        
+    
+    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2020/09/09/cef/cef_cpptoc_ctocpp/" title="CPP-C" itemprop="url">
+  
+    <h1 itemprop="name">CPP-C</h1>
+    
+     
+           <p itemprop="description" >cpp to c关键代码123456789101112131415161718192021222324252627282930313233343536template&amp;lt;class ClassName, class BaseName, class StructName&amp;gt;</p>
+        
+    
+    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2020/09/09/windows/owned-windows/" title="Owned Windows" itemprop="url">
+  
+    <h1 itemprop="name">Owned Windows</h1>
+    
+     
+           <p itemprop="description" >An overlapped or pop-up window can be owned by another overlapped or pop-up window. Being owned places several constraints on a window.
+An o</p>
+        
+    
+    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2020/09/09/windows/hook/" title="Hook" itemprop="url">
+  
+    <h1 itemprop="name">Hook</h1>
+    
+     
+           <p itemprop="description" >123456789HHOOK SetWindowsHookExA(  int       idHook,  HOOKPROC  lpfn,  HINSTANCE hmod,  DWORD     dwThreadId);BOOL UnhookWindowsHookEx(  HHO</p>
+        
+    
+    <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
+    <a class="extend prev" rel="prev" href="/">&lt;span&gt;&lt;&#x2F;span&gt;Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next&lt;span&gt;&lt;&#x2F;span&gt;</a>
   </nav>
 
 </div>
@@ -218,25 +303,44 @@ An o</p>
 <aside class="clearfix">
 
   
+
+
+  
 <div class="categorieslist">
 	<p class="asidetitle">Categories</p>
 		<ul>
 		
+		  
 			<li><a href="/categories/CEF/" title="CEF">CEF<sup>1</sup></a></li>
+		  
 		
-			<li><a href="/categories/CPP/" title="CPP">CPP<sup>8</sup></a></li>
+		  
+			<li><a href="/categories/CPP/" title="CPP">CPP<sup>9</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Chromium/" title="Chromium">Chromium<sup>1</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Frontend/" title="Frontend">Frontend<sup>5</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Math/" title="Math">Math<sup>2</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Network/" title="Network">Network<sup>4</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Unicode/" title="Unicode">Unicode<sup>1</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Windows/" title="Windows">Windows<sup>9</sup></a></li>
+		  
 		
 		</ul>
 </div>
@@ -244,34 +348,41 @@ An o</p>
 
   
 
-  
-  <div class="archiveslist">
-    <p class="asidetitle"><a href="/archives">Archives</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a><span class="archive-list-count">1</span></li></ul>
-  </div>
-
-
 </aside>
 </div>
     </div>
     <footer><div id="footer" >
 	
 	
-	<div class="social-font clearfix">
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
 		
 		
 		
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+			
 		
-		<a href="https://zerobit.ga" target="_blank" title="dayo">dayo</a>
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="dayo">dayo</a>
+		
 		
 		</p>
 </div>
 </footer>
-    <script src="/js/jquery-2.1.0.min.js"></script>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){ 
   $('.navbar').click(function(){
@@ -289,18 +400,6 @@ $(document).ready(function(){
       a = $('#asidepart'),
       c = $('.closeaside'),
       o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
   c.click(function(){
     a.addClass('fadeOut').css('display', 'none');
     o.css('display', 'block').addClass('fadeIn');
@@ -314,6 +413,18 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
 });
 </script>
 
@@ -322,6 +433,61 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
 
   </body>
  </html>

@@ -5,35 +5,40 @@
   <meta charset="UTF-8">
   
     <title>Memory Leak | 业精于勤，荒于嬉。行成于思，毁于随。</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="dayo">
     
-    <meta name="description" content="Using Performance Monitor to Find a User-Mode Memory Leak
-Launch perfmon.exe. Add the following counters:
 
-Process–&amp;gt;Private Bytes which indicates t">
+    
+    <meta name="description" content="Using Performance Monitor to Find a User-Mode Memory Leak Launch perfmon.exe. Add the following counters:  Process–&gt;Private Bytes which indicates the total amount of memory that a process has alloc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Memory Leak">
+<meta property="og:url" content="https://zerobit.ga/2021/02/20/windows/memory_leak/index.html">
+<meta property="og:site_name" content="业精于勤，荒于嬉。行成于思，毁于随。">
+<meta property="og:description" content="Using Performance Monitor to Find a User-Mode Memory Leak Launch perfmon.exe. Add the following counters:  Process–&gt;Private Bytes which indicates the total amount of memory that a process has alloc">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-02-20T07:19:00.684Z">
+<meta property="article:author" content="dayo">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="alternative" href="/atom.xml" title="业精于勤，荒于嬉。行成于思，毁于随。" type="application/atom+xml">
     
     
-    
-    
-    <link rel="alternate" href="[object Object]" title="业精于勤，荒于嬉。行成于思，毁于随。" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
     
     
 <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
   <body>
     <header>
-      <div>
+      
+<div>
 		
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="业精于勤，荒于嬉。行成于思，毁于随。">业精于勤，荒于嬉。行成于思，毁于随。</a></h1>
@@ -43,14 +48,19 @@ Process–&amp;gt;Private Bytes which indicates t">
 			</a></div>
 			<nav class="animated">
 				<ul>
-					
+					<ul>
+					 
 						<li><a href="/">Home</a></li>
 					
-					<li>
+						<li><a href="/archives">Archives</a></li>
 					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:zerobit.ga">
 					</form>
 					
@@ -58,10 +68,10 @@ Process–&amp;gt;Private Bytes which indicates t">
 				</ul>
 			</nav>			
 </div>
-
     </header>
     <div id="container">
       <div id="main" class="post" itemscope itemprop="blogPost">
+  
 	<article itemprop="articleBody"> 
 		<header class="article-info clearfix">
   <h1 itemprop="name">
@@ -69,21 +79,21 @@ Process–&amp;gt;Private Bytes which indicates t">
       <a href="/2021/02/20/windows/memory_leak/" title="Memory Leak" itemprop="url">Memory Leak</a>
   </h1>
   <p class="article-author">By
-    
-      <a href="https://zerobit.ga" title="dayo">dayo</a>
-    </p>
+       
+		<a href="/about" title="dayo" target="_blank" itemprop="author">dayo</a>
+		
   <p class="article-time">
-    <time datetime="2021-02-19T16:00:00.000Z" itemprop="datePublished">2021-02-20</time>
-    Updated:<time datetime="2021-02-20T07:19:00.684Z" itemprop="dateModified">2021-02-20</time>
+    <time datetime="2021-02-19T16:00:00.000Z" itemprop="datePublished"> Published 2021-02-20</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Performance-Monitor-to-Find-a-User-Mode-Memory-Leak"><span class="toc-number">1.</span> <span class="toc-text">Using Performance Monitor to Find a User-Mode Memory Leak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UMDH-User-Mode-Dump-Heap-GFlags"><span class="toc-number">2.</span> <span class="toc-text">UMDH(User-Mode Dump Heap) + GFlags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Performance-Monitor-to-Find-a-User-Mode-Memory-Leak"><span class="toc-number">1.</span> <span class="toc-text">Using Performance Monitor to Find a User-Mode Memory Leak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UMDH-User-Mode-Dump-Heap-GFlags"><span class="toc-number">2.</span> <span class="toc-text">UMDH(User-Mode Dump Heap) + GFlags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+		
 		</div>
 		
 		<h2 id="Using-Performance-Monitor-to-Find-a-User-Mode-Memory-Leak"><a href="#Using-Performance-Monitor-to-Find-a-User-Mode-Memory-Leak" class="headerlink" title="Using Performance Monitor to Find a User-Mode Memory Leak"></a>Using Performance Monitor to Find a User-Mode Memory Leak</h2><ol>
@@ -126,7 +136,7 @@ Process–&amp;gt;Private Bytes which indicates t">
   
 	</div>
 		<footer class="article-footer clearfix">
-
+<div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
@@ -134,21 +144,28 @@ Process–&amp;gt;Private Bytes which indicates t">
 </div>
 
 
-
-<div class="article-share" id="share">
-
-  <div data-url="https://zerobit.ga/2021/02/20/windows/memory_leak/" data-title="Memory Leak | 业精于勤，荒于嬉。行成于思，毁于随。" data-tsina="" class="share clearfix">
-  </div>
-
 </div>
-</footer>   	       
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://zerobit.ga/2021/02/20/windows/memory_leak/" data-title="Memory Leak | 业精于勤，荒于嬉。行成于思，毁于随。" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
 	</article>
 	
 <nav class="article-nav clearfix">
  
  <div class="prev" >
  <a href="/2021/03/18/cpp/modern_cpp/" title="Modern CPP">
-  <strong>PREVIOUS:</strong><br/>
+  <strong>上一篇：</strong><br/>
   <span>
   Modern CPP</span>
 </a>
@@ -157,7 +174,7 @@ Process–&amp;gt;Private Bytes which indicates t">
 
 <div class="next">
 <a href="/2020/11/20/fontend/typescript/"  title="TypeScript">
- <strong>NEXT:</strong><br/> 
+ <strong>下一篇：</strong><br/> 
  <span>TypeScript
 </span>
 </a>
@@ -166,12 +183,17 @@ Process–&amp;gt;Private Bytes which indicates t">
 </nav>
 
 	
+
+
+
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Performance-Monitor-to-Find-a-User-Mode-Memory-Leak"><span class="toc-number">1.</span> <span class="toc-text">Using Performance Monitor to Find a User-Mode Memory Leak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UMDH-User-Mode-Dump-Heap-GFlags"><span class="toc-number">2.</span> <span class="toc-text">UMDH(User-Mode Dump Heap) + GFlags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Performance-Monitor-to-Find-a-User-Mode-Memory-Leak"><span class="toc-number">1.</span> <span class="toc-text">Using Performance Monitor to Find a User-Mode Memory Leak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UMDH-User-Mode-Dump-Heap-GFlags"><span class="toc-number">2.</span> <span class="toc-text">UMDH(User-Mode Dump Heap) + GFlags</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+ 
   </div>
 
 <div id="asidepart">
@@ -179,25 +201,44 @@ Process–&amp;gt;Private Bytes which indicates t">
 <aside class="clearfix">
 
   
+
+
+  
 <div class="categorieslist">
 	<p class="asidetitle">Categories</p>
 		<ul>
 		
+		  
 			<li><a href="/categories/CEF/" title="CEF">CEF<sup>1</sup></a></li>
+		  
 		
-			<li><a href="/categories/CPP/" title="CPP">CPP<sup>8</sup></a></li>
+		  
+			<li><a href="/categories/CPP/" title="CPP">CPP<sup>9</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Chromium/" title="Chromium">Chromium<sup>1</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Frontend/" title="Frontend">Frontend<sup>5</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Math/" title="Math">Math<sup>2</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Network/" title="Network">Network<sup>4</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Unicode/" title="Unicode">Unicode<sup>1</sup></a></li>
+		  
 		
+		  
 			<li><a href="/categories/Windows/" title="Windows">Windows<sup>9</sup></a></li>
+		  
 		
 		</ul>
 </div>
@@ -205,34 +246,41 @@ Process–&amp;gt;Private Bytes which indicates t">
 
   
 
-  
-  <div class="archiveslist">
-    <p class="asidetitle"><a href="/archives">Archives</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">January 2000</a><span class="archive-list-count">1</span></li></ul>
-  </div>
-
-
 </aside>
 </div>
     </div>
     <footer><div id="footer" >
 	
 	
-	<div class="social-font clearfix">
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
 		
 		
 		
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+			
 		
-		<a href="https://zerobit.ga" target="_blank" title="dayo">dayo</a>
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="dayo">dayo</a>
+		
 		
 		</p>
 </div>
 </footer>
-    <script src="/js/jquery-2.1.0.min.js"></script>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){ 
   $('.navbar').click(function(){
@@ -250,20 +298,6 @@ $(document).ready(function(){
       a = $('#asidepart'),
       c = $('.closeaside'),
       o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
-        
-    }
-  });
   c.click(function(){
     a.addClass('fadeOut').css('display', 'none');
     o.css('display', 'block').addClass('fadeIn');
@@ -277,6 +311,20 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
 });
 </script>
 
@@ -285,8 +333,6 @@ $(document).ready(function(){
   var ai = $('.article-content>iframe'),
       ae = $('.article-content>embed'),
       t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
       ta = $('#toc.toc-aside'),
       o  = $('.openaside'),
       c  = $('.closeaside');
@@ -296,19 +342,15 @@ $(document).ready(function(){
   if(ae.length>0){
    ae.wrap('<div class="video-container" />');
   };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
 });
 </script>
 
@@ -319,32 +361,108 @@ $(document).ready(function(){
       url = $this.attr('data-url'),
       encodedUrl = encodeURIComponent(url),
       title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
   var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
   '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
   '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
   '<span title="Share to"></span>'
   ].join('');
   $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
   });
-});     
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
 </script>
 
 
 
 
 
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
 
   </body>
 </html>
