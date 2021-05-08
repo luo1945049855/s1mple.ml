@@ -66,6 +66,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-fontend/es6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/13/fontend/es6/" class="article-date">
+  <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Frontend/">Frontend</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/13/fontend/es6/">ES6</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a><code>let</code>命令</h2><p><code>let</code>类似与<code>var</code>, 但是let所生明的变量，只在let所在的作用域内有效。</p>
+<ol>
+<li>不存在变量提升</li>
+</ol>
+<p>let要先声明，后使用。否则报错。<br>var先使用再声明，值为undefined。</p>
+<ol start="2">
+<li>暂时性死区</li>
+</ol>
+<p>暂时性死区意味着<code>typeof</code>不再是百分之百安全操作。<br>ES6明确规定，如果区块内存在let或const命令，这些命令声明的变量，从一开始就形成了封闭作用域，凡是在声明前使用，就会报错。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tmp = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    tmp = <span class="string">&#x27;abc&#x27;</span>; <span class="comment">// ReferenceError.</span></span><br><span class="line">    <span class="keyword">typeof</span> tmp; <span class="comment">// ReferenceError.</span></span><br><span class="line">    <span class="keyword">typeof</span> undefined_variable; <span class="comment">// undefined.</span></span><br><span class="line">    <span class="keyword">let</span> tmp;</span><br><span class="line">    <span class="built_in">console</span>.log(tmp); <span class="comment">// undefined.</span></span><br><span class="line">    tmp = <span class="number">123</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(tmp); <span class="comment">// 123.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = x; <span class="comment">// ok.</span></span><br><span class="line"><span class="keyword">let</span> x = x; <span class="comment">// error.</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>let不允许重复声明</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arg; <span class="comment">// arg is duplicate.</span></span><br><span class="line">&#125;</span><br><span class="line">func() <span class="comment">// error.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a><code>const</code>命令</h2><p>const声明一个只读的常量，一旦声明，变量的值就不能改变。</p>
+<p>const作用域与let命令相同：只在声明所在的块级作用域内有效。</p>
+<p>const命令声明的变量也是不提升、存在暂时性死区，只能在声明的位置后面使用。</p>
+<p>const命令与let一样不能重复。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PI = <span class="number">3.1415</span>;</span><br><span class="line">PI = <span class="number">3</span>; <span class="comment">// error</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> MAX = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line">MAX <span class="comment">// Uncaught ReferenceError: MAX is not defined.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(MAX); <span class="comment">// ReferenceError</span></span><br><span class="line">    <span class="keyword">const</span> MAX = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/06/13/fontend/es6/" data-id="ckofi72x00005m8vv08675os7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-fontend/css" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/06/13/fontend/css/" class="article-date">
@@ -135,91 +196,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/06/13/fontend/css/" data-id="ckofhdl8d0005d0vvg8l6b7au" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-fontend/html" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/06/13/fontend/html/" class="article-date">
-  <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Frontend/">Frontend</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/13/fontend/html/">HTML</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="head-tag"><a href="#head-tag" class="headerlink" title="head tag"></a>head tag</h2><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>段落<span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="comment">&lt;!--paragraph段落--&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">em</span>&gt;</span>斜体<span class="tag">&lt;/<span class="name">em</span>&gt;</span> <span class="comment">&lt;!--emphasis强调--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">strong</span>&gt;</span>加粗<span class="tag">&lt;/<span class="name">strong</span>&gt;</span> <span class="comment">&lt;!--加粗--&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>一级标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>二级标题<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>三级标题<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h4</span>&gt;</span>四级标题<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h5</span>&gt;</span>五级标题<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h6</span>&gt;</span>六级标题<span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="块"><a href="#块" class="headerlink" title="块"></a>块</h2><p><code>&lt;span&gt;span标签是没有语义的，目的是设置单独的样式&lt;/span&gt;</code></p>
-<h2 id="短引用"><a href="#短引用" class="headerlink" title="短引用"></a>短引用</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">q</span>&gt;</span>引用内容<span class="tag">&lt;/<span class="name">q</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">换<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">行<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">的内容</span><br></pre></td></tr></table></figure>
-
-<h2 id="横线"><a href="#横线" class="headerlink" title="横线"></a>横线</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">横</span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">线</span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line">的内容</span><br></pre></td></tr></table></figure>
-
-<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><p><code>空&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;格</code></p>
-<h2 id="长引用"><a href="#长引用" class="headerlink" title="长引用"></a>长引用</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">blockquote</span>&gt;</span></span><br><span class="line">青青园中葵，朝露待日晞。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">阳春布德泽，万物生光辉。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">常恐秋节至，焜黄华叶衰。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">百川东到海，何时复西归。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">少壮不努力，老大徒伤悲。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">blockquote</span>&gt;</span> <span class="comment">&lt;!--长引用--&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="联系地址：-lt-各种地址-gt"><a href="#联系地址：-lt-各种地址-gt" class="headerlink" title="联系地址：&lt;!--各种地址--&gt;"></a>联系地址：<code>&lt;!--各种地址--&gt;</code></h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">address</span>&gt;</span>北京市海淀区<span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">address</span>&gt;</span>luo1945049855@gmail.com<span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="单行代码"><a href="#单行代码" class="headerlink" title="单行代码"></a>单行代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>我们可能知道水平渐变的实现，类似这样：<span class="tag">&lt;<span class="name">code</span>&gt;</span>&#123;background-image:linear-gradient(left, red 100px, yellow 200px);&#125;<span class="tag">&lt;/<span class="name">code</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="预处理-lt-pre-gt"><a href="#预处理-lt-pre-gt" class="headerlink" title="预处理&lt;pre&gt;"></a>预处理<code>&lt;pre&gt;</code></h2><p>常用于处理代码</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;pre&gt;</span><br><span class="line"><span class="keyword">var</span> msg = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">    alert(msg);</span><br><span class="line">&#125;</span><br><span class="line">&lt;pre&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>这是我的第一个列表<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我的第一个列表信息<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p><code>&lt;div id=&quot;div_id&quot;&gt;这是一个模块&lt;/div&gt;</code></p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-tag">table</span> <span class="selector-tag">tr</span> <span class="selector-tag">td</span>,<span class="selector-tag">th</span>&#123;<span class="attribute">border</span>:<span class="number">1px</span> solid blue;&#125;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">summary</span>=<span class="string">&quot;员工信息登记&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">caption</span>&gt;</span>员工信息登记表<span class="tag">&lt;/<span class="name">caption</span>&gt;</span><span class="comment">&lt;!--为表格添加标题--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>性别<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>年龄<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>张三<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>男<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>10<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.google.com&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Goolge&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>google<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:yy@qq.com?cc=cc@qq.com&amp;bcc=bcc@qq.com&amp;subject=测试邮箱&amp;body=这是内容&quot;</span> <span class="attr">title</span>=<span class="string">&quot;发送邮件给我&quot;</span>&gt;</span>点击发送<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片下载失败时可见&quot;</span> <span class="attr">title</span>=<span class="string">&quot;图片标题（tooltip功能)&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="表单form"><a href="#表单form" class="headerlink" title="表单form"></a>表单form</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--method: get/post action: 浏览者输入的数据被传送到的地方--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;save.php&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>账户：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;zhangsan&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;pass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1234&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;确定&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;reset&quot;</span> <span class="attr">value</span>=<span class="string">&quot;清空&quot;</span> <span class="attr">name</span>=<span class="string">&quot;reset&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>联系我们<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">cols</span>=<span class="string">&quot;50&quot;</span> <span class="attr">rows</span>=<span class="string">&quot;10&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span> <span class="comment">&lt;!--文本域--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--单选框--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>性别<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--for属性关联label与radio--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;male&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">id</span>=<span class="string">&quot;male&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;female&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">id</span>=<span class="string">&quot;female&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--复选框--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>兴趣<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;id_basketball&quot;</span>&gt;</span>篮球：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;basketball&quot;</span> <span class="attr">id</span>=<span class="string">&quot;id_basketball&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;id_football&quot;</span>&gt;</span>足球：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;football&quot;</span> <span class="attr">id</span>=<span class="string">&quot;id_football&quot;</span> <span class="attr">value</span>=<span class="string">&quot;football&quot;</span> <span class="attr">checked</span> /&gt;</span> <span class="comment">&lt;!--value为提交到服务器的值--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>兴趣：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">multiple</span>=<span class="string">&quot;multiple&quot;</span>&gt;</span><span class="comment">&lt;!--多选--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span>篮球<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;2&quot;</span>&gt;</span>足球<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;3&quot;</span> <span class="attr">selected</span>=<span class="string">&quot;selected&quot;</span>&gt;</span>F1<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="DOCTYPE"><a href="#DOCTYPE" class="headerlink" title="DOCTYPE"></a>DOCTYPE</h2><p>document type declaration(DTD)</p>
-<!DOCTYPE><p>是HTML中的第一个标签。用来通知浏览器网页的HTML版本。</p>
-<h3 id="在HTML4-01中，有三种-lt-DOCTYPE-gt-声明。"><a href="#在HTML4-01中，有三种-lt-DOCTYPE-gt-声明。" class="headerlink" title="在HTML4.01中，有三种&lt;!DOCTYPE&gt;声明。"></a>在HTML4.01中，有三种<code>&lt;!DOCTYPE&gt;</code>声明。</h3><ol>
-<li><p>HTML4.01Strict: This DTD contains all HTML elements and attributes, but does NOT INCLUDE presentational or deprecated elements (like font). Framesets are not allowed.</p>
-</li>
-<li><p>HTML 4.01 Transitional: This DTD contains all HTML elements and attributes, INCLUDING presentational and deprecated elements (like font). Framesets are not allowed.</p>
-</li>
-<li><p>HTML 4.01 Frameset: This DTD is equal to HTML 4.01 Transitional, but allows the use of frameset content.</p>
-</li>
-</ol>
-<h3 id="在HTML5中，只有一种声明，即：-lt-DOCTYPE-html-gt"><a href="#在HTML5中，只有一种声明，即：-lt-DOCTYPE-html-gt" class="headerlink" title="在HTML5中，只有一种声明，即：&lt;!DOCTYPE html&gt;"></a>在HTML5中，只有一种声明，即：<code>&lt;!DOCTYPE html&gt;</code></h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/06/13/fontend/html/" data-id="ckofhdl8e0006d0vvbfv8ef0z" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/06/13/fontend/css/" data-id="ckofi72x00004m8vvfo9q0qdl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -268,7 +245,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2000/01/01/hello-world/" data-id="ckofhdl800000d0vvckmy38df" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2000/01/01/hello-world/" data-id="ckofi72wo0000m8vv2zcqckik" class="article-share-link">Share</a>
       
       
     </footer>

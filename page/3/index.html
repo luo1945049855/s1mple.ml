@@ -66,14 +66,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-cpp/function_obj" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-math/curve" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/09/cpp/function_obj/" class="article-date">
+    <a href="/2020/09/09/math/curve/" class="article-date">
   <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+    <a class="article-category-link" href="/categories/Math/">Math</a>
   </div>
 
   </div>
@@ -84,7 +84,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/cpp/function_obj/">operator int() vs int operator()</a>
+      <a class="article-title" href="/2020/09/09/math/curve/">Curve</a>
     </h1>
   
 
@@ -92,56 +92,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="comment">// operator() override turn an object into a `function object`.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// convertion operator construct a int object by an object.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h2 id="Bezier-Curve"><a href="#Bezier-Curve" class="headerlink" title="Bezier Curve"></a>Bezier Curve</h2><p>贝塞尔曲线通过两个<code>端点</code>和两个<code>控制点</code>指定。<br>曲线不会通过控制点，但是控制点会像磁铁一样将曲线拉向控制点的方向，并影响曲线的弯曲。<br>如下图所示：</p>
+<p><img src="/images/bezier_spline.png" alt="bezier_splines"></p>
+<p>注意：<br>曲线从端点p1开始，向控制点c1移动。曲线在端点p1处的<code>切线</code>是p1和c1的连线。<br>曲线在端点p2处的切线是p2和c2的连线。</p>
+<h2 id="给定一系列点，画曲线"><a href="#给定一系列点，画曲线" class="headerlink" title="给定一系列点，画曲线"></a>给定一系列点，画曲线</h2><p>此处找到的方式有：</p>
+<ul>
+<li><p>Krita（基于Qt的画图工具）基于Bezier曲线的实现。</p>
+</li>
+<li><p>JScurve求平均值方式，可以使点平滑。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/burningmime/curves">burningmime</a>基于<code>Philip J. Schneider&#39;s least-squares method</code>实现的方案。此方案效果较好，但是有出错情况而且性能较差。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit">Draw a Smooth Curve through a Set of 2D Points with Bezier Primitives</a>。</p>
+</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-bezier-splines-about">Bezier Splines</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30791706/gdi-curve-overflowing/49693235">GDI+ curve “overflowing”</a></li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/cpp/function_obj/" data-id="ckofhdl8i000cd0vv3lfl44co" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-cpp/crt_linking" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/cpp/crt_linking/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/CPP/">CPP</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/cpp/crt_linking/">MT-MTd-MD-MDd</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="MT和-MTd"><a href="#MT和-MTd" class="headerlink" title="/MT和/MTd"></a>/MT和/MTd</h2><p> /MT和/MTd表示采用多线程CRT库的静态lib版本。该选项会在编译时将运行时库以静态lib的形式完全嵌入。该选项生成的可执行文件运行时不需要运行时库dll的参加，会获得轻微的性能提升，但最终生成的二进制代码因链入庞大的运行时库实现而变得非常臃肿。当某项目以静态链接库的形式嵌入到多个项目，则可能造成运行时库的内存管理有多份，最终将导致致命的“Invalid Address specified to RtlValidateHeap”问题。另外托管C++和CLI中不再支持/MT和/MTd选项。</p>
-<h2 id="MD和-MDd"><a href="#MD和-MDd" class="headerlink" title="/MD和/MDd"></a>/MD和/MDd</h2><p>/MD和/MDd表示采用多线程CRT库的动态dll版本，会使应用程序使用运行时库特定版本的多线程DLL。链接时将按照传统VC链接dll的方式将运行时库MSVCRxx.DLL的导入库MSVCRT.lib链接，在运行时要求安装了相应版本的VC运行时库可再发行组件包（当然把这些运行时库dll放在应用程序目录下也是可以的）。 因/MD和/MDd方式不会将运行时库链接到可执行文件内部，可有效减少可执行文件尺寸。当多项目以MD方式运作时，其内部会采用同一个堆，内存管理将被简化，跨模块内存管理问题也能得到缓解。</p>
-<h2 id="ML和-MLd"><a href="#ML和-MLd" class="headerlink" title="/ML和/MLd"></a>/ML和/MLd</h2><p>单线程运行时库选项/ML和/MLd在VS2003以后就被废了。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>/MD和/MDd将是潮流所趋，/ML和/MLd方式请及时放弃，/MT和/MTd在非必要时最好也不要采用了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/cpp/crt_linking/" data-id="ckofhdl8g0009d0vv5x236g8i" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/math/curve/" data-id="ckofi72xj0010m8vve1vs3szr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -202,7 +175,51 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/cef/cef_cpptoc_ctocpp/" data-id="ckofhdl890002d0vv6iy3850t" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/cef/cef_cpptoc_ctocpp/" data-id="ckofi72wx0002m8vveqi4aae9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cpp/crt_linking" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cpp/crt_linking/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cpp/crt_linking/">MT-MTd-MD-MDd</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MT和-MTd"><a href="#MT和-MTd" class="headerlink" title="/MT和/MTd"></a>/MT和/MTd</h2><p> /MT和/MTd表示采用多线程CRT库的静态lib版本。该选项会在编译时将运行时库以静态lib的形式完全嵌入。该选项生成的可执行文件运行时不需要运行时库dll的参加，会获得轻微的性能提升，但最终生成的二进制代码因链入庞大的运行时库实现而变得非常臃肿。当某项目以静态链接库的形式嵌入到多个项目，则可能造成运行时库的内存管理有多份，最终将导致致命的“Invalid Address specified to RtlValidateHeap”问题。另外托管C++和CLI中不再支持/MT和/MTd选项。</p>
+<h2 id="MD和-MDd"><a href="#MD和-MDd" class="headerlink" title="/MD和/MDd"></a>/MD和/MDd</h2><p>/MD和/MDd表示采用多线程CRT库的动态dll版本，会使应用程序使用运行时库特定版本的多线程DLL。链接时将按照传统VC链接dll的方式将运行时库MSVCRxx.DLL的导入库MSVCRT.lib链接，在运行时要求安装了相应版本的VC运行时库可再发行组件包（当然把这些运行时库dll放在应用程序目录下也是可以的）。 因/MD和/MDd方式不会将运行时库链接到可执行文件内部，可有效减少可执行文件尺寸。当多项目以MD方式运作时，其内部会采用同一个堆，内存管理将被简化，跨模块内存管理问题也能得到缓解。</p>
+<h2 id="ML和-MLd"><a href="#ML和-MLd" class="headerlink" title="/ML和/MLd"></a>/ML和/MLd</h2><p>单线程运行时库选项/ML和/MLd在VS2003以后就被废了。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>/MD和/MDd将是潮流所趋，/ML和/MLd方式请及时放弃，/MT和/MTd在非必要时最好也不要采用了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/cpp/crt_linking/" data-id="ckofi72x40009m8vvekww65gx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -255,54 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/hook/" data-id="ckofhdl900015d0vvb6kv0gz0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows/owned-windows" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/windows/owned-windows/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Windows/">Windows</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/windows/owned-windows/">Owned Windows</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>An overlapped or pop-up window can be owned by another overlapped or pop-up window. Being owned places several constraints on a window.</p>
-<p>An owned window is always above its owner in the z-order.<br>The system automatically destroys an owned window when its owner is destroyed.<br>An owned window is hidden when its owner is minimized.<br>Only an overlapped or pop-up window can be an owner window; a child window cannot be an owner window. An application creates an owned window by specifying the owner’s window handle as the hwndParent parameter of CreateWindowEx when it creates a window with the WS_OVERLAPPED or WS_POPUP style. The hwndParent parameter must identify an overlapped or pop-up window. If hwndParent identifies a child window, the system assigns ownership to the top-level parent window of the child window. After creating an owned window, an application cannot transfer ownership of the window to another window.</p>
-<p>Dialog boxes and message boxes are owned windows by default. An application specifies the owner window when calling a function that creates a dialog box or message box.</p>
-<p>An application can use the GetWindow function with the GW_OWNER flag to retrieve a handle to a window’s owner.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-gb/windows/win32/winmsg/window-features">Window Features</a></li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/owned-windows/" data-id="ckofhdl94001dd0vv1nw2661h" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/windows/hook/" data-id="ckofi72xn0015m8vv9zjl6di2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -363,7 +333,48 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/io-completion-ports/" data-id="ckofhdl920019d0vv68fpdz54" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/windows/io-completion-ports/" data-id="ckofi72xo0018m8vv6xyne874" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cpp/function_obj" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cpp/function_obj/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cpp/function_obj/">operator int() vs int operator()</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="comment">// operator() override turn an object into a `function object`.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// convertion operator construct a int object by an object.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/cpp/function_obj/" data-id="ckofi72x5000cm8vv71aofwlt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -412,7 +423,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/memory_type/" data-id="ckofhdl93001cd0vv1f0gab0a" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/windows/memory_type/" data-id="ckofi72xq001cm8vvcic6gmlc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -497,7 +508,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/07/18/life-of-a-pixel/" data-id="ckofhdl880001d0vv9au8dmr3" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/07/18/life-of-a-pixel/" data-id="ckofi72wv0001m8vv0dusgg9s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -679,7 +690,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/06/14/fontend/vue/" data-id="ckofhdl8f0008d0vv7bsq6ctp" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/06/14/fontend/vue/" data-id="ckofi72x20008m8vvc4uq4h30" class="article-share-link">Share</a>
       
       
     </footer>
@@ -689,9 +700,9 @@
 
 
   
-    <article id="post-fontend/es6" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-fontend/html" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/06/13/fontend/es6/" class="article-date">
+    <a href="/2020/06/13/fontend/html/" class="article-date">
   <time datetime="2020-06-13T12:19:09.000Z" itemprop="datePublished">2020-06-13</time>
 </a>
     
@@ -707,7 +718,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/13/fontend/es6/">ES6</a>
+      <a class="article-title" href="/2020/06/13/fontend/html/">HTML</a>
     </h1>
   
 
@@ -715,32 +726,55 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="let命令"><a href="#let命令" class="headerlink" title="let命令"></a><code>let</code>命令</h2><p><code>let</code>类似与<code>var</code>, 但是let所生明的变量，只在let所在的作用域内有效。</p>
-<ol>
-<li>不存在变量提升</li>
-</ol>
-<p>let要先声明，后使用。否则报错。<br>var先使用再声明，值为undefined。</p>
-<ol start="2">
-<li>暂时性死区</li>
-</ol>
-<p>暂时性死区意味着<code>typeof</code>不再是百分之百安全操作。<br>ES6明确规定，如果区块内存在let或const命令，这些命令声明的变量，从一开始就形成了封闭作用域，凡是在声明前使用，就会报错。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tmp = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    tmp = <span class="string">&#x27;abc&#x27;</span>; <span class="comment">// ReferenceError.</span></span><br><span class="line">    <span class="keyword">typeof</span> tmp; <span class="comment">// ReferenceError.</span></span><br><span class="line">    <span class="keyword">typeof</span> undefined_variable; <span class="comment">// undefined.</span></span><br><span class="line">    <span class="keyword">let</span> tmp;</span><br><span class="line">    <span class="built_in">console</span>.log(tmp); <span class="comment">// undefined.</span></span><br><span class="line">    tmp = <span class="number">123</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(tmp); <span class="comment">// 123.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = x; <span class="comment">// ok.</span></span><br><span class="line"><span class="keyword">let</span> x = x; <span class="comment">// error.</span></span><br></pre></td></tr></table></figure>
+        <h2 id="head-tag"><a href="#head-tag" class="headerlink" title="head tag"></a>head tag</h2><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>段落<span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="comment">&lt;!--paragraph段落--&gt;</span></span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>let不允许重复声明</li>
+<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">em</span>&gt;</span>斜体<span class="tag">&lt;/<span class="name">em</span>&gt;</span> <span class="comment">&lt;!--emphasis强调--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">strong</span>&gt;</span>加粗<span class="tag">&lt;/<span class="name">strong</span>&gt;</span> <span class="comment">&lt;!--加粗--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>一级标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>二级标题<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>三级标题<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h4</span>&gt;</span>四级标题<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h5</span>&gt;</span>五级标题<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h6</span>&gt;</span>六级标题<span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="块"><a href="#块" class="headerlink" title="块"></a>块</h2><p><code>&lt;span&gt;span标签是没有语义的，目的是设置单独的样式&lt;/span&gt;</code></p>
+<h2 id="短引用"><a href="#短引用" class="headerlink" title="短引用"></a>短引用</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">q</span>&gt;</span>引用内容<span class="tag">&lt;/<span class="name">q</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">换<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">行<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">的内容</span><br></pre></td></tr></table></figure>
+
+<h2 id="横线"><a href="#横线" class="headerlink" title="横线"></a>横线</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">横</span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">线</span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line">的内容</span><br></pre></td></tr></table></figure>
+
+<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><p><code>空&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;格</code></p>
+<h2 id="长引用"><a href="#长引用" class="headerlink" title="长引用"></a>长引用</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">blockquote</span>&gt;</span></span><br><span class="line">青青园中葵，朝露待日晞。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">阳春布德泽，万物生光辉。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">常恐秋节至，焜黄华叶衰。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">百川东到海，何时复西归。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">少壮不努力，老大徒伤悲。<span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">blockquote</span>&gt;</span> <span class="comment">&lt;!--长引用--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="联系地址：-lt-各种地址-gt"><a href="#联系地址：-lt-各种地址-gt" class="headerlink" title="联系地址：&lt;!--各种地址--&gt;"></a>联系地址：<code>&lt;!--各种地址--&gt;</code></h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">address</span>&gt;</span>北京市海淀区<span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">address</span>&gt;</span>luo1945049855@gmail.com<span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="单行代码"><a href="#单行代码" class="headerlink" title="单行代码"></a>单行代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>我们可能知道水平渐变的实现，类似这样：<span class="tag">&lt;<span class="name">code</span>&gt;</span>&#123;background-image:linear-gradient(left, red 100px, yellow 200px);&#125;<span class="tag">&lt;/<span class="name">code</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="预处理-lt-pre-gt"><a href="#预处理-lt-pre-gt" class="headerlink" title="预处理&lt;pre&gt;"></a>预处理<code>&lt;pre&gt;</code></h2><p>常用于处理代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;pre&gt;</span><br><span class="line"><span class="keyword">var</span> msg = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">    alert(msg);</span><br><span class="line">&#125;</span><br><span class="line">&lt;pre&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>这是我的第一个列表<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我的第一个列表信息<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p><code>&lt;div id=&quot;div_id&quot;&gt;这是一个模块&lt;/div&gt;</code></p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-tag">table</span> <span class="selector-tag">tr</span> <span class="selector-tag">td</span>,<span class="selector-tag">th</span>&#123;<span class="attribute">border</span>:<span class="number">1px</span> solid blue;&#125;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">summary</span>=<span class="string">&quot;员工信息登记&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">caption</span>&gt;</span>员工信息登记表<span class="tag">&lt;/<span class="name">caption</span>&gt;</span><span class="comment">&lt;!--为表格添加标题--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>性别<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>年龄<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>张三<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>男<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>10<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.google.com&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Goolge&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>google<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:yy@qq.com?cc=cc@qq.com&amp;bcc=bcc@qq.com&amp;subject=测试邮箱&amp;body=这是内容&quot;</span> <span class="attr">title</span>=<span class="string">&quot;发送邮件给我&quot;</span>&gt;</span>点击发送<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片下载失败时可见&quot;</span> <span class="attr">title</span>=<span class="string">&quot;图片标题（tooltip功能)&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="表单form"><a href="#表单form" class="headerlink" title="表单form"></a>表单form</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--method: get/post action: 浏览者输入的数据被传送到的地方--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">action</span>=<span class="string">&quot;save.php&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>账户：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;zhangsan&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>密码：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;pass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1234&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;确定&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;reset&quot;</span> <span class="attr">value</span>=<span class="string">&quot;清空&quot;</span> <span class="attr">name</span>=<span class="string">&quot;reset&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>联系我们<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">cols</span>=<span class="string">&quot;50&quot;</span> <span class="attr">rows</span>=<span class="string">&quot;10&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span> <span class="comment">&lt;!--文本域--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--单选框--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>性别<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--for属性关联label与radio--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;male&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">id</span>=<span class="string">&quot;male&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;female&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">id</span>=<span class="string">&quot;female&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--复选框--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>兴趣<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;id_basketball&quot;</span>&gt;</span>篮球：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;basketball&quot;</span> <span class="attr">id</span>=<span class="string">&quot;id_basketball&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;id_football&quot;</span>&gt;</span>足球：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;football&quot;</span> <span class="attr">id</span>=<span class="string">&quot;id_football&quot;</span> <span class="attr">value</span>=<span class="string">&quot;football&quot;</span> <span class="attr">checked</span> /&gt;</span> <span class="comment">&lt;!--value为提交到服务器的值--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>兴趣：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">multiple</span>=<span class="string">&quot;multiple&quot;</span>&gt;</span><span class="comment">&lt;!--多选--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span>篮球<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;2&quot;</span>&gt;</span>足球<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;3&quot;</span> <span class="attr">selected</span>=<span class="string">&quot;selected&quot;</span>&gt;</span>F1<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="DOCTYPE"><a href="#DOCTYPE" class="headerlink" title="DOCTYPE"></a>DOCTYPE</h2><p>document type declaration(DTD)</p>
+<!DOCTYPE><p>是HTML中的第一个标签。用来通知浏览器网页的HTML版本。</p>
+<h3 id="在HTML4-01中，有三种-lt-DOCTYPE-gt-声明。"><a href="#在HTML4-01中，有三种-lt-DOCTYPE-gt-声明。" class="headerlink" title="在HTML4.01中，有三种&lt;!DOCTYPE&gt;声明。"></a>在HTML4.01中，有三种<code>&lt;!DOCTYPE&gt;</code>声明。</h3><ol>
+<li><p>HTML4.01Strict: This DTD contains all HTML elements and attributes, but does NOT INCLUDE presentational or deprecated elements (like font). Framesets are not allowed.</p>
+</li>
+<li><p>HTML 4.01 Transitional: This DTD contains all HTML elements and attributes, INCLUDING presentational and deprecated elements (like font). Framesets are not allowed.</p>
+</li>
+<li><p>HTML 4.01 Frameset: This DTD is equal to HTML 4.01 Transitional, but allows the use of frameset content.</p>
+</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arg; <span class="comment">// arg is duplicate.</span></span><br><span class="line">&#125;</span><br><span class="line">func() <span class="comment">// error.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="const命令"><a href="#const命令" class="headerlink" title="const命令"></a><code>const</code>命令</h2><p>const声明一个只读的常量，一旦声明，变量的值就不能改变。</p>
-<p>const作用域与let命令相同：只在声明所在的块级作用域内有效。</p>
-<p>const命令声明的变量也是不提升、存在暂时性死区，只能在声明的位置后面使用。</p>
-<p>const命令与let一样不能重复。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PI = <span class="number">3.1415</span>;</span><br><span class="line">PI = <span class="number">3</span>; <span class="comment">// error</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> MAX = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line">MAX <span class="comment">// Uncaught ReferenceError: MAX is not defined.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(MAX); <span class="comment">// ReferenceError</span></span><br><span class="line">    <span class="keyword">const</span> MAX = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<h3 id="在HTML5中，只有一种声明，即：-lt-DOCTYPE-html-gt"><a href="#在HTML5中，只有一种声明，即：-lt-DOCTYPE-html-gt" class="headerlink" title="在HTML5中，只有一种声明，即：&lt;!DOCTYPE html&gt;"></a>在HTML5中，只有一种声明，即：<code>&lt;!DOCTYPE html&gt;</code></h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/06/13/fontend/es6/" data-id="ckofhdl8c0004d0vva74228qr" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/06/13/fontend/html/" data-id="ckofi72x10006m8vvbxlnfp40" class="article-share-link">Share</a>
       
       
     </footer>
