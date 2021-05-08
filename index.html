@@ -424,7 +424,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2021/04/30/cpp/effective_modern_cpp/" data-id="ckoc7u04h0000n8vvdqh5dma5" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2021/04/30/cpp/effective_modern_cpp/" data-id="ckofhdl9r002kd0vvegcyfzec" class="article-share-link">Share</a>
       
       
     </footer>
@@ -469,7 +469,8 @@
 
 <h3 id="RValue-Reference"><a href="#RValue-Reference" class="headerlink" title="RValue Reference"></a>RValue Reference</h3><ul>
 <li>lvalue: value to the left of the assignment symbol.</li>
-<li>rvalue: value to the right of the assignment symbol.<pre><code>    Temporary object no longer exists after the expression ends.</code></pre>
+<li>rvalue: value to the right of the assignment symbol.<pre><code>    Temporary object no longer exists after the expression ends.
+</code></pre>
 </li>
 </ul>
 <p>C++11, <code>rvalue reference</code> divides rvalue into:</p>
@@ -549,7 +550,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2021/03/18/cpp/modern_cpp/" data-id="ckmk0c73z00021ovvfytm32w1" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2021/03/18/cpp/modern_cpp/" data-id="ckofhdl8i000dd0vv2gc56fdi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -601,9 +602,11 @@
 <p>While it’s possible to turn on the user stack database with the <code>!gflag</code> debugging extension.</p>
 </li>
 <li><p>You must compare log files recorded at different time to determine which allocation are growing.</p>
- <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">:: record the <span class="built_in">start</span> state.</span><br><span class="line">umdh -p:pid -f:log1.txt</span><br><span class="line"></span><br><span class="line">:: -------------some operations--------------</span><br><span class="line"></span><br><span class="line">:: record the end state.</span><br><span class="line">umdh -p:pid -f:log2.txt</span><br><span class="line"></span><br><span class="line">:: compare </span><br><span class="line">:: you may also include the -d option,</span><br><span class="line">:: which converts the byte and allocation</span><br><span class="line">:: counts from hexadecimal to decimal.</span><br><span class="line"></span><br><span class="line">umdh log1.txt log2.txt &gt; logCompare.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">:: record the <span class="built_in">start</span> state.</span><br><span class="line">umdh -p:pid -f:log1.txt</span><br><span class="line"></span><br><span class="line">:: -------------some operations--------------</span><br><span class="line"></span><br><span class="line">:: record the end state.</span><br><span class="line">umdh -p:pid -f:log2.txt</span><br><span class="line"></span><br><span class="line">:: compare </span><br><span class="line">:: you may also include the -d option,</span><br><span class="line">:: which converts the byte and allocation</span><br><span class="line">:: counts from hexadecimal to decimal.</span><br><span class="line"></span><br><span class="line">umdh log1.txt log2.txt &gt; logCompare.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>Open the logCompare.txt file. Its contents resemble the following:</p>
  <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ 5320 ( f110 - 9df0) 3a allocs BackTrace00B53 </span><br><span class="line">Total increase == 5320  </span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>0xf110 bytes allocated by BackTrace00B53 according to records in log2.txt.</li>
 <li>0x9d50 bytes allocated by BackTrace00B53 according to records in log1.txt.</li>
@@ -612,6 +615,7 @@
 </li>
 <li><p>To determine what is in that backtrace, open one of the original log files(for example, log2.txt) and search for “BackTrace00B53”. The results are similar to this data:</p>
  <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">00005320 bytes in 0x14 allocations (@ 0x00000428) by: BackTrace00B53</span><br><span class="line">ntdll!RtlDebugAllocateHeap+0x000000FD</span><br><span class="line">ntdll!RtlAllocateHeapSlowly+0x0000005A</span><br><span class="line">ntdll!RtlAllocateHeap+0x00000808</span><br><span class="line">MyApp!_heap_alloc_base+0x00000069</span><br><span class="line">MyApp!_heap_alloc_dbg+0x000001A2</span><br><span class="line">MyApp!_nh_malloc_dbg+0x00000023</span><br><span class="line">MyApp!_nh_malloc+0x00000016</span><br><span class="line">MyApp!operator new+0x0000000E</span><br><span class="line">MyApp!DisplayMyGraphics+0x0000001E</span><br><span class="line">MyApp!main+0x0000002C</span><br><span class="line">MyApp!mainCRTStartup+0x000000FC</span><br><span class="line">KERNEL32!BaseProcessStart+0x0000003D</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>0x5320 bytes allocated from 0x14(decimal 20) separate allocations of 0x428(decimal 1064) bytes each.</li>
 </ul>
@@ -626,7 +630,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2021/02/20/windows/memory_leak/" data-id="cklde3iel0000iovvhuaog9ow" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2021/02/20/windows/memory_leak/" data-id="ckofhdl910018d0vvhvd20hl1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -722,7 +726,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/11/20/fontend/typescript/" data-id="ckhx0y4j300073gvv0pj36y9y" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/11/20/fontend/typescript/" data-id="ckofhdl9q002jd0vv89g85iow" class="article-share-link">Share</a>
       
       
     </footer>
@@ -788,7 +792,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/10/10/network/tcp_ip_osi_model/" data-id="ckmk0c74n000j1ovv7lt7dich" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/10/10/network/tcp_ip_osi_model/" data-id="ckofhdl8v000xd0vve2nq1ipi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -890,7 +894,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/24/windows/batch/" data-id="ckflxi0lc0000p8vvglc3bsxq" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/24/windows/batch/" data-id="ckofhdl8z0014d0vvdob24pgf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -978,7 +982,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/17/math/matrix/" data-id="ckf6qsyp600008ovv09j1699r" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/17/math/matrix/" data-id="ckofhdl8r000sd0vv28thbnc5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1031,7 +1035,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/16/windows/uniquely_identify_a_windows_machine/" data-id="ckf54hznl00006svv8g3s7na9" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/16/windows/uniquely_identify_a_windows_machine/" data-id="ckofhdl95001gd0vv9ypd8i0o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1089,7 +1093,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/15/unicode/soft_hyphen/" data-id="ckmk0c74u000t1ovvej9rbzcj" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/15/unicode/soft_hyphen/" data-id="ckofhdl8y0011d0vv0ay90keo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1099,14 +1103,14 @@
 
 
   
-    <article id="post-cpp/function_obj" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-network/transport_layer" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/09/cpp/function_obj/" class="article-date">
+    <a href="/2020/09/09/network/transport_layer/" class="article-date">
   <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+    <a class="article-category-link" href="/categories/Network/">Network</a>
   </div>
 
   </div>
@@ -1117,7 +1121,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/cpp/function_obj/">operator int() vs int operator()</a>
+      <a class="article-title" href="/2020/09/09/network/transport_layer/">Protocol</a>
     </h1>
   
 
@@ -1125,12 +1129,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="comment">// operator() override turn an object into a `function object`.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// convertion operator construct a int object by an object.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><p>Internet Protocol version 4. IPv4, which we often denote as just IP, has been the<br>workhorse protocol of the IP suite since the early 1980s. It uses 32-bit<br>addresses (Section A.4). IPv4 provides packet delivery service for TCP, UDP,<br>SCTP, ICMP, and IGMP.</p>
+<h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>Internet Protocol version 6. IPv6 was designed in the mid-1990s as a replace-<br>ment for IPv4. The major change is a larger address comprising 128 bits (Sec-<br>tion A.5), to deal with the explosive growth of the Internet in the 1990s. IPv6<br>provides packet delivery service for TCP, UDP, SCTP, and ICMPv6.<br>We often use the word ‘‘IP’’ as an adjective, as in IP layer and IP address, when<br>the distinction between IPv4 and IPv6 is not needed.</p>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>Transmission Control Protocol. TCP is a connection-oriented protocol that pro-<br>vides a reliable, full-duplex byte stream to its users. TCP sockets are an<br>example of stream sockets. TCP takes care of details such as acknowledg-<br>ments, timeouts, retransmissions, and the like. Most Internet application pro-<br>grams use TCP. Notice that TCP can use either IPv4 or IPv6.</p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>User Datagram Protocol. UDP is a connectionless protocol, and UDP sockets<br>are an example of datagram sockets. There is no guarantee that UDP data-<br>grams ever reach their intended destination. As with TCP, UDP can use<br>either IPv4 or IPv6.</p>
+<h2 id="SCTP"><a href="#SCTP" class="headerlink" title="SCTP"></a>SCTP</h2><p>Stream Control Transmission Protocol. SCTP is a connection-oriented protocol<br>that provides a reliable full-duplex association. The word ‘‘association’’ is used<br>when referring to a connection in SCTP because SCTP is multihomed, involv-<br>ing a set of IP addresses and a single port for each side of an association.<br>SCTP provides a message service, which maintains record boundaries. As<br>with TCP and UDP, SCTP can use either IPv4 or IPv6, but it can also use both<br>IPv4 and IPv6 simultaneously on the same association.</p>
+<h2 id="ICMP"><a href="#ICMP" class="headerlink" title="ICMP"></a>ICMP</h2><p>Internet Control Message Protocol. ICMP handles error and control information<br>between routers and hosts. These messages are normally generated by and<br>processed by the TCP/IP networking software itself, not user processes,<br>although we show the ping and traceroute programs, which use ICMP.<br>We sometimes refer to this protocol as ICMPv4 to distinguish it from<br>ICMPv6.</p>
+<h2 id="IGMP"><a href="#IGMP" class="headerlink" title="IGMP"></a>IGMP</h2><p>Internet Group Management Protocol. IGMP is used with multicasting (Chap-<br>ter 21), which is optional with IPv4.</p>
+<h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><p>Address Resolution Protocol. ARP maps an IPv4 address into a hardware<br>address (such as an Ethernet address). ARP is normally used on broadcast<br>networks such as Ethernet, token ring, and FDDI, and is not needed on point-<br>to-point networks.</p>
+<h2 id="RARP"><a href="#RARP" class="headerlink" title="RARP"></a>RARP</h2><p>Reverse Address Resolution Protocol. RARP maps a hardware address into an<br>IPv4 address. It is sometimes used when a diskless node is booting.</p>
+<h2 id="ICMPv6"><a href="#ICMPv6" class="headerlink" title="ICMPv6"></a>ICMPv6</h2><p>Internet Control Message Protocol version 6. ICMPv6 combines the functionality<br>of ICMPv4, IGMP, and ARP.</p>
+<h2 id="BPF"><a href="#BPF" class="headerlink" title="BPF"></a>BPF</h2><p>BSD packet filter. This interface provides access to the datalink layer. It is nor-<br>mally found on Berkeley-derived kernels.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/cpp/function_obj/" data-id="ckmk0c73w00011ovvfh2m15za" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/network/transport_layer/" data-id="ckofhdl8w0010d0vv47631txa" class="article-share-link">Share</a>
       
       
     </footer>

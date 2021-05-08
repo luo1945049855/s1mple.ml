@@ -66,6 +66,313 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-cpp/runtime_errors" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cpp/runtime_errors/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cpp/runtime_errors/">Runtime Error</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Pure-Virtual-on-Call"><a href="#Pure-Virtual-on-Call" class="headerlink" title="Pure Virtual on Call"></a>Pure Virtual on Call</h2><ol>
+<li>Reason</li>
+</ol>
+<p>They can result if you try to make a virtual function call from a constructor or destructor. Since you can’t make a virtual function call from a <code>constructor</code> or <code>destructor</code> (the derived class object hasn’t been constructed or has already been destroyed), it calls the base class version, which in the case of a pure virtual function, doesn’t exist.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/cpp/runtime_errors/" data-id="ckofhdl8l000gd0vv4e9cfz6h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cpp/mutex_lock" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cpp/mutex_lock/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cpp/mutex_lock/">Mutex vs Lock</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="mutex"><a href="#mutex" class="headerlink" title="mutex"></a>mutex</h2><p>mutex提供exclusive一种lock</p>
+<ol>
+<li>lock、try_lock、unlock</li>
+</ol>
+<p>shared_mutex提供shared以及exclusive两种lock：</p>
+<ol>
+<li><code>lock_shared、try_lock_shared、unlock_shared</code></li>
+<li><code>lock、try_lock、unlock</code></li>
+</ol>
+<h2 id="lock"><a href="#lock" class="headerlink" title="lock"></a>lock</h2><ul>
+<li><code>unique_lock&lt;mutex&gt;</code>提供lock、try_lock、unlock接口，实为调用mutex/shared_mutex的exclusive接口。</li>
+<li><code>shared_lock&lt;mutex&gt;</code>提供lock、try_lock、unlock接口，实为调用shared_mutex的shared接口。</li>
+<li>unique_lock和shared_lock都是只能move不能copy的。</li>
+<li>unique_lock和shared_lock可以配合shared_mutex实现read-write lock。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/cpp/mutex_lock/" data-id="ckofhdl8m000hd0vv93xh333f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cpp/shared_ptr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cpp/shared_ptr/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cpp/shared_ptr/">Shared_Ptr</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">shared_ptr</span> &#123;</span></span><br><span class="line">    ......</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T * px;                         <span class="comment">//contained pointer</span></span><br><span class="line">    boost::detail::shared_count pn; <span class="comment">//reference counter</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">shared_count</span> &#123;</span></span><br><span class="line">    ......</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    sp_counted_base * pi_;      <span class="comment">//important</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sp_counted_base</span> &#123;</span></span><br><span class="line">    ......</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//pointer shared count</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">atomic_int_least32_t</span> use_count_;   </span><br><span class="line">    <span class="comment">//self(sp_counted_bast *) shared count </span></span><br><span class="line">    <span class="built_in">std</span>::<span class="keyword">atomic_int_least32_t</span> weak_count_;  </span><br><span class="line"> &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="enable-shared-from-this-作用"><a href="#enable-shared-from-this-作用" class="headerlink" title="enable_shared_from_this 作用"></a>enable_shared_from_this 作用</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">enable_shared_from_this</span> &#123;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// inherited from enable_shared_from_this</span></span><br><span class="line"><span class="keyword">template</span>&lt; <span class="class"><span class="keyword">class</span> <span class="title">X</span>, <span class="title">class</span> <span class="title">Y</span>, <span class="title">class</span> <span class="title">T</span> &gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">void</span> <span class="title">sp_enable_shared_from_this</span>(</span></span><br><span class="line"><span class="class">     <span class="title">boost</span>:</span>:<span class="built_in">shared_ptr</span>&lt;X&gt; <span class="keyword">const</span> * ppx, Y <span class="keyword">const</span> * py,</span><br><span class="line">     boost::enable_shared_from_this&lt; T &gt; <span class="keyword">const</span> * pe ) &#123;</span><br><span class="line">    <span class="keyword">if</span>( pe != <span class="number">0</span> ) &#123;</span><br><span class="line">        pe-&gt;_internal_accept_owner( ppx, <span class="keyword">const_cast</span>&lt; Y* &gt;( py ) );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// not inherited from enable_shared_from_this</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">sp_enable_shared_from_this</span><span class="params">( ... )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/cpp/shared_ptr/" data-id="ckofhdl8n000kd0vv2t8rb0qa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cpp/std_cross_dll" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cpp/std_cross_dll/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cpp/std_cross_dll/">Use std classes cross dll boundary</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Keep in mind one thing before you read further: My answer is coming from the point of view of writing portable code that can be used in applications made up of modules compiled under different compilers. This can include different versions or even different patch levels of the same compiler.</p>
+<p>How can I use stl-classes in my dll-interface?</p>
+<p>Answer: You often can’t1.</p>
+<p>Reason: The STL is a code library, not a binary library like a DLL. It does not have a single ABI that is guaranteed to be the same wherever you might use it. Indeed, STL does stand for “Standard Template Library,” but a key operative word here besides Standard is Template.</p>
+<p>The Standard defines the methods and data members each STL class is required to provide, and it defines what those methods are to do; but no more. In particular, the Standard doesn’t specify how compiler writers should implement the Standard-defined functionality. Compiler writers are free to provide a implementation of an STL class that adds member functions and member variables not listed in the Standard, so long as those members which are defined in the Standard are still there and do what the Standard says.</p>
+<p>Maybe an example is in order. The basic_string class is defined in the Standard as having certain member functions &amp; variables. The actual definition is almost 4 pages in the Standard, but here’s just a snippet of it:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="built_in">std</span> &#123;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">charT</span>, <span class="title">class</span> <span class="title">traits</span> = <span class="title">char_traits</span>&lt;charT&gt;,</span></span><br><span class="line"><span class="class">         <span class="title">class</span> <span class="title">Allocator</span> = <span class="title">allocator</span>&lt;charT&gt; &gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">basic_string</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">size_type <span class="title">length</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">size_type <span class="title">max_size</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">resize</span><span class="params">(size_type n, charT c)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">resize</span><span class="params">(size_type n)</span></span>;</span><br><span class="line">  <span class="function">size_type <span class="title">capacity</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">reserve</span><span class="params">(size_type res_arg = <span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Consider the size() and length() member functions. There is nothing in the Standard that specified member variables for holding this information. Indeed, there are no member variables defined at all, not even to hold the string itself. So how is this implemented?</p>
+<p>The answer is, many different ways. Some compilers might use a size_t member variable to hold the size and a char* to hold the string. Another one might use a pointer to some other data store which holds that data (this might be the case in a reference-counted implementation). In fact, different versions or even patch levels of the same compiler may change these implementation details. You can’t rely on them. So, MSVC 10’s implementation might look like this:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="built_in">std</span> &#123;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">charT</span>, <span class="title">class</span> <span class="title">traits</span> = <span class="title">char_traits</span>&lt;charT&gt;,</span></span><br><span class="line"><span class="class">         <span class="title">class</span> <span class="title">Allocator</span> = <span class="title">allocator</span>&lt;charT&gt; &gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">basic_string</span> &#123;</span></span><br><span class="line"><span class="keyword">char</span>* m_pTheString;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">basic_string::size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">strlen</span>(m_pTheString;) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>…Whereas MSVC 10 with SP1 might look like this:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="built_in">std</span> &#123;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">charT</span>, <span class="title">class</span> <span class="title">traits</span> = <span class="title">char_traits</span>&lt;charT&gt;,</span></span><br><span class="line"><span class="class">         <span class="title">class</span> <span class="title">Allocator</span> = <span class="title">allocator</span>&lt;charT&gt; &gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">basic_string</span> &#123;</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; m_TheString;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">basic_string::size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_TheString.size(); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>I’m not saying they do look like this, I’m saying they might. The point here is the actual implementation is platform-dependent, and you really have no way of knowing what it will be anywhere else.</p>
+<p>Now say you use MSVC10 to write a DLL that exports this class:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyGizmo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span> name_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>What is the sizeof(MyGizmo)?</p>
+<p>Assuming my proposed implementations above, under MSVC10 its going to be <code>sizeof(char*)</code>, but under SP1 it will be <code>sizeof(vector&lt;char&gt;)</code>. If you write an application in VC10 SP1 that uses the DLL, the size of the object will look different than it actually is. The binary interface is changed.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/cpp/std_cross_dll/" data-id="ckofhdl8o000ld0vv07y68mnc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cpp/warnings" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/cpp/warnings/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/cpp/warnings/">Warnings</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="c4251"><a href="#c4251" class="headerlink" title="c4251"></a>c4251</h2><p>当导出类中包含未导出类的数据成员时出现，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TemplateClass</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> --<span class="title">declspec</span>(<span class="title">dllexport</span>) <span class="title">ExportedClass</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    TemplateClass&lt;<span class="keyword">int</span>&gt; m_member;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>Pimpl(Pointer to implementation)模式</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/cpp/warnings/" data-id="ckofhdl8p000od0vvddsn9ixq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-math/curve" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/09/math/curve/" class="article-date">
+  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Math/">Math</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/math/curve/">Curve</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Bezier-Curve"><a href="#Bezier-Curve" class="headerlink" title="Bezier Curve"></a>Bezier Curve</h2><p>贝塞尔曲线通过两个<code>端点</code>和两个<code>控制点</code>指定。<br>曲线不会通过控制点，但是控制点会像磁铁一样将曲线拉向控制点的方向，并影响曲线的弯曲。<br>如下图所示：</p>
+<p><img src="/images/bezier_spline.png" alt="bezier_splines"></p>
+<p>注意：<br>曲线从端点p1开始，向控制点c1移动。曲线在端点p1处的<code>切线</code>是p1和c1的连线。<br>曲线在端点p2处的切线是p2和c2的连线。</p>
+<h2 id="给定一系列点，画曲线"><a href="#给定一系列点，画曲线" class="headerlink" title="给定一系列点，画曲线"></a>给定一系列点，画曲线</h2><p>此处找到的方式有：</p>
+<ul>
+<li><p>Krita（基于Qt的画图工具）基于Bezier曲线的实现。</p>
+</li>
+<li><p>JScurve求平均值方式，可以使点平滑。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/burningmime/curves">burningmime</a>基于<code>Philip J. Schneider&#39;s least-squares method</code>实现的方案。此方案效果较好，但是有出错情况而且性能较差。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit">Draw a Smooth Curve through a Set of 2D Points with Bezier Primitives</a>。</p>
+</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-bezier-splines-about">Bezier Splines</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30791706/gdi-curve-overflowing/49693235">GDI+ curve “overflowing”</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zerobit.ga/2020/09/09/math/curve/" data-id="ckofhdl8q000pd0vvhq2afcnb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-windows/wtl-thunk" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/09/09/windows/wtl-thunk/" class="article-date">
@@ -124,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/wtl-thunk/" data-id="ckev6e5hy000aqgvv0kz37bx2" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/windows/wtl-thunk/" data-id="ckofhdl99001kd0vv7adp0z3z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -223,230 +530,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/network/proxy_types/" data-id="ckev6y91k000e18vv9ise77cw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows/memory_type" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/windows/memory_type/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Windows/">Windows</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/windows/memory_type/">Memory Type</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/1984186/what-is-private-bytes-virtual-bytes-working-set">原地址：What is private bytes, virtual bytes, working set?</a></p>
-<ul>
-<li><p>Private Bytes：指可执行文件申请的，不一定是实际使用的。private代表它不包括memory-mapped files（例如：共享dll）占用的内存。但是它是包括dll中的函数所分配内存的，所以Private Bytes大小的变化可能由可执行文件和共享dll引起。Private Bytes不止是物理内存，还可能page to disk或者page list(i.e. no longer in use, but not paged yet either)</p>
-</li>
-<li><p>Working Set：代表进程占用的全部物理内存（RAM），但是不同于Private Bytes，它包括memory-mapped files（例如：共享dll）和其他资源，与Private Bytes相比，更加不能代表一个可执行文件使用的内存。任务管理器中的“内存使用”就是该值，最近几年造成了很多的误解。Working Set代表占用RAM中的内存大小，所以访问其中内存地址时不会有page fault。注意：虽然page list仍然在内存中，当你最小化窗口时，“内存使用”可能会突然减小。</p>
-</li>
-<li><p>Virtual Bytes：代表整个进程占用的全部虚拟内存空间，包括memory-mapped files、page list以及page to disk。当系统中存在大量进程时，所有进程的Virtual Bytes的和会比机器的物理内存大出很多。</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/memory_type/" data-id="ckmk0c74s000s1ovv1kbygb73" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-network/transport_layer" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/network/transport_layer/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Network/">Network</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/network/transport_layer/">Protocol</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><p>Internet Protocol version 4. IPv4, which we often denote as just IP, has been the<br>workhorse protocol of the IP suite since the early 1980s. It uses 32-bit<br>addresses (Section A.4). IPv4 provides packet delivery service for TCP, UDP,<br>SCTP, ICMP, and IGMP.</p>
-<h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>Internet Protocol version 6. IPv6 was designed in the mid-1990s as a replace-<br>ment for IPv4. The major change is a larger address comprising 128 bits (Sec-<br>tion A.5), to deal with the explosive growth of the Internet in the 1990s. IPv6<br>provides packet delivery service for TCP, UDP, SCTP, and ICMPv6.<br>We often use the word ‘‘IP’’ as an adjective, as in IP layer and IP address, when<br>the distinction between IPv4 and IPv6 is not needed.</p>
-<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>Transmission Control Protocol. TCP is a connection-oriented protocol that pro-<br>vides a reliable, full-duplex byte stream to its users. TCP sockets are an<br>example of stream sockets. TCP takes care of details such as acknowledg-<br>ments, timeouts, retransmissions, and the like. Most Internet application pro-<br>grams use TCP. Notice that TCP can use either IPv4 or IPv6.</p>
-<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>User Datagram Protocol. UDP is a connectionless protocol, and UDP sockets<br>are an example of datagram sockets. There is no guarantee that UDP data-<br>grams ever reach their intended destination. As with TCP, UDP can use<br>either IPv4 or IPv6.</p>
-<h2 id="SCTP"><a href="#SCTP" class="headerlink" title="SCTP"></a>SCTP</h2><p>Stream Control Transmission Protocol. SCTP is a connection-oriented protocol<br>that provides a reliable full-duplex association. The word ‘‘association’’ is used<br>when referring to a connection in SCTP because SCTP is multihomed, involv-<br>ing a set of IP addresses and a single port for each side of an association.<br>SCTP provides a message service, which maintains record boundaries. As<br>with TCP and UDP, SCTP can use either IPv4 or IPv6, but it can also use both<br>IPv4 and IPv6 simultaneously on the same association.</p>
-<h2 id="ICMP"><a href="#ICMP" class="headerlink" title="ICMP"></a>ICMP</h2><p>Internet Control Message Protocol. ICMP handles error and control information<br>between routers and hosts. These messages are normally generated by and<br>processed by the TCP/IP networking software itself, not user processes,<br>although we show the ping and traceroute programs, which use ICMP.<br>We sometimes refer to this protocol as ICMPv4 to distinguish it from<br>ICMPv6.</p>
-<h2 id="IGMP"><a href="#IGMP" class="headerlink" title="IGMP"></a>IGMP</h2><p>Internet Group Management Protocol. IGMP is used with multicasting (Chap-<br>ter 21), which is optional with IPv4.</p>
-<h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><p>Address Resolution Protocol. ARP maps an IPv4 address into a hardware<br>address (such as an Ethernet address). ARP is normally used on broadcast<br>networks such as Ethernet, token ring, and FDDI, and is not needed on point-<br>to-point networks.</p>
-<h2 id="RARP"><a href="#RARP" class="headerlink" title="RARP"></a>RARP</h2><p>Reverse Address Resolution Protocol. RARP maps a hardware address into an<br>IPv4 address. It is sometimes used when a diskless node is booting.</p>
-<h2 id="ICMPv6"><a href="#ICMPv6" class="headerlink" title="ICMPv6"></a>ICMPv6</h2><p>Internet Control Message Protocol version 6. ICMPv6 combines the functionality<br>of ICMPv4, IGMP, and ARP.</p>
-<h2 id="BPF"><a href="#BPF" class="headerlink" title="BPF"></a>BPF</h2><p>BSD packet filter. This interface provides access to the datalink layer. It is nor-<br>mally found on Berkeley-derived kernels.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/network/transport_layer/" data-id="ckmk0c74q000r1ovvft9r5xuj" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows/io-completion-ports" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/windows/io-completion-ports/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Windows/">Windows</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/windows/io-completion-ports/">I/O Completion Ports</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>I/O completion ports 是多核系统下，处理多个异步I/O请求的高效线程模型。当进程创建一个I/O completion port对象，系统创建一个队列与之关联，用来将相关请求放入队列。与接收到I/O请求创建线程相比，I/O completion port与线程池配合，可以使进程在处理并发异步请求时，更快更有效率。</p>
-<p>可以理解为I/O completion port为I/O completion队列，线程池根据队列内容进行处理。</p>
-<p>相关windows api包括：</p>
-<ol>
-<li><p>CreateIoCompletionPort<br>将file handle与completion key关联，得到I/O completion port。</p>
-</li>
-<li><p>GetQueuedCompletionStatus<br>通过I/O completion port得到completion key和overlapped(that was specified when the completed I/O operation was started.)。<br>注意：completion key与file handle关联。overlapped可区分input/output。</p>
-</li>
-<li><p>PostQueuedCompletionStatus</p>
-</li>
-<li><p>WriteFile</p>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WriteFile(handle_.Get(), message-&gt;data(),</span><br><span class="line">          <span class="keyword">static_cast</span>&lt;DWORD&gt;(message-&gt;data_num_bytes()), <span class="literal">NULL</span>,</span><br><span class="line">          &amp;write_context_.overlapped)</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>ReadFile</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">::ReadFile(handle_.Get(), buffer, <span class="keyword">static_cast</span>&lt;DWORD&gt;(buffer_capacity),</span><br><span class="line">           <span class="literal">NULL</span>, &amp;read_context_.overlapped);</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/fileio/i-o-completion-ports">I/O Completion Ports</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/io-completion-ports/" data-id="ckev6e5ho0001qgvv30vc7v09" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows/using-lockbits-in-gdi+" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/windows/using-lockbits-in-gdi+/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Windows/">Windows</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/windows/using-lockbits-in-gdi+/">Using LockBits in GDI+</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Understanding how to use LockBits is essential for creating high performance GDI+ applications. Usually, GDI+ is thought of as a low performance graphics API. While arguments can be made for this, if you use GDI+ properly, you can achieve great performance.</p>
-<p>The easiest way to access pixel data is to use GetPixel and SetPixel member functions of the Bitmap class. Unfortunately, using these functions has a great amount of overhead. When working with large images, doing any type of processing with GetPixel and SetPixel is simply too slow and not acceptable for modern applications. LockBits is specifically used to make the data in a bitmap directly available to you, the programmer. The workflow is very simple:</p>
-<ol>
-<li>Use LockBits to obtain a raw array of data</li>
-<li>Perform image processing using the standard array of data</li>
-<li>Use UnlockBits to commit the new data back into the bitmap</li>
-</ol>
-<h2 id="Calling-LockBits"><a href="#Calling-LockBits" class="headerlink" title="Calling LockBits"></a>Calling LockBits</h2><p>When calling LockBits, you can specify a specific rectangular portion of the bitmap you want to manipulate, the read/write mode, the pixel format you would like the data to be in.</p>
-<p>// We must use LockBits to get the raw data. GetPixel and SetPixel are simply too slow</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BitmapData bitmapData;</span><br><span class="line">pBitmap-&gt;LockBits(</span><br><span class="line">    &amp;Rect(<span class="number">0</span>,<span class="number">0</span>,pBitmap-&gt;GetWidth(), pBitmap-&gt;GetHeight()), </span><br><span class="line">    ImageLockModeWrite,</span><br><span class="line">    PixelFormat32bppARGB, &amp;bitmapData);</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-format-of-the-pixel-data"><a href="#The-format-of-the-pixel-data" class="headerlink" title="The format of the pixel data"></a>The format of the pixel data</h2><p>It is important for you to realize how the data is formatted. The data is located in the Scan0 member variable in the BitmapData class. This is a standard, one dimensional array which stores information for a 2D image. Therefore, that 2D information is packed into a 1D array. In order to gain access to a specific pixel, you will need to know the X and Y coordinate, along with the Stride.</p>
-<p><img src="/images/LockBits.jpg?raw=true%22LockBits%22" alt="LockBits"></p>
-<p>As you can see in the image above, not all data elements are used. Furthermore, the Scan0 array is of the type void. Before accessing data, it is a good idea to keep another pointer around with the same element size as that in the format you picked when calling the LockBits function. For example, in the code above, a 32 bits per pixel format was selected. Therefore, it would be a good idea to create a pointer of the type int, which is 32 bits for most compilers.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> *pRawBitmapOrig = (<span class="keyword">unsigned</span> <span class="keyword">int</span>*)bitmapData.Scan0;   <span class="comment">// for easy access and indexing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> curColor = pRawBitmapCopy[curY * bitmapData.Stride / <span class="number">4</span> + curX];</span><br><span class="line"><span class="keyword">int</span> b = curColor &amp; <span class="number">0xff</span>;</span><br><span class="line"><span class="keyword">int</span> g = (curColor &amp; <span class="number">0xff00</span>) &gt;&gt; <span class="number">8</span>;</span><br><span class="line"><span class="keyword">int</span> r = (curColor &amp; <span class="number">0xff0000</span>) &gt;&gt; <span class="number">16</span>;</span><br><span class="line"><span class="keyword">int</span> a = (curColor &amp; <span class="number">0xff000000</span>) &gt;&gt; <span class="number">24</span>;</span><br></pre></td></tr></table></figure>
-
-<p>As you can see in the above code, casting the Scan0 array to another pointer with 32 bits per data element makes accessing the pixel data very straightforward.</p>
-<h2 id="Unlocking-the-bits"><a href="#Unlocking-the-bits" class="headerlink" title="Unlocking the bits"></a>Unlocking the bits</h2><p>As soon as you’re finished manipulating the image data, you’ll want to call UnlockBits. This function essentially commits the data in the Scan0 array back into the bitmap, and also does memory management if any memory had to be allocated in the first place with LockBits.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pBitmap-&gt;UnlockBits(&amp;bitmapData);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Using LockBits and Unlock bits can make simple functions such as image convolution perform 20 times as fast when compared to using GetPixel and SetPixel. Just remember that if you’re editing even a moderately small number of pixels, it might be a good idea to take route described in this tutorial instead of having to make thousands or even millions of functions calls.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="http://supercomputingblog.com/graphics/using-lockbits-in-gdi/">Using LockBits in GDI+</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/using-lockbits-in-gdi+/" data-id="ckev6e5hx0009qgvvby25c2rv" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/network/proxy_types/" data-id="ckofhdl8s000td0vv1zh61d26" class="article-share-link">Share</a>
       
       
     </footer>
@@ -535,7 +619,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/network/tcp_establish_terminate/" data-id="ckmk0c74m000h1ovv1tch5dlz" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/network/tcp_establish_terminate/" data-id="ckofhdl8u000wd0vvb3v3653z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -545,70 +629,9 @@
 
 
   
-    <article id="post-cef/cef_cpptoc_ctocpp" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-windows/using-lockbits-in-gdi+" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/09/cef/cef_cpptoc_ctocpp/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/CEF/">CEF</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/cef/cef_cpptoc_ctocpp/">CPP-C</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="cpp-to-c关键代码"><a href="#cpp-to-c关键代码" class="headerlink" title="cpp to c关键代码"></a>cpp to c关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">CefCppToC</span> :</span> <span class="keyword">public</span> CefBase &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">static</span> StructName* <span class="title">Wrap</span><span class="params">(CefRefPtr&lt;BaseName&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!c.get())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    ClassName* wrapper = <span class="keyword">new</span> ClassName();</span><br><span class="line">    wrapper-&gt;wrapper_struct_.object_ = c.get();</span><br><span class="line">    wrapper-&gt;AddRef();</span><br><span class="line">    <span class="keyword">return</span> wrapper-&gt;GetStruct();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">  CefCppToC() &#123;</span><br><span class="line">    wrapper_struct_.type_ = kWrapperType;</span><br><span class="line">    wrapper_struct_.wrapper_ = <span class="keyword">this</span>;</span><br><span class="line">    <span class="built_in">memset</span>(GetStruct(), <span class="number">0</span>, <span class="keyword">sizeof</span>(StructName));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">cef_base_t</span>* base = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">cef_base_t</span>*&gt;(GetStruct());</span><br><span class="line">    base-&gt;size = <span class="keyword">sizeof</span>(StructName);</span><br><span class="line">    base-&gt;add_ref = struct_add_ref;</span><br><span class="line">    base-&gt;release = struct_release;</span><br><span class="line">    base-&gt;has_one_ref = struct_has_one_ref;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> NDEBUG</span></span><br><span class="line">    base::AtomicRefCountInc(&amp;DebugObjCt);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">WrapperStruct</span> &#123;</span></span><br><span class="line">    CefWrapperType type_;</span><br><span class="line">    BaseName* object_;</span><br><span class="line">    CefCppToC&lt;ClassName, BaseName, StructName&gt;* wrapper_;</span><br><span class="line">    StructName struct_;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="模板实例化"><a href="#模板实例化" class="headerlink" title="模板实例化"></a>模板实例化</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CefAppCppToC</span></span></span><br><span class="line"><span class="class">    :</span> <span class="keyword">public</span> CefCppToC &lt;CefAppCppToC, CefApp, <span class="keyword">cef_app_t</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">CefAppCppToC::CefAppCppToC() &#123;</span><br><span class="line">  GetStruct()-&gt;on_before_command_line_processing =</span><br><span class="line">      app_on_before_command_line_processing;</span><br><span class="line">  GetStruct()-&gt;on_register_custom_schemes = app_on_register_custom_schemes;</span><br><span class="line">  GetStruct()-&gt;get_resource_bundle_handler = app_get_resource_bundle_handler;</span><br><span class="line">  GetStruct()-&gt;get_browser_process_handler = app_get_browser_process_handler;</span><br><span class="line">  GetStruct()-&gt;get_render_process_handler = app_get_render_process_handler;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><ul>
-<li>模板参数分别为：派生类，基类，C结构体。</li>
-<li>CefCppToC中存在C结构体WrapperStruct对象。</li>
-<li>WrapperStruct中BaseName* object_保存cpp对象指针。</li>
-<li>WrapperStruct中StructName struct_保存c对象。</li>
-<li>CefCppToC::AddRef调用object_::AddRef。</li>
-<li>CefCppToC构造函数初始化C结构体cef_base_t成员，派生类初始化派生结构体中函数指针（如：CefAppCppToC初始化cef_app_t中函数指针)。</li>
-</ul>
-<h2 id="c-to-cpp关键代码"><a href="#c-to-cpp关键代码" class="headerlink" title="c to cpp关键代码"></a>c to cpp关键代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">CefRefPtr</span>&lt;BaseName&gt;</span></span><br><span class="line"><span class="class">    <span class="title">CefCToCpp</span> &lt;ClassName, BaseName, StructName&gt; :</span>:Wrap(StructName* s) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!s)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">  WrapperStruct* wrapperStruct = <span class="keyword">new</span> WrapperStruct;</span><br><span class="line">  wrapperStruct-&gt;type_ = kWrapperType;</span><br><span class="line">  wrapperStruct-&gt;struct_ = s;</span><br><span class="line">  <span class="function">CefRefPtr&lt;BaseName&gt; <span class="title">wrapperPtr</span><span class="params">(&amp;wrapperStruct-&gt;wrapper_)</span></span>;</span><br><span class="line">  wrapperStruct-&gt;wrapper_.UnderlyingRelease();</span><br><span class="line">  <span class="keyword">return</span> wrapperPtr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">CefCToCpp</span>&lt;ClassName,BaseName,StructName&gt;:</span>:WrapperStruct &#123;</span><br><span class="line">  CefWrapperType type_;</span><br><span class="line">  StructName* struct_;</span><br><span class="line">  ClassName wrapper_;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">StructName* <span class="title">GetStruct</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">WrapperStruct* wrapperStruct = GetWrapperStruct(<span class="keyword">this</span>);</span><br><span class="line">DCHECK_EQ(kWrapperType, wrapperStruct-&gt;type_);</span><br><span class="line"><span class="keyword">return</span> wrapperStruct-&gt;struct_;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ClassName</span>, <span class="title">class</span> <span class="title">BaseName</span>, <span class="title">class</span> <span class="title">StructName</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">typename</span> <span class="title">CefCToCpp</span>&lt;ClassName, BaseName, StructName&gt;:</span>:WrapperStruct*</span><br><span class="line">    CefCToCpp&lt;ClassName, BaseName, StructName&gt;::GetWrapperStruct(</span><br><span class="line">        <span class="keyword">const</span> BaseName* obj) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;WrapperStruct*&gt;(</span><br><span class="line">      <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">char</span>*&gt;(<span class="keyword">const_cast</span>&lt;BaseName*&gt;(obj)) -</span><br><span class="line">      (<span class="keyword">sizeof</span>(WrapperStruct) - <span class="keyword">sizeof</span>(ClassName)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="关键点-1"><a href="#关键点-1" class="headerlink" title="关键点"></a>关键点</h3><ul>
-<li>模板参数与CppToC类似。</li>
-<li>CefCToCpp::WrapperStruct中StructName* struct_保存c结构体地址。</li>
-<li>CefCToCpp::WrapperStruct中wrapper保存cpp对象。</li>
-<li>CefCToCpp::<strong>GetWrapperStruct</strong>为<strong>桥梁</strong>函数，起到关键作用。该函数首先根据数据成员和结构体的内存偏移得到CefCToCpp::WrapperStruct，从而得到c结构体指针struct_。</li>
-<li>cef_base_t * struct内部函数使用类似上述的技术，先得到CefCppToC::WrapperStruct，从而得到原cpp对象object_。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/cef/cef_cpptoc_ctocpp/" data-id="ckmk0c73n00001ovv12ki7abl" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows/owned-windows" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/windows/owned-windows/" class="article-date">
+    <a href="/2020/09/09/windows/using-lockbits-in-gdi+/" class="article-date">
   <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
 </a>
     
@@ -624,7 +647,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/windows/owned-windows/">Owned Windows</a>
+      <a class="article-title" href="/2020/09/09/windows/using-lockbits-in-gdi+/">Using LockBits in GDI+</a>
     </h1>
   
 
@@ -632,71 +655,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>An overlapped or pop-up window can be owned by another overlapped or pop-up window. Being owned places several constraints on a window.</p>
-<p>An owned window is always above its owner in the z-order.<br>The system automatically destroys an owned window when its owner is destroyed.<br>An owned window is hidden when its owner is minimized.<br>Only an overlapped or pop-up window can be an owner window; a child window cannot be an owner window. An application creates an owned window by specifying the owner’s window handle as the hwndParent parameter of CreateWindowEx when it creates a window with the WS_OVERLAPPED or WS_POPUP style. The hwndParent parameter must identify an overlapped or pop-up window. If hwndParent identifies a child window, the system assigns ownership to the top-level parent window of the child window. After creating an owned window, an application cannot transfer ownership of the window to another window.</p>
-<p>Dialog boxes and message boxes are owned windows by default. An application specifies the owner window when calling a function that creates a dialog box or message box.</p>
-<p>An application can use the GetWindow function with the GW_OWNER flag to retrieve a handle to a window’s owner.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-gb/windows/win32/winmsg/window-features">Window Features</a></li>
+        <p>Understanding how to use LockBits is essential for creating high performance GDI+ applications. Usually, GDI+ is thought of as a low performance graphics API. While arguments can be made for this, if you use GDI+ properly, you can achieve great performance.</p>
+<p>The easiest way to access pixel data is to use GetPixel and SetPixel member functions of the Bitmap class. Unfortunately, using these functions has a great amount of overhead. When working with large images, doing any type of processing with GetPixel and SetPixel is simply too slow and not acceptable for modern applications. LockBits is specifically used to make the data in a bitmap directly available to you, the programmer. The workflow is very simple:</p>
+<ol>
+<li>Use LockBits to obtain a raw array of data</li>
+<li>Perform image processing using the standard array of data</li>
+<li>Use UnlockBits to commit the new data back into the bitmap</li>
 </ol>
+<h2 id="Calling-LockBits"><a href="#Calling-LockBits" class="headerlink" title="Calling LockBits"></a>Calling LockBits</h2><p>When calling LockBits, you can specify a specific rectangular portion of the bitmap you want to manipulate, the read/write mode, the pixel format you would like the data to be in.</p>
+<p>// We must use LockBits to get the raw data. GetPixel and SetPixel are simply too slow</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BitmapData bitmapData;</span><br><span class="line">pBitmap-&gt;LockBits(</span><br><span class="line">    &amp;Rect(<span class="number">0</span>,<span class="number">0</span>,pBitmap-&gt;GetWidth(), pBitmap-&gt;GetHeight()), </span><br><span class="line">    ImageLockModeWrite,</span><br><span class="line">    PixelFormat32bppARGB, &amp;bitmapData);</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-format-of-the-pixel-data"><a href="#The-format-of-the-pixel-data" class="headerlink" title="The format of the pixel data"></a>The format of the pixel data</h2><p>It is important for you to realize how the data is formatted. The data is located in the Scan0 member variable in the BitmapData class. This is a standard, one dimensional array which stores information for a 2D image. Therefore, that 2D information is packed into a 1D array. In order to gain access to a specific pixel, you will need to know the X and Y coordinate, along with the Stride.</p>
+<p><img src="/images/LockBits.jpg?raw=true%22LockBits%22" alt="LockBits"></p>
+<p>As you can see in the image above, not all data elements are used. Furthermore, the Scan0 array is of the type void. Before accessing data, it is a good idea to keep another pointer around with the same element size as that in the format you picked when calling the LockBits function. For example, in the code above, a 32 bits per pixel format was selected. Therefore, it would be a good idea to create a pointer of the type int, which is 32 bits for most compilers.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> *pRawBitmapOrig = (<span class="keyword">unsigned</span> <span class="keyword">int</span>*)bitmapData.Scan0;   <span class="comment">// for easy access and indexing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> curColor = pRawBitmapCopy[curY * bitmapData.Stride / <span class="number">4</span> + curX];</span><br><span class="line"><span class="keyword">int</span> b = curColor &amp; <span class="number">0xff</span>;</span><br><span class="line"><span class="keyword">int</span> g = (curColor &amp; <span class="number">0xff00</span>) &gt;&gt; <span class="number">8</span>;</span><br><span class="line"><span class="keyword">int</span> r = (curColor &amp; <span class="number">0xff0000</span>) &gt;&gt; <span class="number">16</span>;</span><br><span class="line"><span class="keyword">int</span> a = (curColor &amp; <span class="number">0xff000000</span>) &gt;&gt; <span class="number">24</span>;</span><br></pre></td></tr></table></figure>
+
+<p>As you can see in the above code, casting the Scan0 array to another pointer with 32 bits per data element makes accessing the pixel data very straightforward.</p>
+<h2 id="Unlocking-the-bits"><a href="#Unlocking-the-bits" class="headerlink" title="Unlocking the bits"></a>Unlocking the bits</h2><p>As soon as you’re finished manipulating the image data, you’ll want to call UnlockBits. This function essentially commits the data in the Scan0 array back into the bitmap, and also does memory management if any memory had to be allocated in the first place with LockBits.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pBitmap-&gt;UnlockBits(&amp;bitmapData);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Using LockBits and Unlock bits can make simple functions such as image convolution perform 20 times as fast when compared to using GetPixel and SetPixel. Just remember that if you’re editing even a moderately small number of pixels, it might be a good idea to take route described in this tutorial instead of having to make thousands or even millions of functions calls.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="http://supercomputingblog.com/graphics/using-lockbits-in-gdi/">Using LockBits in GDI+</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/owned-windows/" data-id="ckev6e5hs0003qgvv82h6c0ie" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-windows/hook" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/windows/hook/" class="article-date">
-  <time datetime="2020-09-08T16:00:00.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Windows/">Windows</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/windows/hook/">Hook</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HHOOK <span class="title">SetWindowsHookExA</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  <span class="keyword">int</span>       idHook,</span></span></span><br><span class="line"><span class="function"><span class="params">  HOOKPROC  lpfn,</span></span></span><br><span class="line"><span class="function"><span class="params">  HINSTANCE hmod,</span></span></span><br><span class="line"><span class="function"><span class="params">  DWORD     dwThreadId</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br><span class="line"><span class="function">BOOL <span class="title">UnhookWindowsHookEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  HHOOK hhk</span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
-<li>当dwThreadId为0或为其它进程创建时，lpfn必须在一个dll中。</li>
-<li>当dwThreadId为0时，钩子关联所有线程。</li>
-<li>hmod为lpfn所在dll句柄。当dwThreadId为当前进程创建或lpfn在当前进程代码中时，hmod必须为NULL。</li>
-</ul>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-setwindowshookexa">setwindowshookexa</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/winmsg/using-hooks">using-hooks</a></p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2020/09/09/windows/hook/" data-id="ckev6e5hi0000qgvv4kim8cgc" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2020/09/09/windows/using-lockbits-in-gdi+/" data-id="ckofhdl96001hd0vv8vgue318" class="article-share-link">Share</a>
       
       
     </footer>

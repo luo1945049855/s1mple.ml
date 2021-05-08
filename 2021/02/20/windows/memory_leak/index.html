@@ -15,7 +15,7 @@
 <meta property="og:description" content="Using Performance Monitor to Find a User-Mode Memory Leak Launch perfmon.exe. Add the following counters:  Process–&gt;Private Bytes which indicates the total amount of memory that a process has alloc">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-02-20T07:19:00.684Z">
+<meta property="article:modified_time" content="2021-05-08T08:19:43.315Z">
 <meta property="article:author" content="dayo">
 <meta name="twitter:card" content="summary">
   
@@ -108,9 +108,11 @@
 <p>While it’s possible to turn on the user stack database with the <code>!gflag</code> debugging extension.</p>
 </li>
 <li><p>You must compare log files recorded at different time to determine which allocation are growing.</p>
- <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">:: record the <span class="built_in">start</span> state.</span><br><span class="line">umdh -p:pid -f:log1.txt</span><br><span class="line"></span><br><span class="line">:: -------------some operations--------------</span><br><span class="line"></span><br><span class="line">:: record the end state.</span><br><span class="line">umdh -p:pid -f:log2.txt</span><br><span class="line"></span><br><span class="line">:: compare </span><br><span class="line">:: you may also include the -d option,</span><br><span class="line">:: which converts the byte and allocation</span><br><span class="line">:: counts from hexadecimal to decimal.</span><br><span class="line"></span><br><span class="line">umdh log1.txt log2.txt &gt; logCompare.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">:: record the <span class="built_in">start</span> state.</span><br><span class="line">umdh -p:pid -f:log1.txt</span><br><span class="line"></span><br><span class="line">:: -------------some operations--------------</span><br><span class="line"></span><br><span class="line">:: record the end state.</span><br><span class="line">umdh -p:pid -f:log2.txt</span><br><span class="line"></span><br><span class="line">:: compare </span><br><span class="line">:: you may also include the -d option,</span><br><span class="line">:: which converts the byte and allocation</span><br><span class="line">:: counts from hexadecimal to decimal.</span><br><span class="line"></span><br><span class="line">umdh log1.txt log2.txt &gt; logCompare.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>Open the logCompare.txt file. Its contents resemble the following:</p>
  <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ 5320 ( f110 - 9df0) 3a allocs BackTrace00B53 </span><br><span class="line">Total increase == 5320  </span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>0xf110 bytes allocated by BackTrace00B53 according to records in log2.txt.</li>
 <li>0x9d50 bytes allocated by BackTrace00B53 according to records in log1.txt.</li>
@@ -119,6 +121,7 @@
 </li>
 <li><p>To determine what is in that backtrace, open one of the original log files(for example, log2.txt) and search for “BackTrace00B53”. The results are similar to this data:</p>
  <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">00005320 bytes in 0x14 allocations (@ 0x00000428) by: BackTrace00B53</span><br><span class="line">ntdll!RtlDebugAllocateHeap+0x000000FD</span><br><span class="line">ntdll!RtlAllocateHeapSlowly+0x0000005A</span><br><span class="line">ntdll!RtlAllocateHeap+0x00000808</span><br><span class="line">MyApp!_heap_alloc_base+0x00000069</span><br><span class="line">MyApp!_heap_alloc_dbg+0x000001A2</span><br><span class="line">MyApp!_nh_malloc_dbg+0x00000023</span><br><span class="line">MyApp!_nh_malloc+0x00000016</span><br><span class="line">MyApp!operator new+0x0000000E</span><br><span class="line">MyApp!DisplayMyGraphics+0x0000001E</span><br><span class="line">MyApp!main+0x0000002C</span><br><span class="line">MyApp!mainCRTStartup+0x000000FC</span><br><span class="line">KERNEL32!BaseProcessStart+0x0000003D</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>0x5320 bytes allocated from 0x14(decimal 20) separate allocations of 0x428(decimal 1064) bytes each.</li>
 </ul>
@@ -133,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zerobit.ga/2021/02/20/windows/memory_leak/" data-id="cklde3iel0000iovvhuaog9ow" class="article-share-link">Share</a>
+      <a data-url="https://zerobit.ga/2021/02/20/windows/memory_leak/" data-id="ckofhdl910018d0vvhvd20hl1" class="article-share-link">Share</a>
       
       
     </footer>
