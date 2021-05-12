@@ -6,7 +6,7 @@ categories: CPP
 
 ## Language Enhancements
 
-### Tail Type Inference
+### C++11 Tail Type Inference(Deprecated in C++14)
 
 ```cpp
 // 1. `auto` cannot be used for function arguments for type derivation. 
@@ -24,6 +24,12 @@ decltype(x + y) Add(T x, U y) {
 // 3. Tail Type Inference
 template <typename T, typename U>
 auto Add(T x, U y) -> decltype(x + y) {
+    return x + y;
+}
+// 4. C++14
+template <typename T, typename U>
+auto Add(T x, U y)
+{
     return x + y;
 }
 ```
@@ -74,11 +80,17 @@ C++11, `rvalue reference` divides rvalue into:
 
 ### Literal
 
+* `Raw String` `R"()"`
+
 ```cpp
 // * Raw String Literal `R"()"`
 std::string path = "C:\\Path\\To\\File";
 std::string raw_path = R"(C:\Path\To\File)";
+```
 
+* `Custom Literal`
+
+```cpp
 // * Custom Literal by overloading the double quotes suffix operator:
 //   Custom Literal support four literals:
 //   1. Integer literal: (unsigned long long, const char*)
